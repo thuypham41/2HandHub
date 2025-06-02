@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Yêu cầu giảm giá - 2HandHub</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background-color: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .back-icon {
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #222;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .back-icon:hover {
+      background-color: #eaeaea;
+    }
+
+    .logo img {
+      height: 75px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .alert {
+      background: #fff3f3;
+      color: #b30000;
+      padding: 10px 16px;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+
+    .product {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+      font-size: 16px;
+    }
+
+    .price-box {
+      margin: 24px 0;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button.submit-btn {
+      margin-top: 20px;
+      background: #e60023;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button.submit-btn:hover {
+      background: #cc001f;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <button class="back-icon" onclick="window.location.href='home.html'">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="logo">
+      <img src="image/2hand.png" alt="2HandHub Logo">
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Yêu cầu giảm giá</h2>
+    <p class="note">Nếu người bán chấp nhận, bạn sẽ nhận được thông báo trong mục "Thông báo".</p>
+    <p class="note"><em>*Phản hồi từ người bán sẽ được gửi trong vòng 24 giờ.</em></p>
+
+    <div class="alert">
+      Nếu bạn không mua sau khi đồng ý, các hạn chế sử dụng có thể được áp dụng.
+    </div>
+
+    <div class="product">
+      <strong>Đồng hồ treo tường cũ</strong><br>
+      Đã bao gồm phí vận chuyển (người bán trả)<br>
+      <strong>Giá: 99.000đ</strong>
+    </div>
+
+    <div class="price-box">
+      <label for="offer">Giá chào hàng:</label>
+      <input type="number" id="offer" placeholder="Nhập giá mong muốn (50.000đ - 99.000đ)">
+    </div>
+
+    <button class="submit-btn">Gửi yêu cầu giảm giá</button>
+  </div>
+
+</body>
+</html>

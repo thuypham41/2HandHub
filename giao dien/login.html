@@ -132,48 +132,118 @@
     <img src="image/2hand.png" alt="2HandHub Logo" class="login-logo">
   </div>
 
-  <!-- Form -->
-  <div class="login-page">
+  <!-- Đăng nhập -->
+  <div class="login-page" id="login-page">
     <form class="login-form" onsubmit="handleLogin(event)">
       <h2>Đăng nhập</h2>
-
-      <div id="step-email">
-        <label for="email">Email của bạn</label>
-        <input type="email" id="email" required placeholder="example@email.com" />
-        <button type="submit">Gửi mã</button>
-      </div>
-
-      <div id="step-otp" class="hidden">
-        <label for="otp">Nhập mã xác nhận</label>
-        <input type="text" id="otp" required placeholder="Mã gồm 6 chữ số" />
-        <button type="button" onclick="verifyOtp()">Xác nhận</button>
-      </div>
-
-      <p><a href="#">Không nhận được mã?</a></p>
+      <label for="email">Email của bạn</label>
+      <input type="email" id="email" required placeholder="example@email.com" />
+      <button type="submit">Gửi mã</button>
+      <p><a href="#" onclick="showRegisterForm()">Bạn chưa có tài khoản?</a></p>
     </form>
   </div>
 
+  <!-- Đăng ký -->
+  <div class="login-page hidden" id="register-page">
+    <form class="login-form" onsubmit="handleRegister(event)">
+      <h2>Đăng ký tài khoản</h2>
+      <label for="fullname">Họ và tên</label>
+      <input type="text" id="fullname" required />
+      <label for="register-email">Email</label>
+      <input type="email" id="register-email" required />
+      <label for="dob">Ngày sinh</label>
+      <input type="date" id="dob" required />
+      <label for="address">Địa chỉ</label>
+      <input type="text" id="address" required />
+      <label for="phone">Số điện thoại</label>
+      <input type="tel" id="phone" required />
+      <button type="submit">Gửi mã</button>
+      <p><a href="#" onclick="showLoginForm()">Bạn đã có tài khoản?</a></p>
+    </form>
+  </div>
+
+  <!-- Nhập mã xác thực OTP -->
+  <div class="login-page hidden" id="otp-page">
+    <form class="login-form" onsubmit="verifyOtp(event)">
+      <h2>Nhập mã xác thực</h2>
+      <p id="otp-label-text">Mã gồm 6 chữ số đã gửi tới email của bạn.</p>
+      <label for="otp">Mã xác nhận</label>
+      <input type="text" id="otp" required placeholder="Nhập mã..." maxlength="6" />
+      <button type="submit">Xác nhận</button>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
   <script>
+    let currentMode = ""; // login hoặc register
+
+    function showRegisterForm() {
+      document.getElementById("login-page").classList.add("hidden");
+      document.getElementById("register-page").classList.remove("hidden");
+    }
+
+    function showLoginForm() {
+      document.getElementById("register-page").classList.add("hidden");
+      document.getElementById("login-page").classList.remove("hidden");
+    }
+
     function handleLogin(event) {
       event.preventDefault();
       const email = document.getElementById("email").value;
       if (email) {
+        currentMode = "login";
         alert("Mã xác thực đã được gửi đến " + email);
-        document.getElementById("step-email").classList.add("hidden");
-        document.getElementById("step-otp").classList.remove("hidden");
+        document.getElementById("login-page").classList.add("hidden");
+        document.getElementById("otp-page").classList.remove("hidden");
       }
     }
 
-    function verifyOtp() {
+    function handleRegister(event) {
+      event.preventDefault();
+      const email = document.getElementById("register-email").value;
+      if (email) {
+        currentMode = "register";
+        alert("Mã xác thực đã được gửi đến " + email);
+        document.getElementById("register-page").classList.add("hidden");
+        document.getElementById("otp-page").classList.remove("hidden");
+      }
+    }
+
+    function verifyOtp(event) {
+      event.preventDefault();
       const otp = document.getElementById("otp").value;
       if (otp === "123456") {
-        alert("Đăng nhập thành công!");
-        window.location.href = "index.html";
+        if (currentMode === "login") {
+          alert("Đăng nhập thành công!");
+        } else if (currentMode === "register") {
+          alert("Đăng ký thành công!");
+        }
+        window.location.href = "home.html";
+
       } else {
         alert("Mã không đúng. Vui lòng thử lại.");
       }
     }
+    function verifyOtp(event) {
+  event.preventDefault();
+  const otp = document.getElementById("otp").value;
+  const email = currentMode === "login" ? document.getElementById("email").value : document.getElementById("register-email").value;
+
+  if (otp === "123456") {
+    if (email === "thuypt@aptech.vn") {
+      alert("Đăng nhập quản trị viên thành công!");
+      window.location.href = "admin.html"; // Trang riêng cho admin
+    } else {
+      alert(currentMode === "login" ? "Đăng nhập thành công!" : "Đăng ký thành công!");
+      window.location.href = "home.html";
+    }
+  } else {
+    alert("Mã không đúng. Vui lòng thử lại.");
+  }
+}
+
   </script>
+    
 
 </body>
 </html>

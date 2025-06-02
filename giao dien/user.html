@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài khoản của tôi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2a7f62;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h3 {
+      border-bottom: 2px solid #2a7f62;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      color: #2a7f62;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #444;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #2a7f62;
+      color: white;
+    }
+
+    .stat-box {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #f0f8f4;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item h4 {
+      margin: 0;
+      color: #2a7f62;
+    }
+
+    .stat-item p {
+      margin: 5px 0 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <a href="home.html" class="back-button">&#8249;</a>
+</div>
+<div class="container">
+  <h2>Tài khoản của tôi</h2>
+
+  <!-- Thông tin cá nhân -->
+  <div class="section">
+    <h3>Thông tin cá nhân</h3>
+    <div class="info-row"><span class="info-label">Họ và tên:</span><span>Nguyễn Văn A</span></div>
+    <div class="info-row"><span class="info-label">Email:</span><span>nguyenvana@example.com</span></div>
+    <div class="info-row"><span class="info-label">Ngày sinh:</span><span>01/01/1995</span></div>
+    <div class="info-row"><span class="info-label">Địa chỉ:</span><span>123 Lê Lợi, Đà Nẵng</span></div>
+    <div class="info-row"><span class="info-label">Số điện thoại:</span><span>0901234567</span></div>
+  </div>
+
+  <!-- Đơn hàng của tôi -->
+  <div class="section">
+    <h3>Đơn hàng của tôi</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Mã đơn</th>
+          <th>Sản phẩm</th>
+          <th>Giá</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#DH001</td>
+          <td>Áo hoodie nam</td>
+          <td>150.000đ</td>
+          <td>Đang giao</td>
+        </tr>
+        <tr>
+          <td>#DH002</td>
+          <td>Sách Lập trình Java</td>
+          <td>95.000đ</td>
+          <td>Hoàn tất</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Thống kê đơn hàng đã bán -->
+  <div class="section">
+    <h3>Thống kê đơn hàng đã bán</h3>
+    <div class="stat-box">
+      <div class="stat-item">
+        <h4>Số đơn đã bán</h4>
+        <p>12</p>
+      </div>
+      <div class="stat-item">
+        <h4>Tổng doanh thu</h4>
+        <p>1.560.000đ</p>
+      </div>
+      <div class="stat-item">
+        <h4>Sản phẩm bán chạy</h4>
+        <p>Áo thun basic</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

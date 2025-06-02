@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng bán sản phẩm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .back-button {
+      font-size: 32px;
+      color: #2a7f62;
+      margin-right: 20px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 80px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2a7f62;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    textarea {
+      resize: none; /* không cho kéo */
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #2a7f62;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #256d56;
+    }
+
+    .alert {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #e6f7e9;
+      color: #2a7f62;
+      border: 1px solid #b2e2c6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header với nút quay lại và logo -->
+<div class="header">
+  <a href="home.html" class="back-button">&#8249;</a>
+</div>
+
+<!-- Form đăng bán -->
+<div class="container">
+  <h2>Đăng bán sản phẩm</h2>
+  <form id="sellForm">
+    <label for="productName">Tên sản phẩm:</label>
+    <input type="text" id="productName" required>
+
+    <label for="productDesc">Mô tả sản phẩm:</label>
+    <textarea id="productDesc" rows="4" required></textarea>
+
+    <label for="productPrice">Giá bán (VNĐ):</label>
+    <input type="number" id="productPrice" min="1000" step="1000" required>
+
+    <label for="productImage">Ảnh đại diện sản phẩm:</label>
+    <input type="file" id="productImage" accept="image/*" required>
+
+    <button type="submit">Đăng bán sản phẩm</button>
+  </form>
+
+  <div id="alertBox" class="alert" style="display:none;"></div>
+</div>
+
+<script>
+  document.getElementById("sellForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("productName").value.trim();
+    const desc = document.getElementById("productDesc").value.trim();
+    const price = document.getElementById("productPrice").value;
+    const image = document.getElementById("productImage").files[0];
+
+    if (!name || !desc || !price || !image) {
+      alert("Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
+
+    const post = {
+      name,
+      desc,
+      price,
+      imageName: image.name,
+      status: "Chờ duyệt"
+    };
+
+    console.log("Bài đăng:", post);
+
+    const alertBox = document.getElementById("alertBox");
+    alertBox.textContent = "Bài đăng đã được gửi và đang chờ quản trị viên duyệt.";
+    alertBox.style.display = "block";
+
+    document.getElementById("sellForm").reset();
+  });
+</script>
+
+</body>
+</html>

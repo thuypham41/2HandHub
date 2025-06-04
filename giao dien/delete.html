@@ -11,6 +11,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #eef2f5;
@@ -25,10 +26,12 @@
       color: #fff;
       padding: 24px 0;
     }
+
     .sidebar ul {
       list-style: none;
       padding: 0 16px;
     }
+
     .sidebar a.menu-link {
       display: block;
       padding: 14px 20px;
@@ -38,9 +41,11 @@
       margin-bottom: 10px;
       transition: background-color 0.3s;
     }
+
     .sidebar a.menu-link:hover {
       background-color: #2e304b;
     }
+
     .sidebar a.menu-link.active {
       background-color: #4a4e91;
       font-weight: bold;
@@ -108,29 +113,18 @@
       margin-top: 12px;
     }
 
-    .post-actions button {
+    .delete-btn {
       padding: 8px 16px;
       border: none;
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
+      background-color: #f44336;
+      color: #fff;
       transition: background-color 0.3s;
     }
 
-    .approve-btn {
-      background-color: #4caf50;
-      color: #fff;
-      margin-right: 10px;
-    }
-    .approve-btn:hover {
-      background-color: #45a049;
-    }
-
-    .reject-btn {
-      background-color: #f44336;
-      color: #fff;
-    }
-    .reject-btn:hover {
+    .delete-btn:hover {
       background-color: #e53935;
     }
   </style>
@@ -138,20 +132,19 @@
 <body>
   <div class="sidebar">
     <ul>
-      <li><a href="#" class="menu-link active"><i class="fas fa-check-square"></i> Duyệt bài đăng</a></li>
-      <li><a href="delete.html" class="menu-link"><i class="fas fa-trash-alt"></i> Bài đã đăng</a></li>
+      <li><a href="admin.html" class="menu-link"><i class="fas fa-check-square"></i> Duyệt bài đăng</a></li>
+      <li><a href="delete.html" class="menu-link active"><i class="fas fa-trash-alt"></i> Bài đã đăng</a></li>
       <li><a href="list.html" class="menu-link"><i class="fas fa-chart-line"></i> Thống kê doanh thu</a></li>
     </ul>
   </div>
 
   <div class="main-layout">
     <div class="main-header">
-      <div>Xin chào, Quản trị viên</div>
-      <div><i class="fas fa-bell"></i></div>
+      <div>Trang bài đăng đã hiển thị</div>
+      <div><i class="fas fa-trash"></i></div>
     </div>
 
     <div class="main-body">
-      <!-- Mẫu post -->
       <div class="post-card">
         <img src="image/add1.jpg" alt="add1">
         <div class="post-content">
@@ -159,8 +152,7 @@
           <p>Mô tả: Áo khoác da secondhand, còn mới 90%</p>
           <p>Giá bán: 85.000đ</p>
           <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
+            <button class="delete-btn">Xóa</button>
           </div>
         </div>
       </div>
@@ -172,34 +164,7 @@
           <p>Mô tả: Chân váy được làm bằng vải cotton, mới 99%</p>
           <p>Giá bán: 55.000đ</p>
           <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="post-card">
-        <img src="image/post4.jpg" alt="post4">
-        <div class="post-content">
-          <h4>Sản phẩm: Tai nghe Sony kết nối Bluetooth</h4>
-          <p>Mô tả: Tai nghe không dây của Sony có kết nối Bluetooth, mới 85%</p>
-          <p>Giá bán: 155.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="post-card">
-        <img src="image/add4.jpg" alt="add4">
-        <div class="post-content">
-          <h4>Sản phẩm: Truyện tranh Doraemon</h4>
-          <p>Mô tả: Truyện tranh Doraemon truyện dài, còn mới 90%</p>
-          <p>Giá bán: 15.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
+            <button class="delete-btn">Xóa</button>
           </div>
         </div>
       </div>

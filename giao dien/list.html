@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thống kê doanh thu - 2HandHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef2f5;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #202235;
+      color: #fff;
+      padding: 24px 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0 16px;
+    }
+    .sidebar a.menu-link {
+      display: block;
+      padding: 14px 20px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: background-color 0.3s;
+    }
+    .sidebar a.menu-link:hover {
+      background-color: #2e304b;
+    }
+    .sidebar a.menu-link.active {
+      background-color: #4a4e91;
+      font-weight: bold;
+    }
+    .main-layout {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-header {
+      background-color: #fff;
+      padding: 16px 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    thead {
+      background-color: #202235;
+      color: #fff;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+    canvas#lineChart {
+      max-width: 100%;
+    }
+    canvas#pieChart {
+      max-width: 300px;
+      height: auto;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <ul>
+      <li><a href="admin.html" class="menu-link"><i class="fas fa-check-square"></i> Duyệt bài đăng</a></li>
+      <li><a href="delete.html" class="menu-link"><i class="fas fa-trash-alt"></i> Bài đã đăng</a></li>
+      <li><a href="list.html" class="menu-link active"><i class="fas fa-chart-line"></i> Thống kê doanh thu</a></li>
+    </ul>
+  </div>
+
+  <div class="main-layout">
+    <div class="main-header">
+      <div>Xin chào, Quản trị viên</div>
+      <div><i class="fas fa-bell"></i></div>
+    </div>
+
+    <div class="main-body">
+      <!-- Bộ lọc thời gian -->
+      <div style="margin-bottom: 20px;">
+        <label for="time-filter"><strong>Chọn mốc thời gian:</strong></label>
+        <select id="time-filter">
+          <option value="day">Ngày</option>
+          <option value="week">Tuần</option>
+          <option value="month" selected>Tháng</option>
+          <option value="year">Năm</option>
+        </select>
+      </div>
+
+      <!-- Tổng doanh thu -->
+      <div style="background: #fff; padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+        <h3>Tổng doanh thu toàn hệ thống: <span style="color: #4a4e91;">5.000.000đ / tháng</span></h3>
+      </div>
+
+      <!-- Bảng chi tiết -->
+      <table>
+        <thead>
+          <tr>
+            <th>Tên người dùng</th>
+            <th>Số đơn đã bán</th>
+            <th>Tổng giá trị đơn</th>
+            <th>Phí hệ thống thu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nguyễn Văn A</td>
+            <td>12</td>
+            <td>2.400.000đ</td>
+            <td>240.000đ</td>
+          </tr>
+          <tr>
+            <td>Trần Thị B</td>
+            <td>8</td>
+            <td>1.600.000đ</td>
+            <td>160.000đ</td>
+          </tr>
+          <tr>
+            <td>Lê Văn C</td>
+            <td>15</td>
+            <td>3.000.000đ</td>
+            <td>300.000đ</td>
+          </tr>
+          <tr>
+            <td>Phạm Thị D</td>
+            <td>6</td>
+            <td>1.200.000đ</td>
+            <td>120.000đ</td>
+          </tr>
+          <tr>
+            <td>Đỗ Văn E</td>
+            <td>10</td>
+            <td>2.000.000đ</td>
+            <td>200.000đ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Biểu đồ đường -->
+      <div style="margin-top: 40px;">
+        <canvas id="lineChart"></canvas>
+      </div>
+
+      <!-- Biểu đồ tròn -->
+      <div style="margin-top: 40px;">
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <script>
+        new Chart(document.getElementById("lineChart"), {
+          type: 'line',
+          data: {
+            labels: ["Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"],
+            datasets: [{
+              label: "Doanh thu (VND)",
+              data: [1000000, 1200000, 1400000, 1300000],
+              borderColor: "#4a4e91",
+              backgroundColor: "rgba(74, 78, 145, 0.2)",
+              fill: true
+            }]
+          }
+        });
+
+        new Chart(document.getElementById("pieChart"), {
+          type: 'pie',
+          data: {
+            labels: ["Nguyễn Văn A", "Trần Thị B", "Lê Văn C", "Phạm Thị D", "Đỗ Văn E"],
+            datasets: [{
+              data: [240000, 160000, 300000, 120000, 200000],
+              backgroundColor: ["#4a4e91", "#f39c12", "#2ecc71", "#e74c3c", "#9b59b6"]
+            }]
+          }
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>

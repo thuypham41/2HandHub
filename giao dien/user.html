@@ -12,6 +12,35 @@
       padding: 0;
     }
 
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .back-button {
+      font-size: 24px;
+      text-decoration: none;
+      color: #2a7f62;
+    }
+
+    .logout-button {
+      text-decoration: none;
+      color: #fff;
+      background-color: #2a7f62;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background-color: #256f57;
+    }
+
     .container {
       max-width: 1000px;
       margin: 40px auto;
@@ -89,11 +118,37 @@
       font-weight: bold;
     }
   </style>
+  <script>
+  function showCancelPopup(orderId) {
+    document.getElementById('cancel-popup').style.display = 'block';
+    document.getElementById('cancel-order-id').innerText = orderId;
+  }
+
+  function closeCancelPopup() {
+    document.getElementById('cancel-popup').style.display = 'none';
+  }
+
+  function submitCancelReason() {
+    const reason = document.querySelector('input[name="cancel-reason"]:checked');
+    if (reason) {
+      alert(`Đơn ${document.getElementById('cancel-order-id').innerText} đã được yêu cầu hủy với lý do: ${reason.value}`);
+      closeCancelPopup();
+    } else {
+      alert("Vui lòng chọn lý do hủy đơn.");
+    }
+  }
+</script>
+
 </head>
 <body>
+
+<!-- HEADER -->
 <div class="header">
   <a href="home.html" class="back-button">&#8249;</a>
+  <a href="index.html" class="logout-button">Đăng xuất</a>
 </div>
+
+<!-- MAIN CONTENT -->
 <div class="container">
   <h2>Tài khoản của tôi</h2>
 
@@ -108,51 +163,101 @@
   </div>
 
   <!-- Đơn hàng của tôi -->
-  <div class="section">
-    <h3>Đơn hàng của tôi</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Mã đơn</th>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Trạng thái</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>#DH001</td>
-          <td>Áo hoodie nam</td>
-          <td>150.000đ</td>
-          <td>Đang giao</td>
-        </tr>
-        <tr>
-          <td>#DH002</td>
-          <td>Sách Lập trình Java</td>
-          <td>95.000đ</td>
-          <td>Hoàn tất</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="section">
+  <h3>Đơn hàng của tôi</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Mã đơn</th>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#DH001</td>
+        <td>Áo hoodie nam</td>
+        <td>150.000đ</td>
+        <td>Đang giao</td>
+        <td><button onclick="showCancelPopup('#DH001')">Hủy</button></td>
+      </tr>
+      <tr>
+        <td>#DH002</td>
+        <td>Sách Lập trình Java</td>
+        <td>95.000đ</td>
+        <td>Hoàn tất</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <!-- Thống kê đơn hàng đã bán -->
-  <div class="section">
-    <h3>Thống kê đơn hàng đã bán</h3>
-    <div class="stat-box">
-      <div class="stat-item">
-        <h4>Số đơn đã bán</h4>
-        <p>12</p>
-      </div>
-      <div class="stat-item">
-        <h4>Tổng doanh thu</h4>
-        <p>1.560.000đ</p>
-      </div>
-      <div class="stat-item">
-        <h4>Sản phẩm bán chạy</h4>
-        <p>Áo thun basic</p>
-      </div>
-    </div>
+  <!-- Đơn hàng đã bán -->
+<div class="section">
+  <h3>Đơn hàng đã bán</h3>
+  <div style="margin-bottom: 10px;">
+    <label>Lọc theo thời gian:
+      <select>
+        <option>Tất cả</option>
+        <option>7 ngày qua</option>
+        <option>30 ngày qua</option>
+      </select>
+    </label>
+    <label style="margin-left: 20px;">Trạng thái:
+      <select>
+        <option>Tất cả</option>
+        <option>Đã giao</option>
+        <option>Đang xử lý</option>
+        <option>Đã hủy</option>
+      </select>
+    </label>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Mã đơn</th>
+        <th>Người mua</th>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+        <th>Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#B001</td>
+        <td>Trần Thị B</td>
+        <td>Áo thun basic</td>
+        <td>130.000đ</td>
+        <td>Đã giao</td>
+      </tr>
+      <tr>
+        <td>#B002</td>
+        <td>Lê Văn C</td>
+        <td>Túi tote canvas</td>
+        <td>80.000đ</td>
+        <td>Đang xử lý</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<div id="cancel-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4); z-index:1000;">
+  <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:8px; position:relative;">
+    <h3>Hủy đơn <span id="cancel-order-id"></span></h3>
+    <p>Vui lòng chọn lý do:</p>
+    <form>
+      <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ"> Cập nhật lại địa chỉ</label><br>
+      <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối"> Thủ tục thanh toán rắc rối</label><br>
+      <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn"> Tìm chỗ mua khác tốt hơn</label><br>
+      <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa"> Không có nhu cầu mua nữa</label><br>
+      <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy"> Không tìm thấy lý do hủy</label>
+    </form>
+    <br>
+    <button onclick="submitCancelReason()">Xác nhận hủy</button>
+    <button onclick="closeCancelPopup()" style="margin-left:10px;">Đóng</button>
   </div>
 </div>
 

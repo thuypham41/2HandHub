@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thương lượng giá - 2HandHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+    }
+
+    .chat-header {
+      background-color: #2a7f62;
+      color: white;
+      padding: 16px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .message.buyer {
+      align-self: flex-start;
+      background-color: #f0f0f0;
+    }
+
+    .message.seller {
+      align-self: flex-end;
+      background-color: #d1f5e1;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 12px 16px;
+      border-top: 1px solid #eee;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 16px;
+      background-color: #2a7f62;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .chat-input button:hover {
+      background-color: #226a52;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">Thương lượng giá với Mizu</div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message buyer">Chào bạn, mình muốn mua đồng hồ với giá 85.000đ được không ạ?</div>
+      <div class="message seller">Chào bạn, giá mình đang để là 99.000đ, có thể giảm còn 90.000đ nhé!</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+      <button onclick="sendMessage()">Gửi</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if (msg === '') return;
+
+      const chatBox = document.getElementById('chatMessages');
+      const newMsg = document.createElement('div');
+      newMsg.classList.add('message', 'seller');
+      newMsg.innerText = msg;
+      chatBox.appendChild(newMsg);
+
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>

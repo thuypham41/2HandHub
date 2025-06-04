@@ -4,82 +4,158 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trang quản trị - 2HandHub</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f6f8;
-      margin: 0;
-      padding: 0;
+      display: flex;
+      height: 100vh;
     }
-
-    .admin-header {
-      background-color: #2e7d32;
+    .sidebar {
+      width: 240px;
+      background-color: #1e1e2f;
       color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
+      padding: 24px 0;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar li {
+      padding: 16px 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar li:hover {
+      background-color: #2e2e40;
+    }
+    .main-layout {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-header {
+      background-color: #fff;
+      padding: 16px 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .post-card {
+      display: flex;
+      align-items: flex-start;
+      background-color: #fff;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      gap: 16px;
+    }
+    .post-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .post-content {
+      flex: 1;
+    }
+    .post-actions {
+      margin-top: 12px;
+    }
+    .post-actions button {
+      padding: 6px 12px;
+      margin-right: 8px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: bold;
     }
-
-    .admin-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 32px;
+    .approve-btn {
+      background-color: #4caf50;
+      color: #fff;
     }
-
-    .admin-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: 0.3s ease;
-    }
-
-    .admin-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    }
-
-    .admin-card h3 {
-      margin: 0 0 12px;
-      color: #2e7d32;
-    }
-
-    .admin-card p {
-      margin: 0;
-      font-size: 15px;
-      color: #555;
+    .reject-btn {
+      background-color: #f44336;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-
-  <div class="admin-header">Quản trị viên - Bảng điều khiển hệ thống</div>
-
-  <div class="admin-container">
-    <div class="admin-card">
-      <h3>Duyệt bài đăng</h3>
-      <p>Kiểm tra và phê duyệt các sản phẩm được đăng bởi người dùng.</p>
+  <div class="sidebar">
+    <ul>
+      <li><i class="fas fa-comments"></i> Duyệt bài đăng</li>
+      <li><i class="fas fa-users"></i> Xóa bài đăng</li>
+      <li><i class="fas fa-chart-line"></i> Thống kê doanh thu hệ thống</li>
+    </ul>
+  </div>
+  <div class="main-layout">
+    <div class="main-header">
+      <div>Xin chào, Quản trị viên</div>
+      <div><i class="fas fa-bell"></i></div>
     </div>
-    <div class="admin-card">
-      <h3>Xóa bài đăng</h3>
-      <p>Gỡ bỏ bài đăng sai phạm hoặc không hợp lệ khỏi hệ thống.</p>
-    </div>
-    <div class="admin-card">
-      <h3>Khóa tài khoản</h3>
-      <p>Khóa tài khoản người dùng vi phạm nội quy cộng đồng.</p>
-    </div>
-    <div class="admin-card">
-      <h3>Mở khóa tài khoản</h3>
-      <p>Mở lại tài khoản sau khi đã xử lý xong vi phạm.</p>
-    </div>
-    <div class="admin-card">
-      <h3>Thống kê doanh thu</h3>
-      <p>Theo dõi tổng thu nhập hệ thống từ phí đăng bán, phân tích theo thời gian.</p>
+    <div class="main-body">
+      <div class="post-card">
+        <img src="image/add1.jpg" alt="add1">
+        <div class="post-content">
+          <h4>Sản phẩm: Áo khoác da vintage</h4>
+          <p>Mô tả: Áo khoác da secondhand, còn mới 90%</p>
+           <p>Giá bán: 85.000đ</p>
+          <div class="post-actions">
+            <button class="approve-btn">Duyệt</button>
+            <button class="reject-btn">Từ chối</button>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <img src="image/add2.jpg" alt="add2">
+        <div class="post-content">
+          <h4>Sản phẩm: Chân váy ngắn xếp ly basic</h4>
+          <p>Mô tả: Chân váy được làm bằng vải cotton, mới 99%</p>
+           <p>Giá bán: 55.000đ</p>
+          <div class="post-actions">
+            <button class="approve-btn">Duyệt</button>
+            <button class="reject-btn">Từ chối</button>
+          </div>
+        </div>
+      </div>
+         <div class="post-card">
+        <img src="image/post4.jpg" alt="post4">
+        <div class="post-content">
+          <h4>Sản phẩm: Tai nghe sony kết nối blutooth</h4>
+          <p>Mô tả: Tai nghe không dây của sony có kết nối blutooth, mới 85%</p>
+           <p>Giá bán: 155.000đ</p>
+          <div class="post-actions">
+            <button class="approve-btn">Duyệt</button>
+            <button class="reject-btn">Từ chối</button>
+          </div>
+        </div>
+      </div>
+         <div class="post-card">
+        <img src="image/add4.jpg" alt="add4">
+        <div class="post-content">
+          <h4>Sản phẩm: Truyên tranh doraemon</h4>
+          <p>Mô tả: Truyện tranh doraemon truyện dài, còn mới 90%</p>
+           <p>Giá bán: 15.000đ</p>
+          <div class="post-actions">
+            <button class="approve-btn">Duyệt</button>
+            <button class="reject-btn">Từ chối</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
 </body>
 </html>

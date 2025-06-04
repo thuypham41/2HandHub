@@ -23,6 +23,20 @@
 
   <!-- Menu icon bên phải -->
   <div class="right-icons">
+    <div class="notification-wrapper">
+  <div class="notification-popup hidden" id="notificationBox">
+    <p><strong>Yêu cầu thương lượng:</strong></p>
+    <div class="negotiation-request">
+      <p>Người dùng <strong>Mizu</strong> đề xuất giá <strong>85.000đ</strong> cho <em>Đồng hồ treo tường cũ</em></p>
+      <div class="action-buttons">
+        <button onclick="respond('accepted')">Đồng ý</button>
+        <button onclick="respond('rejected')">Từ chối</button>
+        <button onclick="respond('chat')">Trả lời</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <a href="user.html" class="username" target="_blank">Mizu</a>
     <i class="fa fa-bell"></i>
     <i class="fa fa-shopping-bag"></i>
@@ -74,6 +88,48 @@
 .search-bar i {
   color: #888;
 }
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-popup {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 16px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.notification-popup.hidden {
+  display: none;
+}
+
+.notification-popup p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.action-buttons button {
+  background: #eee;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-buttons button:hover {
+  background-color: #ccc;
+}
+
 
 .right-icons {
   display: flex;
@@ -136,7 +192,7 @@
 
 <section id="Slider">
   <div class="slider-wrapper">
-    <img src="image/menu.png" alt="">
+    <img src="image/menu00.jpg" alt="">
     <img src="image/menu1.png" alt="">
     <img src="image/menu2.png" alt="">
     <img src="image/menu3.png" alt="">
@@ -317,4 +373,38 @@ document.addEventListener('click', function(e) {
 
   setInterval(slideImages, 4000);
 </script>
+<script>
+  // Toggle hiển thị box thông báo khi bấm vào icon 🔔
+  const bellIcon = document.querySelector('.fa-bell');
+  const notificationBox = document.getElementById('notificationBox');
+
+  bellIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notificationBox.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!notificationBox.contains(e.target)) {
+      notificationBox.classList.add('hidden');
+    }
+  });
+
+  function respond(action) {
+    switch(action) {
+      case 'accepted':
+        alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật cho người mua.");
+        break;
+      case 'rejected':
+        alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
+        break;
+      case 'chat':
+        window.location.href = "chat.html"; // Chuyển sang trang khung chat nếu có
+        break;
+      default:
+        alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
+    }
+    notificationBox.classList.add('hidden');
+  }
+</script>
+
 </html>

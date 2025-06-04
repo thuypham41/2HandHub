@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mua sản phẩm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      color: #2a7f62;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .product-info {
+      margin-bottom: 20px;
+    }
+
+    .product-info img {
+      max-width: 200px;
+      float: right;
+      margin-left: 20px;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .btn {
+      margin-top: 25px;
+      background-color: #2a7f62;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: #256f57;
+    }
+
+    .popup {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background-color: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .popup.error {
+      background-color: #f2dede;
+      color: #a94442;
+      border: 1px solid #ebccd1;
+    }
+
+    .popup .actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .popup .actions a {
+      text-decoration: none;
+      background-color: #2a7f62;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup .actions a:hover {
+      background-color: #256f57;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Mua sản phẩm</h2>
+
+    <div class="product-info">
+      <h3>Đồng hồ treo tường cũ</h3>
+      <p>Mô tả: Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu, phù hợp trang trí phòng khách hoặc quán cà phê. Màu gỗ trầm tạo cảm giác cổ điển nhưng không lỗi thời.</p>
+      <p>Tình trạng: Đã qua sử dụng</p>
+      <p>Giá: <strong>99.000đ</strong></p>
+      <img src="hoodie.jpg" alt="Đồng hồ treo tường cũ">
+    </div>
+
+    <label for="payment">Chọn phương thức thanh toán:</label>
+    <select id="payment">
+      <option value="qr">Thanh toán qua mã QR</option>
+    </select>
+
+    <label for="address">Nhập địa chỉ giao hàng:</label>
+    <input type="text" id="address" placeholder="VD: 123 Lê Lợi, Đà Nẵng">
+
+    <button class="btn" onclick="placeOrder()">Đặt hàng</button>
+
+    <div id="popup" class="popup"></div>
+  </div>
+
+  <script>
+    function placeOrder() {
+      const address = document.getElementById('address').value.trim();
+      const popup = document.getElementById('popup');
+
+      if (address === '') {
+        popup.innerHTML = "Vui lòng nhập địa chỉ giao hàng.";
+        popup.className = 'popup error';
+        popup.style.display = 'block';
+        return;
+      }
+
+      // Giả lập đặt hàng thành công
+      const success = true;
+
+      if (success) {
+        popup.className = 'popup';
+        popup.innerHTML = `
+          <strong>🎉 Đặt hàng thành công!</strong>
+          <div class="actions">
+            <a href="home.html">🏠 Về trang chủ</a>
+            <a href="user.html">📦 Xem đơn đã mua</a>
+          </div>
+        `;
+      } else {
+        popup.className = 'popup error';
+        popup.innerHTML = "Đặt hàng thất bại, vui lòng thử lại.";
+      }
+
+      popup.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

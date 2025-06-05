@@ -1,129 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com//1147679ae7.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="style.css">
-        <title>2HandHub.com</title>
-    </head>
-    <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css" />
+  <title>2HandHub.com</title>
+  <style>
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid #eee;
+      background-color: white;
+    }
 
-<div class="navbar">
-  <!-- Logo -->
-  <div class="logo">
-    <img src="image/2hand.png" alt="logo">
-  </div>
+    .logo img {
+      height: 75px;
+    }
 
-  <!-- Thanh tìm kiếm -->
-  <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm sản phẩm...">
-    <i class="fas fa-search"></i>
-  </div>
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 50px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      padding: 6px 12px;
+    }
 
-  <!-- Menu icon bên phải -->
-  <div class="right-icons">
-    <div class="notification-wrapper">
-  <div class="notification-popup hidden" id="notificationBox">
-    <p><strong>Yêu cầu thương lượng:</strong></p>
-    <div class="negotiation-request">
-      <p>Người dùng <strong>Mizu</strong> đề xuất giá <strong>85.000đ</strong> cho <em>Đồng hồ treo tường cũ</em></p>
-      <div class="action-buttons">
-        <button onclick="respond('accepted')">Đồng ý</button>
-        <button onclick="respond('rejected')">Từ chối</button>
-        <button onclick="respond('chat')">Trả lời</button>
-      </div>
-    </div>
-  </div>
-</div>
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+    }
 
-    <a href="user.html" class="username" target="_blank">Mizu</a>
-    <i class="fa fa-bell"></i>
-    <i class="fa fa-shopping-bag"></i>
-    <a href="post.html" class="post-button">Đăng bán</a>
-  </div>
-</div>
+    .search-bar i {
+      color: #888;
+    }
 
-<!-- Menu danh mục trải đều -->
-<div class="sub-menu">
-  <a href="#" class="menu-link active">GỢI Ý</a>
-  <a href="style.html" class="menu-link">THỜI TRANG</a>
-  <a href="book.html" class="menu-link">SÁCH</a>
-  <a href="hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
-  <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
-  <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
-</div>
+    .notification-wrapper {
+      position: relative;
+    }
 
-<style>
-.navbar {
+    .notification-indicator {
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      z-index: 2;
+    }
+
+    .notification-popup {
+      position: absolute;
+      top: 36px;
+      right: 0;
+      width: 360px;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .notification-popup.hidden {
+      display: none;
+    }
+
+    .notification-popup p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+   .action-buttons {
   display: flex;
+  gap: 8px;            /* Khoảng cách giữa các nút */
+  margin-top: 12px;
+  flex-wrap: nowrap;   /* Ngăn các nút xuống dòng */
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  border-bottom: 1px solid #eee;
-  background-color: white;
-}
-
-.logo img {
-  height: 75px; /* ✅ Tăng kích thước logo */
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  width: 50px; /* ✅ Thu ngắn thanh tìm kiếm */
-  background: #f5f5f5;
-  border-radius: 6px;
-  padding: 6px 12px;
-}
-
-.search-bar input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 14px;
-}
-
-.search-bar i {
-  color: #888;
-}
-
-.notification-wrapper {
-  position: relative;
-}
-
-.notification-popup {
-  position: absolute;
-  top: 36px;
-  right: 0;
-  width: 300px;
-  background: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 16px;
-  border-radius: 8px;
-  z-index: 1000;
-}
-
-.notification-popup.hidden {
-  display: none;
-}
-
-.notification-popup p {
-  margin: 0 0 10px;
-  font-size: 14px;
-  color: #333;
 }
 
 .action-buttons button {
   background: #eee;
   border: none;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 6px;
-  margin-right: 8px;
+  font-size: 14px;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease;
 }
 
 .action-buttons button:hover {
@@ -131,66 +106,106 @@
 }
 
 
-.right-icons {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-.right-icons i,
-.right-icons .username {
-  font-size: 16px;
-  color: #333;
-}
+    .right-icons i,
+    .right-icons .username {
+      font-size: 16px;
+      color: #333;
+    }
 
-.post-button {
-  background-color: #ff3b30;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: bold;
-  text-decoration: none;
-  white-space: nowrap;
-}
+    .post-button {
+      background-color: #ff3b30;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
-.sub-menu {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-}
+    .sub-menu {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+    }
 
-.menu-link {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  padding: 6px 10px;
-  position: relative;
-}
+    .menu-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      padding: 6px 10px;
+      position: relative;
+    }
 
-.menu-link.active {
-  color: #e60023;
-}
+    .menu-link.active {
+      color: #e60023;
+    }
 
-.menu-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #e60023;
-  margin-top: 4px;
-}
+    .menu-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e60023;
+      margin-top: 4px;
+    }
 
-.menu-link:hover {
-  color: #e60023;
-}
-</style>
+    .menu-link:hover {
+      color: #e60023;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="image/2hand.png" alt="logo" />
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="right-icons">
+      <div class="notification-wrapper">
+        <div class="notification-indicator" id="notifDot"></div>
+        <i class="fa fa-bell" id="notifIcon"></i>
+        <div class="notification-popup hidden" id="notificationBox">
+          <p><strong>📢 Yêu cầu thương lượng:</strong></p>
+          <div class="negotiation-request">
+            <p><strong>Mizu</strong> đề xuất giá <strong>50.000đ</strong> cho sản phẩm <em>Đồng hồ treo tường cũ</em>.</p>
+            <div class="action-buttons">
+              <button onclick="respond('accepted')">✅ Đồng ý</button>
+              <button onclick="respond('rejected')">❌ Từ chối</button>
+              <button onclick="respond('chat')">💬 Trả lời</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="user.html" class="username" target="_blank">Mizu</a>
+      <i class="fa fa-shopping-bag"></i>
+      <a href="post.html" class="post-button">Đăng bán</a>
+    </div>
+  </div>
 
+  <div class="sub-menu">
+    <a href="#" class="menu-link active">GỢI Ý</a>
+    <a href="style.html" class="menu-link">THỜI TRANG</a>
+    <a href="book.html" class="menu-link">SÁCH</a>
+    <a href="hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
+    <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
+    <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
+  </div>
 
-<section id="Slider">
+  <!-- Slider, Gợi ý, Khám phá, Bài đăng mới (giữ nguyên nội dung ở phần sau của bạn nếu cần) -->
+   <section id="Slider">
   <div class="slider-wrapper">
     <img src="image/menu00.jpg" alt="">
     <img src="image/menu1.png" alt="">
@@ -290,7 +305,7 @@
     <div class="product-card">
       <img src="image/post6.jpg" alt="post6">
       <h3>Kindle Paperwhite Gen 3</h3>
-      <p>850.000đ</p>
+<p>850.000đ</p>
     </div>
     <div class="product-card">
       <img src="image/post7.jpg" alt="post7">
@@ -335,76 +350,42 @@
   </div>
 </section>
 
-
   <script>
-    function toggleLogin() {
-      document.getElementById('login-form').classList.toggle('hidden');
-    }
-  </script>
-</body>
-</html>
+  window.onload = function () {
+    const bellIcon = document.getElementById('notifIcon');
+    const notificationBox = document.getElementById('notificationBox');
+    const notifDot = document.getElementById('notifDot');
 
+    bellIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      notificationBox.classList.toggle('hidden');
+      notifDot.style.display = 'none';
+    });
 
-</body>
-<script>
-  function toggleUserMenu() {
-  const userInfo = document.querySelector('.user-info');
-  userInfo.classList.toggle('show');
-}
+    document.addEventListener('click', (e) => {
+      if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
+        notificationBox.classList.add('hidden');
+      }
+    });
 
-document.addEventListener('click', function(e) {
-  const userInfo = document.querySelector('.user-info');
-  if (!userInfo.contains(e.target)) {
-    userInfo.classList.remove('show');
-  }
-});
-
-</script>
-
-<script>
-  const slider = document.querySelector('.slider-wrapper');
-  const images = slider.querySelectorAll('img');
-  let index = 0;
-
-  function slideImages() {
-    index = (index + 1) % images.length;
-    slider.style.transform = `translateX(-${index * 100}vw)`;
-  }
-
-  setInterval(slideImages, 4000);
-</script>
-<script>
-  // Toggle hiển thị box thông báo khi bấm vào icon 🔔
-  const bellIcon = document.querySelector('.fa-bell');
-  const notificationBox = document.getElementById('notificationBox');
-
-  bellIcon.addEventListener('click', (e) => {
-    e.stopPropagation();
-    notificationBox.classList.toggle('hidden');
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!notificationBox.contains(e.target)) {
+    window.respond = function(action) {
+      switch (action) {
+        case 'accepted':
+          alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
+          break;
+        case 'rejected':
+          alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
+          break;
+        case 'chat':
+          window.location.href = "chat.html";
+          break;
+        default:
+          alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
+      }
       notificationBox.classList.add('hidden');
     }
-  });
-
-  function respond(action) {
-    switch(action) {
-      case 'accepted':
-        alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật cho người mua.");
-        break;
-      case 'rejected':
-        alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
-        break;
-      case 'chat':
-        window.location.href = "chat.html"; // Chuyển sang trang khung chat nếu có
-        break;
-      default:
-        alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
-    }
-    notificationBox.classList.add('hidden');
-  }
+  };
 </script>
 
+</body>
 </html>

@@ -12,7 +12,32 @@
       margin: 0;
       padding: 0;
     }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background-color: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+     .back-icon {
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #222;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
 
+    .back-icon:hover {
+      background-color: #eaeaea;
+    }
+
+    .logo img {
+      height: 75px;
+    }
     .chat-container {
       max-width: 600px;
       margin: 40px auto;
@@ -93,6 +118,13 @@
   </style>
 </head>
 <body>
+   <div class="header">
+   <a href="home.html" class="back-icon">‹</a>
+
+    <div class="logo">
+      <img src="image/2hand.png" alt="2HandHub Logo">
+    </div>
+  </div>
 
   <div class="chat-container">
     <div class="chat-header">Thương lượng giá với Mizu</div>

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Máy hút bụi mini cầm tay",
+    "price": "420000đ",
+    "image": "image/gd_ls_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Robot lau nhà thông minh",
+    "price": "1850000đ",
+    "image": "image/gd_ls_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Chổi lau nhà 360° inox",
+    "price": "240000đ",
+    "image": "image/gd_ls_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Bình xịt lau kính đa năng",
+    "price": "75000đ",
+    "image": "image/gd_ls_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Bộ cọ toilet thông minh",
+    "price": "89000đ",
+    "image": "image/gd_ls_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Khăn lau đa năng 5 chiếc",
+    "price": "59000đ",
+    "image": "image/gd_ls_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy xịt phòng tự động",
+    "price": "350000đ",
+    "image": "image/gd_ls_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Kệ treo dụng cụ lau dọn",
+    "price": "120000đ",
+    "image": "image/gd_ls_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Máy lọc không khí mini",
+    "price": "950000đ",
+    "image": "image/gd_ls_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Máy hút bụi cầm tay ô tô",
+    "price": "390000đ",
+    "image": "image/gd_ls_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Găng tay rửa bát silicon",
+    "price": "79000đ",
+    "image": "image/gd_ls_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Dụng cụ bắt bụi rèm cửa",
+    "price": "49000đ",
+    "image": "image/gd_ls_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Máy làm thơm phòng mini",
+    "price": "170000đ",
+    "image": "image/gd_ls_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Cây lau nhà phun sương",
+    "price": "290000đ",
+    "image": "image/gd_ls_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Bình dung dịch vệ sinh",
+    "price": "49000đ",
+    "image": "image/gd_ls_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Bàn chải điện cầm tay",
+    "price": "110000đ",
+    "image": "image/gd_ls_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Thùng rác đạp inox 12L",
+    "price": "220000đ",
+    "image": "image/gd_ls_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Bộ dụng cụ cọ rửa bếp",
+    "price": "89000đ",
+    "image": "image/gd_ls_18.jpg"
+  }
+]

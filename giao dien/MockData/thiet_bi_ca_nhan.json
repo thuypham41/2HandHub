@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Máy cạo râu mini",
+    "price": "340000đ",
+    "image": "image/gd_cn_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Máy massage cổ vai gáy",
+    "price": "780000đ",
+    "image": "image/gd_cn_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Đèn ngủ cảm ứng",
+    "price": "110000đ",
+    "image": "image/gd_cn_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Máy làm ấm tay mùa đông",
+    "price": "230000đ",
+    "image": "image/gd_cn_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Gối kê cổ du lịch",
+    "price": "125000đ",
+    "image": "image/gd_cn_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Máy tăm nước",
+    "price": "560000đ",
+    "image": "image/gd_cn_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Bộ tỉa lông mày mini",
+    "price": "20000đ",
+    "image": "image/gd_cn_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Máy làm sạch da mặt",
+    "price": "150000đ",
+    "image": "image/gd_cn_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Quạt sạc mini để bàn",
+    "price": "50000đ",
+    "image": "image/gd_cn_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Máy xông tinh dầu",
+    "price": "270000đ",
+    "image": "image/gd_cn_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bàn chải điện thông minh",
+    "price": "160000đ",
+    "image": "image/gd_cn_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Hộp thuốc mini",
+    "price": "35000đ",
+    "image": "image/gd_cn_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Bộ chăn văn phòng gấp gọn",
+    "price": "175000đ",
+    "image": "image/gd_cn_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Máy cạo lông toàn thân",
+    "price": "245000đ",
+    "image": "image/gd_cn_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Đèn đọc sách gắn đầu giường",
+    "price": "90000đ",
+    "image": "image/gd_cn_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Thảm yoga chống trượt",
+    "price": "210000đ",
+    "image": "image/gd_cn_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Bàn gấp đa năng",
+    "price": "110000đ",
+    "image": "image/gd_cn_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Đồng hồ báo thức mini",
+    "price": "99000đ",
+    "image": "image/gd_cn_18.jpg"
+  }
+]

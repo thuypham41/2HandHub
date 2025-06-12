@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "Quần dài kaki cho nam giới",
+    "price": "59.000đ",
+    "image": "image/n1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Áo khoác bomber da dê nhập khẩu",
+    "price": "105.000đ",
+    "image": "image/n2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Áo sơ mi denim cổ điển",
+    "price": "88.000đ",
+    "image": "image/n3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Quần Jean rách cho nam giới",
+    "price": "50.000đ",
+    "image": "image/n4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Áo polo freesize dài tay",
+    "price": "80.000đ",
+    "image": "image/n5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Áo thun cho nam giới màu xám chuột",
+    "price": "40.000đ",
+    "image": "image/n6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Quần short đùi đen cho nam",
+    "price": "50.000đ",
+    "image": "image/n7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Áo gió chất liệu vải dù không nhăn",
+    "price": "70.000đ",
+    "image": "image/n8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Áo vest nam của Uniqlo",
+    "price": "150.000đ",
+    "image": "image/n9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Áo hoodie nỉ da cá hai lớp",
+    "price": "80.000đ",
+    "image": "image/n10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Quần đùi chất liệu cao cấp",
+    "price": "50.000đ",
+    "image": "image/n11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Quần đùi nam thể thao",
+    "price": "60.000đ",
+    "image": "image/post12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Áo khoác phao 2 lớp lông vũ",
+    "price": "100.000đ",
+    "image": "image/n13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Áo sơ mi nam Uniqlo",
+    "price": "90.000đ",
+    "image": "image/post14.jpg"
+  }
+]

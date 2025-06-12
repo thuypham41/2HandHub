@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Dây nhảy thể dục",
+    "price": "80000đ",
+    "image": "image/tt_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bình nước thể thao",
+    "price": "70000đ",
+    "image": "image/tt_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Thảm yoga du lịch",
+    "price": "200000đ",
+    "image": "image/tt_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Bộ dây kháng lực",
+    "price": "150000đ",
+    "image": "image/tt_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Bóng đá mini",
+    "price": "120000đ",
+    "image": "image/tt_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Vợt cầu lông cơ bản",
+    "price": "250000đ",
+    "image": "image/tt_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Kính bơi chống sương mù",
+    "price": "100000đ",
+    "image": "image/tt_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Mũ bơi silicon",
+    "price": "60000đ",
+    "image": "image/tt_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Bộ bài tây giải trí",
+    "price": "30000đ",
+    "image": "image/tt_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Rubik cube 3x3",
+    "price": "50000đ",
+    "image": "image/tt_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bộ cờ vua nam châm",
+    "price": "180000đ",
+    "image": "image/tt_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Đồ chơi xếp hình gỗ (puzzle)",
+    "price": "90000đ",
+    "image": "image/tt_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Bộ bóng bàn mini",
+    "price": "300000đ",
+    "image": "image/tt_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Khăn lạnh thể thao",
+    "price": "40000đ",
+    "image": "image/tt_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Găng tay tập gym",
+    "price": "130000đ",
+    "image": "image/tt_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Con lăn massage cơ bắp",
+    "price": "220000đ",
+    "image": "image/tt_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Bộ dây đèn LED trang trí (tiệc tùng)",
+    "price": "160000đ",
+    "image": "image/tt_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Kính râm thể thao",
+    "price": "190000đ",
+    "image": "image/tt_18.jpg"
+  }
+]

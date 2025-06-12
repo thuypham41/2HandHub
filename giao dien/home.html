@@ -79,6 +79,16 @@
       color: #333;
     }
 
+    .latest-products h2 {
+      font-size: 26px;
+      text-align: center;
+      color: #222;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+ 
    .action-buttons {
   display: flex;
   gap: 8px;            /* Khoảng cách giữa các nút */
@@ -162,6 +172,46 @@
     .menu-link:hover {
       color: #e60023;
     }
+    .cart-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-popup {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 340px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.cart-popup.hidden {
+  display: none;
+}
+
+.cart-items {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.cart-popup p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.cart-total {
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 12px;
+}
+
   </style>
 </head>
 <body>
@@ -190,7 +240,22 @@
         </div>
       </div>
       <a href="user.html" class="username" target="_blank">Mizu</a>
-      <i class="fa fa-shopping-bag"></i>
+      <div class="cart-wrapper">
+  <i class="fa fa-shopping-bag" id="cartIcon"></i>
+  <div class="cart-popup hidden" id="cartBox">
+    <p><strong>🛒 Giỏ hàng của bạn:</strong></p>
+    <div class="cart-items" id="cartItems">
+      <p>🧥 Áo Hoodie 2Hand - 89.000đ</p>
+      <p>📘 Sách Atomic Habits - 49.000đ</p>
+    </div>
+    <div class="cart-total" id="cartTotal">Tổng: 138.000đ</div>
+    <div class="action-buttons">
+      <button onclick="checkout()">🧾 Thanh toán</button>
+      <button onclick="closeCart()">❌ Đóng</button>
+    </div>
+  </div>
+</div>
+
       <a href="post.html" class="post-button">Đăng bán</a>
     </div>
   </div>
@@ -213,144 +278,88 @@
     <img src="image/menu3.png" alt="">
   </div>
 </section>
- <section class="suggest-section">
+ <section class="latest-products">
     <h2>Gợi ý hôm nay dành cho bạn</h2>
-    <div class="suggest-grid">
-      <div class="product-card">
-        <img src="image/item1.jpg" alt="item1">
-        <h3>Áo Hoodie 2Hand</h3>
-        <p>89.000đ</p>
-      </div>
-      <div class="product-card">
-        <img src="image/item2.jpg" alt="item2">
-        <h3>Sách - Atomic Habits</h3>
-        <p>49.000đ</p>
-      </div>
-      <div class="product-card">
-        <img src="image/item3.jpg" alt="item3">
-        <h3>Loa Bluetooth Cũ</h3>
-        <p>199.000đ</p>
-      </div>
-      <div class="product-card">
-        <img src="image/item4.jpg" alt="item4">
-        <h3>Đèn ngủ cổ điển</h3>
-        <p>75.000đ</p>
-      </div>
-      <div class="product-card">
-        <img src="image/item5.jpg" alt="item5">
-        <h3>Balo vintage</h3>
-        <p>130.000đ</p>
-      </div>
-      <div class="product-card">
-        <img src="image/item6.jpg" alt="item6">
-        <h3>Đồng hồ treo tường</h3>
-        <p>99.000đ</p>
-      </div>
-    </div>
+    <div id="productList1" class="suggest-grid"></div>
   </section>
-  <!-- KHÁM PHÁ DANH MỤC -->
-<section class="explore-section">
-  <h2>Khám phá danh mục</h2>
-  <div class="explore-grid">
-    <div class="explore-card">
-      <img src="image/explore1.jpg" alt="explore1">
-      <h3>Thời trang cá tính</h3>
-    </div>
-    <div class="explore-card">
-      <img src="image/explore2.jpg" alt="explore2">
-      <h3>Sách hot</h3>
-    </div>
-    <div class="explore-card">
-      <img src="image/explore3.jpg" alt="explore3">
-      <h3>Đồ dùng bếp</h3>
-    </div>
-    <div class="explore-card">
-      <img src="image/explore4.jpg" alt="explore4">
-      <h3>Góc công nghệ</h3>
-    </div>
-  </div>
-</section>
 
-<!-- BÀI ĐĂNG MỚI -->
-<section class="latest-products">
-  <h2>Bài đăng mới</h2>
-  <div class="suggest-grid">
-    <a href="sp.html">
-  <div class="product-card">
-    <img src="image/post1.jpg" alt="post1">
-    <h3>Đồng hồ treo tường cũ</h3>
-    <p>99.000đ</p>
-  </div>
-</a>
-    <div class="product-card">
-      <img src="image/post2.jpg" alt="post2">
-      <h3>Giày sneaker nam cũ</h3>
-      <p>45.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post3.jpg" alt="post3">
-      <h3>Bình giữ nhiệt Lock&Lock</h3>
-      <p>110.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post4.jpg" alt="post4">
-      <h3>Tai nghe không dây Sony cũ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post5.jpg" alt="post5">
-      <h3>Balo du lịch đa năng</h3>
-      <p>180.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post6.jpg" alt="post6">
-      <h3>Kindle Paperwhite Gen 3</h3>
-<p>850.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post7.jpg" alt="post7">
-      <h3>Máy xay sinh tố mini</h3>
-      <p>120.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post8.jpg" alt="post8">
-      <h3>Đèn học Rạng Đông</h3>
-      <p>70.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post9.jpg" alt="post9">
-      <h3>Giày Converse bản đặc biệt</h3>
-      <p>250.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post10.jpg" alt="post10">
-      <h3>Ốp lưng điện thoại iPhone15</h3>
-      <p>30.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post11.jpg" alt="post10">
-      <h3>Bàn nà hơi nước Panasonic</h3>
-      <p>300.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post12.jpg" alt="post10">
-      <h3>Quần đùi nam thể thao</h3>
-      <p>90.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post13.jpg" alt="post10">
-      <h3>Túi đeo chéo cho nữ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post14.jpg" alt="post10">
-      <h3>Áo sơ mi nam Uniqlo</h3>
-      <p>90.000đ</p>
-    </div>
-  </div>
-</section>
+  <section class="latest-products">
+    <h2>Khám phá danh mục</h2>
+    <div id="productList2" class="suggest-grid"></div>
+  </section>
+
+  <section class="latest-products">
+    <h2>Bài đăng mới</h2>
+    <div id="productList3" class="suggest-grid"></div>
+  </section>
 
   <script>
+    // ...existing code...
+fetch('MockData/goi_y.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList1');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+
+fetch('MockData/kham_pha.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList2');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+
+fetch('MockData/bai_dang_moi.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList3');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+// ...existing code...
+
+
   window.onload = function () {
     const bellIcon = document.getElementById('notifIcon');
     const notificationBox = document.getElementById('notificationBox');
@@ -385,7 +394,43 @@
       notificationBox.classList.add('hidden');
     }
   };
+      const cartIcon = document.getElementById('cartIcon');
+    const cartBox = document.getElementById('cartBox');
+
+    cartIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      cartBox.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!cartBox.contains(e.target) && !cartIcon.contains(e.target)) {
+        cartBox.classList.add('hidden');
+      }
+    });
+
+    window.closeCart = function() {
+      cartBox.classList.add('hidden');
+    }
+
+    window.checkout = function() {
+  window.location.href = "buy.html";
+ }
+
+function viewProductDetail(productId) {
+  const productMock = {
+    id: 1,
+    name: "Đồng hồ treo tường cũ",
+    price: "99.000",
+    image: "image/post1.jpg",
+    description: "Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu, phù hợp trang trí phòng khách hoặc quán cà phê."
+  };
+  localStorage.setItem('selectedProduct', JSON.stringify(productMock));
+  window.location.href = 'sp.html';
+}
+
+
 </script>
+  
 
 </body>
 </html>

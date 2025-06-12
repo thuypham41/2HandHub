@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Tai nghe không dây giá rẻ",
+    "price": "299000đ",
+    "image": "image/cn_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Loa Bluetooth mini",
+    "price": "350000đ",
+    "image": "image/cn_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Sạc dự phòng 10000mAh",
+    "price": "250000đ",
+    "image": "image/cn_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Đồng hồ thông minh cơ bản",
+    "price": "650000đ",
+    "image": "image/cn_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Kính thực tế ảo di động",
+    "price": "400000đ",
+    "image": "image/cn_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Máy nghe nhạc MP3",
+    "price": "300000đ",
+    "image": "image/cn_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy ảnh compact du lịch",
+    "price": "900000đ",
+    "image": "image/cn_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "USB di động 64GB",
+    "price": "150000đ",
+    "image": "image/cn_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Bút ghi âm kỹ thuật số",
+    "price": "480000đ",
+    "image": "image/cn_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Thiết bị định vị GPS mini",
+    "price": "550000đ",
+    "image": "image/cn_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Pin sạc AA/AAA",
+    "price": "90000đ",
+    "image": "image/cn_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Đèn pin sạc đa năng",
+    "price": "180000đ",
+    "image": "image/cn_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Thiết bị đọc sách điện tử",
+    "price": "800000đ",
+    "image": "image/cn_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Gậy selfie có remote",
+    "price": "130000đ",
+    "image": "image/cn_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Bàn phím Bluetooth di động",
+    "price": "320000đ",
+    "image": "image/cn_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Chuột không dây cơ bản",
+    "price": "190000đ",
+    "image": "image/cn_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Thiết bị phát WiFi di động",
+    "price": "600000đ",
+    "image": "image/cn_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Bộ chuyển đổi cổng USB-C",
+    "price": "220000đ",
+    "image": "image/cn_18.jpg"
+  }
+]

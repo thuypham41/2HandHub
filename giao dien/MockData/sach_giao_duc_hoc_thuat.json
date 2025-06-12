@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Giáo dục Việt Nam học gì từ Phần Lan",
+    "price": "92000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Học như một nhà khoa học",
+    "price": "99000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tư duy phản biện",
+    "price": "98000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Làm chủ tư duy thay đổi vận mệnh",
+    "price": "105000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Học tập thông minh",
+    "price": "87000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Bản đồ tư duy cho học sinh",
+    "price": "86000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Sổ tay học tốt",
+    "price": "73000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Giải mã tâm trí, kiểm soát cảm xúc",
+    "price": "98000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Tư duy hệ thống",
+    "price": "110000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Làm chủ việc học",
+    "price": "90000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bí kíp học tập toàn diện",
+    "price": "85000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Tư duy logic dành cho học sinh",
+    "price": "89000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Rèn luyện tư duy sáng tạo",
+    "price": "96000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Phương pháp học siêu tốc",
+    "price": "104000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Tâm lý học giáo dục",
+    "price": "97000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Khơi nguồn cảm hứng học tập",
+    "price": "91000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Tổ chức học tập",
+    "price": "99000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Học để thành công",
+    "price": "115000đ",
+    "image": "image/book_sach_giao_duc_hoc_thuat_18.jpg"
+  }
+]

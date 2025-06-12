@@ -187,17 +187,17 @@
 
   <div class="container">
     <div class="product-images">
-      <img src="image/post1.jpg" alt="Đồng hồ treo tường cũ" />
-    </div>
+  <img id="productImage" src="image/post1.jpg" alt="Đồng hồ treo tường cũ" />
+  </div>
+
 
     <div class="product-info">
-      <h1 class="product-title">Đồng hồ treo tường cũ</h1>
-      <p class="product-category">Thể loại: Đồ gia dụng</p>
-      <p class="product-condition">Tình trạng: Đã qua sử dụng</p>
-      <p class="product-price">99.000đ</p>
-      <p class="product-description">
-        Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu, phù hợp trang trí phòng khách hoặc quán cà phê. Màu gỗ trầm tạo cảm giác cổ điển nhưng không lỗi thời.
-      </p>
+      <h1 class="product-title" id="productName">Đồng hồ treo tường cũ</h1>
+<p class="product-price" id="productPrice">99.000đ</p>
+<p class="product-description" id="productDesc">
+  Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu...
+</p>
+
 
       <div class="button-group">
         <button class="action-button add">🛒 Thêm vào giỏ</button>
@@ -207,6 +207,17 @@
       </div>
     </div>
   </div>
+<script>
+  const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  if (product) {
+    document.getElementById("productName").textContent = product.name;
+    document.getElementById("productPrice").textContent = product.price + 'đ';
+    document.getElementById("productImage").src = product.image;
+    document.getElementById("productDesc").textContent = product.description;
+  } else {
+    alert("Không có dữ liệu sản phẩm.");
+  }
+</script>
 
 </body>
 </html>

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Tay cầm chơi game không dây",
+    "price": "350000đ",
+    "image": "image/game_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bàn phím gaming giả cơ",
+    "price": "480000đ",
+    "image": "image/game_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Chuột gaming có dây",
+    "price": "250000đ",
+    "image": "image/game_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Tai nghe gaming có mic",
+    "price": "400000đ",
+    "image": "image/game_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Bàn di chuột gaming cỡ lớn",
+    "price": "120000đ",
+    "image": "image/game_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Thẻ quà tặng game (giá trị nhỏ)",
+    "price": "100000đ",
+    "image": "image/game_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Đèn LED RGB trang trí phòng game",
+    "price": "180000đ",
+    "image": "image/game_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Quạt tản nhiệt laptop gaming",
+    "price": "220000đ",
+    "image": "image/game_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Giá treo tai nghe gaming",
+    "price": "90000đ",
+    "image": "image/game_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Bộ nút keycap thay thế",
+    "price": "150000đ",
+    "image": "image/game_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Dây cáp sạc tay cầm PS/Xbox",
+    "price": "80000đ",
+    "image": "image/game_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Miếng dán bảo vệ console",
+    "price": "70000đ",
+    "image": "image/game_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Hub USB cho console/PC",
+    "price": "190000đ",
+    "image": "image/game_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Khóa chống trộm cho thiết bị game",
+    "price": "280000đ",
+    "image": "image/game_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Vòng đeo tay theo dõi thể thao (tích hợp game)",
+    "price": "600000đ",
+    "image": "image/game_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Kính lọc ánh sáng xanh cho màn hình",
+    "price": "300000đ",
+    "image": "image/game_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Bộ dụng cụ vệ sinh gaming gear",
+    "price": "95000đ",
+    "image": "image/game_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Mô hình nhân vật game nhỏ",
+    "price": "200000đ",
+    "image": "image/game_18.jpg"
+  }
+]

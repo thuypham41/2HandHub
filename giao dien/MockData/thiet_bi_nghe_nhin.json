@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Loa soundbar mini",
+    "price": "750000đ",
+    "image": "image/nv_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Máy chiếu mini cầm tay",
+    "price": "1800000đ",
+    "image": "image/nv_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tai nghe chụp tai có dây",
+    "price": "300000đ",
+    "image": "image/nv_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Android TV Box cơ bản",
+    "price": "450000đ",
+    "image": "image/nv_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Micro karaoke Bluetooth",
+    "price": "280000đ",
+    "image": "image/nv_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Camera giám sát trong nhà",
+    "price": "520000đ",
+    "image": "image/nv_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Đầu đĩa DVD",
+    "price": "350000đ",
+    "image": "image/nv_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Kính VR cho điện thoại",
+    "price": "200000đ",
+    "image": "image/nv_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Bộ chuyển đổi HDMI sang VGA",
+    "price": "120000đ",
+    "image": "image/nv_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Cáp quang âm thanh",
+    "price": "90000đ",
+    "image": "image/nv_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Thiết bị ghi hình hành trình",
+    "price": "600000đ",
+    "image": "image/nv_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Bộ chia HDMI 1 ra 2",
+    "price": "180000đ",
+    "image": "image/nv_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Remote điều khiển TV thông minh",
+    "price": "150000đ",
+    "image": "image/nv_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Loa Bluetooth chống nước",
+    "price": "420000đ",
+    "image": "image/nv_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Thiết bị thu sóng TV kỹ thuật số",
+    "price": "250000đ",
+    "image": "image/nv_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Hộp giải mã tín hiệu truyền hình",
+    "price": "580000đ",
+    "image": "image/nv_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Gimbal chống rung điện thoại",
+    "price": "900000đ",
+    "image": "image/nv_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Thiết bị ghi âm chuyên nghiệp",
+    "price": "700000đ",
+    "image": "image/nv_18.jpg"
+  }
+]

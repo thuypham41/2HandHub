@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "Guốc cao gót màu be sữa",
+    "price": "89.000đ",
+    "image": "image/d1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Giày Nike phiên bản giới hạn",
+    "price": "205.000đ",
+    "image": "image/d2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Dép quai hậu Shodo size 39",
+    "price": "88.000đ",
+    "image": "image/d3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Guốc cao gót 12cm đỏ bóng",
+    "price": "110.000đ",
+    "image": "image/d4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Dép quai hậu cute xanh non",
+    "price": "80.000đ",
+    "image": "image/d5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Giày cao gót dáng bệt cao 4cm",
+    "price": "50.000đ",
+    "image": "image/d6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Giày Nike quốc dân viền xanh size 39",
+    "price": "99.000đ",
+    "image": "image/d7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Đèn học Rạng Đông",
+    "price": "70.000đ",
+    "image": "image/post8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Giày Converse bản đặc biệt",
+    "price": "250.000đ",
+    "image": "image/post9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Giày Jordan phiên bản nữ",
+    "price": "130.000đ",
+    "image": "image/d10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bàn là hơi nước Panasonic",
+    "price": "300.000đ",
+    "image": "image/post11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Quần đùi nam thể thao",
+    "price": "90.000đ",
+    "image": "image/post12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Túi đeo chéo cho nữ",
+    "price": "150.000đ",
+    "image": "image/post13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Áo sơ mi nam Uniqlo",
+    "price": "90.000đ",
+    "image": "image/post14.jpg"
+  }
+]

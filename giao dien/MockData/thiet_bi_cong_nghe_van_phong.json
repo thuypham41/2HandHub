@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Bàn phím cơ mini",
+    "price": "550000đ",
+    "image": "image/vp_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Chuột quang có dây",
+    "price": "150000đ",
+    "image": "image/vp_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Webcam HD cơ bản",
+    "price": "400000đ",
+    "image": "image/vp_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Tai nghe có mic văn phòng",
+    "price": "300000đ",
+    "image": "image/vp_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Ổ cứng ngoài 1TB",
+    "price": "850000đ",
+    "image": "image/vp_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Bộ lưu điện UPS mini",
+    "price": "700000đ",
+    "image": "image/vp_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy quét tài liệu cầm tay",
+    "price": "600000đ",
+    "image": "image/vp_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Máy hủy tài liệu cá nhân",
+    "price": "450000đ",
+    "image": "image/vp_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Máy chiếu mini di động",
+    "price": "950000đ",
+    "image": "image/vp_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Bảng vẽ điện tử nhỏ",
+    "price": "380000đ",
+    "image": "image/vp_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Màn hình di động 15 inch",
+    "price": "1200000đ",
+    "image": "image/vp_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Bộ phát wifi Router cơ bản",
+    "price": "350000đ",
+    "image": "image/vp_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Máy tính bảng văn phòng giá rẻ",
+    "price": "1500000đ",
+    "image": "image/vp_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Bút trình chiếu laser",
+    "price": "220000đ",
+    "image": "image/vp_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Đèn bàn LED chống cận",
+    "price": "280000đ",
+    "image": "image/vp_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Bộ sạc laptop đa năng",
+    "price": "480000đ",
+    "image": "image/vp_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Kệ đỡ laptop tản nhiệt",
+    "price": "180000đ",
+    "image": "image/vp_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Bút cảm ứng cho máy tính bảng",
+    "price": "200000đ",
+    "image": "image/vp_18.jpg"
+  }
+]

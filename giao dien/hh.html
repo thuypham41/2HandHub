@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đồ gia dụng - 2HandHub</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
@@ -26,26 +27,27 @@
       height: 75px;
     }
 
-   .search-bar {
-  display: flex;
-  align-items: center;
-  width: 50px; /* ✅ Thu ngắn thanh tìm kiếm */
-  background: #f5f5f5;
-  border-radius: 6px;
-  padding: 6px 12px;
-}
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 50px;
+      /* ✅ Thu ngắn thanh tìm kiếm */
+      background: #f5f5f5;
+      border-radius: 6px;
+      padding: 6px 12px;
+    }
 
-.search-bar input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 14px;
-}
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+    }
 
-.search-bar i {
-  color: #888;
-}
+    .search-bar i {
+      color: #888;
+    }
 
     .right-icons {
       display: flex;
@@ -176,9 +178,35 @@
         justify-content: flex-start;
         gap: 12px;
       }
+      .suggest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.product-card:hover {
+  transform: scale(1.02);
+}
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
     }
   </style>
 </head>
+
 <body>
   <div class="navbar">
     <div class="logo"><img src="image/2hand.png" alt="logo"></div>
@@ -186,11 +214,11 @@
       <input type="text" placeholder="Tìm kiếm sản phẩm...">
       <i class="fas fa-search"></i>
     </div>-->
-      
-  <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm sản phẩm...">
-    <i class="fas fa-search"></i>
-  </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm sản phẩm...">
+      <i class="fas fa-search"></i>
+    </div>
     <div class="right-icons">
       <a href="user.html" class="username" target="_blank">Mizu</a>
       <i class="fa fa-bell"></i>
@@ -208,317 +236,113 @@
     <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
   </div>
 
-  <!-- 4 mục thời trang -->
+
   <section class="latest-products">
-  <h2>QUẦN ÁO NAM</h2>
-  <div class="suggest-grid">
-    <a href="sp.html">
-  <div class="product-card">
-    <img src="image/n1.jpg" alt="post1">
-    <h3>Quần dài kaki cho nam giới</h3>
-    <p>59.000đ</p>
-  </div>
-</a>
-    <div class="product-card">
-      <img src="image/n2.jpg" alt="post2">
-      <h3>Áo khoác bomber da dê nhập khẩu</h3>
-      <p>105.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/n3.jpg" alt="post3">
-      <h3>Áo sơ mi denim cổ điển</h3>
-      <p>88.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post4.jpg" alt="post4">
-      <h3>Tai nghe không dây Sony cũ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post5.jpg" alt="post5">
-      <h3>Balo du lịch đa năng</h3>
-      <p>180.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post6.jpg" alt="post6">
-      <h3>Kindle Paperwhite Gen 3</h3>
-      <p>850.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post7.jpg" alt="post7">
-      <h3>Máy xay sinh tố mini</h3>
-      <p>120.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post8.jpg" alt="post8">
-      <h3>Đèn học Rạng Đông</h3>
-      <p>70.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post9.jpg" alt="post9">
-      <h3>Giày Converse bản đặc biệt</h3>
-      <p>250.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post10.jpg" alt="post10">
-      <h3>Ốp lưng điện thoại iPhone15</h3>
-      <p>30.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post11.jpg" alt="post10">
-      <h3>Bàn nà hơi nước Panasonic</h3>
-      <p>300.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post12.jpg" alt="post10">
-      <h3>Quần đùi nam thể thao</h3>
-      <p>90.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post13.jpg" alt="post10">
-      <h3>Túi đeo chéo cho nữ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post14.jpg" alt="post10">
-      <h3>Áo sơ mi nam Uniqlo</h3>
-      <p>90.000đ</p>
-    </div>
-  </div>
-</section>
-
-<section class="latest-products">
-  <h2>QUẦN ÁO NỮ</h2>
-  <div class="suggest-grid">
-    <a href="sp.html">
-  <div class="product-card">
-    <img src="image/n1.jpg" alt="post1">
-    <h3>Quần dài kaki cho nam giới</h3>
-    <p>59.000đ</p>
-  </div>
-</a>
-    <div class="product-card">
-      <img src="image/n2.jpg" alt="post2">
-      <h3>Áo khoác bomber da dê nhập khẩu</h3>
-      <p>105.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/n3.jpg" alt="post3">
-      <h3>Áo sơ mi denim cổ điển</h3>
-      <p>88.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post4.jpg" alt="post4">
-      <h3>Tai nghe không dây Sony cũ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post5.jpg" alt="post5">
-      <h3>Balo du lịch đa năng</h3>
-      <p>180.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post6.jpg" alt="post6">
-      <h3>Kindle Paperwhite Gen 3</h3>
-      <p>850.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post7.jpg" alt="post7">
-      <h3>Máy xay sinh tố mini</h3>
-      <p>120.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post8.jpg" alt="post8">
-      <h3>Đèn học Rạng Đông</h3>
-      <p>70.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post9.jpg" alt="post9">
-      <h3>Giày Converse bản đặc biệt</h3>
-      <p>250.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post10.jpg" alt="post10">
-      <h3>Ốp lưng điện thoại iPhone15</h3>
-      <p>30.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post11.jpg" alt="post10">
-      <h3>Bàn nà hơi nước Panasonic</h3>
-      <p>300.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post12.jpg" alt="post10">
-      <h3>Quần đùi nam thể thao</h3>
-      <p>90.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post13.jpg" alt="post10">
-      <h3>Túi đeo chéo cho nữ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post14.jpg" alt="post10">
-      <h3>Áo sơ mi nam Uniqlo</h3>
-      <p>90.000đ</p>
-    </div>
-  </div>
-</section>
-
+    <h2>THIẾT BỊ NHÀ BẾP</h2>
+    <div id="productList" class="suggest-grid"></div>
+ </section>
  <section class="latest-products">
-  <h2>GIÀY DÉP</h2>
-  <div class="suggest-grid">
-    <a href="sp.html">
-  <div class="product-card">
-    <img src="image/n1.jpg" alt="post1">
-    <h3>Quần dài kaki cho nam giới</h3>
-    <p>59.000đ</p>
-  </div>
-</a>
-    <div class="product-card">
-      <img src="image/n2.jpg" alt="post2">
-      <h3>Áo khoác bomber da dê nhập khẩu</h3>
-      <p>105.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/n3.jpg" alt="post3">
-      <h3>Áo sơ mi denim cổ điển</h3>
-      <p>88.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post4.jpg" alt="post4">
-      <h3>Tai nghe không dây Sony cũ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post5.jpg" alt="post5">
-      <h3>Balo du lịch đa năng</h3>
-      <p>180.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post6.jpg" alt="post6">
-      <h3>Kindle Paperwhite Gen 3</h3>
-      <p>850.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post7.jpg" alt="post7">
-      <h3>Máy xay sinh tố mini</h3>
-      <p>120.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post8.jpg" alt="post8">
-      <h3>Đèn học Rạng Đông</h3>
-      <p>70.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post9.jpg" alt="post9">
-      <h3>Giày Converse bản đặc biệt</h3>
-      <p>250.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post10.jpg" alt="post10">
-      <h3>Ốp lưng điện thoại iPhone15</h3>
-      <p>30.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post11.jpg" alt="post10">
-      <h3>Bàn nà hơi nước Panasonic</h3>
-      <p>300.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post12.jpg" alt="post10">
-      <h3>Quần đùi nam thể thao</h3>
-      <p>90.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post13.jpg" alt="post10">
-      <h3>Túi đeo chéo cho nữ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post14.jpg" alt="post10">
-      <h3>Áo sơ mi nam Uniqlo</h3>
-      <p>90.000đ</p>
-    </div>
-  </div>
-</section>
+    <h2>THIẾT BỊ LÀM SẠCH & CHĂM SÓC NHÀ CỬA</h2>
+    <div id="productList1" class="suggest-grid"></div>
+ </section>
+ <section class="latest-products">
+    <h2>THIẾT BỊ GIẶT ỦI</h2>
+    <div id="productList2" class="suggest-grid"></div>
+ </section>
+ <section class="latest-products">
+    <h2>THIẾT BỊ SINH HOẠT & CHĂM SÓC CÁ NHÂN</h2>
+    <div id="productList3" class="suggest-grid"></div>
+ </section>
+  
+  <script>
+  fetch('MockData/thiet_bi_nha_bep.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
 
-<section class="latest-products">
-  <h2>PHỤ KIỆN</h2>
-  <div class="suggest-grid">
-    <a href="sp.html">
-  <div class="product-card">
-    <img src="image/n1.jpg" alt="post1">
-    <h3>Quần dài kaki cho nam giới</h3>
-    <p>59.000đ</p>
-  </div>
-</a>
-    <div class="product-card">
-      <img src="image/n2.jpg" alt="post2">
-      <h3>Áo khoác bomber da dê nhập khẩu</h3>
-      <p>105.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/n3.jpg" alt="post3">
-      <h3>Áo sơ mi denim cổ điển</h3>
-      <p>88.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post4.jpg" alt="post4">
-      <h3>Tai nghe không dây Sony cũ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post5.jpg" alt="post5">
-      <h3>Balo du lịch đa năng</h3>
-      <p>180.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post6.jpg" alt="post6">
-      <h3>Kindle Paperwhite Gen 3</h3>
-      <p>850.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post7.jpg" alt="post7">
-      <h3>Máy xay sinh tố mini</h3>
-      <p>120.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post8.jpg" alt="post8">
-      <h3>Đèn học Rạng Đông</h3>
-      <p>70.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post9.jpg" alt="post9">
-      <h3>Giày Converse bản đặc biệt</h3>
-      <p>250.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post10.jpg" alt="post10">
-      <h3>Ốp lưng điện thoại iPhone15</h3>
-      <p>30.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post11.jpg" alt="post10">
-      <h3>Bàn nà hơi nước Panasonic</h3>
-      <p>300.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post12.jpg" alt="post10">
-      <h3>Quần đùi nam thể thao</h3>
-      <p>90.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post13.jpg" alt="post10">
-      <h3>Túi đeo chéo cho nữ</h3>
-      <p>150.000đ</p>
-    </div>
-    <div class="product-card">
-      <img src="image/post14.jpg" alt="post10">
-      <h3>Áo sơ mi nam Uniqlo</h3>
-      <p>90.000đ</p>
-    </div>
-  </div>
-</section>
+ fetch('MockData/thiet_bi_lam_sach.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList1');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+
+ fetch('MockData/thiet_bi_giat_ui).json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList2');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+
+  
+
+ fetch('MockData/thiet_bi_ca_nhan.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList3');
+    data.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.price}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.onclick = function() {
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'sp.html';
+      };
+      container.appendChild(card);
+    });
+  });
+</script>
+
 </body>
+
+
 </html>

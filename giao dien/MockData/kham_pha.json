@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Thời trang cá tính",
+    "price": "",
+    "image": "image/explore1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Sách hot",
+    "price": "",
+    "image": "image/explore2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Đồ dùng bếp",
+    "price": "",
+    "image": "image/explore3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Góc công nghệ",
+    "price": "",
+    "image": "image/explore4.jpg"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Đắc nhân tâm",
+    "price": "79000đ",
+    "image": "image/book_sach_tieu_thuyet_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Chuyện người tùy nữ",
+    "price": "92000đ",
+    "image": "image/book_sach_tieu_thuyet_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Bố già",
+    "price": "85000đ",
+    "image": "image/book_sach_tieu_thuyet_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Kẻ trộm sách",
+    "price": "105000đ",
+    "image": "image/book_sach_tieu_thuyet_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Chuông gọi hồn ai",
+    "price": "99000đ",
+    "image": "image/book_sach_tieu_thuyet_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Giết con chim nhại",
+    "price": "88000đ",
+    "image": "image/book_sach_tieu_thuyet_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Hai số phận",
+    "price": "115000đ",
+    "image": "image/book_sach_tieu_thuyet_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Tiếng chim hót trong bụi mận gai",
+    "price": "109000đ",
+    "image": "image/book_sach_tieu_thuyet_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Mật mã Da Vinci",
+    "price": "89000đ",
+    "image": "image/book_sach_tieu_thuyet_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Cuốn theo chiều gió",
+    "price": "99000đ",
+    "image": "image/book_sach_tieu_thuyet_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Nhà giả kim",
+    "price": "78000đ",
+    "image": "image/book_sach_tieu_thuyet_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Tội ác và hình phạt",
+    "price": "119000đ",
+    "image": "image/book_sach_tieu_thuyet_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Cánh đồng bất tận",
+    "price": "68000đ",
+    "image": "image/book_sach_tieu_thuyet_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Lão Hạc",
+    "price": "45000đ",
+    "image": "image/book_sach_tieu_thuyet_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Dế mèn phiêu lưu ký",
+    "price": "59000đ",
+    "image": "image/book_sach_tieu_thuyet_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Những người khốn khổ",
+    "price": "105000đ",
+    "image": "image/book_sach_tieu_thuyet_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Trại súc vật",
+    "price": "67000đ",
+    "image": "image/book_sach_tieu_thuyet_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Chúa tể những chiếc nhẫn",
+    "price": "130000đ",
+    "image": "image/book_sach_tieu_thuyet_18.jpg"
+  }
+]

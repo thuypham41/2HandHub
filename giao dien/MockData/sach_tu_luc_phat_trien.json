@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Đánh thức con người phi thường trong bạn",
+    "price": "125000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "7 thói quen để thành đạt",
+    "price": "95000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tư duy tích cực thay đổi cuộc sống",
+    "price": "89000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Dám nghĩ lớn",
+    "price": "99000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Hạt giống tâm hồn",
+    "price": "79000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Quẳng gánh lo đi và vui sống",
+    "price": "87000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Bí quyết thành công",
+    "price": "91000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Sức mạnh của hiện tại",
+    "price": "99000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Thức tỉnh mục đích sống",
+    "price": "105000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Tự tin – Bí quyết dẫn đến thành công",
+    "price": "88000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Buông bỏ buồn buông",
+    "price": "67000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Sức mạnh của sự tập trung",
+    "price": "96000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Thay đổi cuộc sống với NLP",
+    "price": "95000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Tối giản tâm trí",
+    "price": "87000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Bạn đắt giá bao nhiêu?",
+    "price": "93000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Dẫn dắt cuộc đời",
+    "price": "112000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Thành công trong tầm tay",
+    "price": "99000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Tâm lý học thành công",
+    "price": "115000đ",
+    "image": "image/book_sach_tu_luc_phat_trien_18.jpg"
+  }
+]

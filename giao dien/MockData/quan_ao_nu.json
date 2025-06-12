@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "Váy hoa xòe tay bồng freesize",
+    "price": "79.000đ",
+    "image": "image/nu1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Áo thun đỏ dài tay cao cổ HM",
+    "price": "55.000đ",
+    "image": "image/nu2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Váy trắng tay loe cách tân",
+    "price": "98.000đ",
+    "image": "image/nu3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Áo sơ mi nữ kẻ sọc trắng hồng",
+    "price": "70.000đ",
+    "image": "image/nu4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Quần Jean bó xanh dương cạp khuy",
+    "price": "90.000đ",
+    "image": "image/nu5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Áo dài truyền thống màu cam",
+    "price": "150.000đ",
+    "image": "image/nu6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Quần bò vintage cạp chun",
+    "price": "90.000đ",
+    "image": "image/nu7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Áo sơ mi dài tay màu xanh than",
+    "price": "70.000đ",
+    "image": "image/nu8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Áo phông xanh đơn giản cho nữ",
+    "price": "50.000đ",
+    "image": "image/nu9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Váy liền thân đuôi tròn",
+    "price": "70.000đ",
+    "image": "image/nu10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Đồ bơi một mảnh có đường viền",
+    "price": "90.000đ",
+    "image": "image/nu11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Váy liền thân nữ form babydoll",
+    "price": "60.000đ",
+    "image": "image/nu12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Túi đeo chéo cho nữ",
+    "price": "150.000đ",
+    "image": "image/post13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Áo sơ mi nam Uniqlo",
+    "price": "90.000đ",
+    "image": "image/post14.jpg"
+  }
+]

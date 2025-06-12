@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Máy giặt mini du lịch",
+    "price": "680000đ",
+    "image": "image/gd_gi_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bàn ủi hơi nước đứng",
+    "price": "980000đ",
+    "image": "image/gd_gi_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Bàn ủi khô Panasonic",
+    "price": "390000đ",
+    "image": "image/gd_gi_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Máy sấy quần áo 7kg",
+    "price": "1490000đ",
+    "image": "image/gd_gi_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Giá phơi đồ gấp gọn",
+    "price": "220000đ",
+    "image": "image/gd_gi_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Thùng đựng đồ giặt vải",
+    "price": "85000đ",
+    "image": "image/gd_gi_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy sấy tóc du lịch",
+    "price": "160000đ",
+    "image": "image/gd_gi_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Bàn chải xơ vải quần áo",
+    "price": "49000đ",
+    "image": "image/gd_gi_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Túi lưới giặt đồ lót",
+    "price": "30000đ",
+    "image": "image/gd_gi_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Hộp đựng bột giặt",
+    "price": "59000đ",
+    "image": "image/gd_gi_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Chổi quét lông bụi áo",
+    "price": "49000đ",
+    "image": "image/gd_gi_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Máy ủi hơi nước cầm tay",
+    "price": "560000đ",
+    "image": "image/gd_gi_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Kẹp phơi đồ tiện dụng",
+    "price": "45000đ",
+    "image": "image/gd_gi_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Giá phơi xoay 360 độ",
+    "price": "190000đ",
+    "image": "image/gd_gi_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Giấy làm thơm quần áo",
+    "price": "32000đ",
+    "image": "image/gd_gi_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Khăn lau khô quần áo",
+    "price": "40000đ",
+    "image": "image/gd_gi_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Máy diệt khuẩn quần áo",
+    "price": "1120000đ",
+    "image": "image/gd_gi_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Móc treo đồ thông minh",
+    "price": "55000đ",
+    "image": "image/gd_gi_18.jpg"
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "Đồng hồ treo tường cũ",
+    "price": "99.000đ",
+    "image": "image/post1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Giày sneaker nam cũ",
+    "price": "45.000đ",
+    "image": "image/post2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Bình giữ nhiệt Lock&Lock",
+    "price": "110.000đ",
+    "image": "image/post3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Tai nghe không dây Sony cũ",
+    "price": "150.000đ",
+    "image": "image/post4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Balo du lịch đa năng",
+    "price": "180.000đ",
+    "image": "image/post5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Kindle Paperwhite Gen 3",
+    "price": "850.000đ",
+    "image": "image/post6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy xay sinh tố mini",
+    "price": "120.000đ",
+    "image": "image/post7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Đèn học Rạng Đông",
+    "price": "70.000đ",
+    "image": "image/post8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Giày Converse bản đặc biệt",
+    "price": "250.000đ",
+    "image": "image/post9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Ốp lưng điện thoại iPhone15",
+    "price": "30.000đ",
+    "image": "image/post10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bàn ủi hơi nước Panasonic",
+    "price": "300.000đ",
+    "image": "image/post11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Quần đùi nam thể thao",
+    "price": "90.000đ",
+    "image": "image/post12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Túi đeo chéo cho nữ",
+    "price": "150.000đ",
+    "image": "image/post13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Áo sơ mi nam Uniqlo",
+    "price": "90.000đ",
+    "image": "image/post14.jpg"
+  }
+]

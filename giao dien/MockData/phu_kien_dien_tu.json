@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Ốp lưng điện thoại phổ biến",
+    "price": "80000đ",
+    "image": "image/pk_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Kính cường lực màn hình",
+    "price": "70000đ",
+    "image": "image/pk_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Cáp sạc nhanh USB-C",
+    "price": "120000đ",
+    "image": "image/pk_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Củ sạc nhanh 20W",
+    "price": "150000đ",
+    "image": "image/pk_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Giá đỡ điện thoại bàn",
+    "price": "60000đ",
+    "image": "image/pk_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Bộ vệ sinh màn hình",
+    "price": "50000đ",
+    "image": "image/pk_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Túi đựng tai nghe",
+    "price": "40000đ",
+    "image": "image/pk_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Dây cáp HDMI",
+    "price": "90000đ",
+    "image": "image/pk_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Bộ chuyển đổi OTG",
+    "price": "75000đ",
+    "image": "image/pk_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Thẻ nhớ MicroSD 32GB",
+    "price": "100000đ",
+    "image": "image/pk_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Đầu đọc thẻ nhớ đa năng",
+    "price": "85000đ",
+    "image": "image/pk_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Nút bịt tai nghe silicon",
+    "price": "30000đ",
+    "image": "image/pk_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Bàn di chuột cơ bản",
+    "price": "55000đ",
+    "image": "image/pk_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Miếng dán bảo vệ laptop",
+    "price": "130000đ",
+    "image": "image/pk_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Khóa chống trộm laptop",
+    "price": "180000đ",
+    "image": "image/pk_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Cáp mạng Ethernet",
+    "price": "65000đ",
+    "image": "image/pk_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Bộ chia USB hub",
+    "price": "95000đ",
+    "image": "image/pk_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Tấm lót chuột lớn",
+    "price": "110000đ",
+    "image": "image/pk_18.jpg"
+  }
+]

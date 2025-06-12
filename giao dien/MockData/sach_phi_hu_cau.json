@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Lược sử thời gian",
+    "price": "98000đ",
+    "image": "image/book_sach_phi_hu_cau_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Sapiens - Lược sử loài người",
+    "price": "112000đ",
+    "image": "image/book_sach_phi_hu_cau_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Vũ trụ trong vỏ hạt dẻ",
+    "price": "95000đ",
+    "image": "image/book_sach_phi_hu_cau_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Nguồn gốc muôn loài",
+    "price": "99000đ",
+    "image": "image/book_sach_phi_hu_cau_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Thế giới phẳng",
+    "price": "102000đ",
+    "image": "image/book_sach_phi_hu_cau_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Điều kỳ diệu của tiềm thức",
+    "price": "89000đ",
+    "image": "image/book_sach_phi_hu_cau_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Bí mật của nước",
+    "price": "85000đ",
+    "image": "image/book_sach_phi_hu_cau_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Tư duy nhanh và chậm",
+    "price": "109000đ",
+    "image": "image/book_sach_phi_hu_cau_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Tâm lý học đám đông",
+    "price": "88000đ",
+    "image": "image/book_sach_phi_hu_cau_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Sự im lặng của bầy cừu",
+    "price": "97000đ",
+    "image": "image/book_sach_phi_hu_cau_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Cấu trúc của các cuộc cách mạng khoa học",
+    "price": "103000đ",
+    "image": "image/book_sach_phi_hu_cau_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Guns, Germs, and Steel",
+    "price": "110000đ",
+    "image": "image/book_sach_phi_hu_cau_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Lược sử loài người",
+    "price": "112000đ",
+    "image": "image/book_sach_phi_hu_cau_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Sự thật về nền kinh tế",
+    "price": "89000đ",
+    "image": "image/book_sach_phi_hu_cau_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Thuyết tương đối",
+    "price": "92000đ",
+    "image": "image/book_sach_phi_hu_cau_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Một thoáng ta rực rỡ ở nhân gian",
+    "price": "105000đ",
+    "image": "image/book_sach_phi_hu_cau_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Homo Deus",
+    "price": "117000đ",
+    "image": "image/book_sach_phi_hu_cau_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Tương lai của trí tuệ",
+    "price": "125000đ",
+    "image": "image/book_sach_phi_hu_cau_18.jpg"
+  }
+]

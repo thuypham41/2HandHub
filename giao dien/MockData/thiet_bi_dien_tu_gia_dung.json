@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Máy đóng gói mini",
+    "price": "672000đ",
+    "image": "image/gd_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Nồi cơm điện mini",
+    "price": "450000đ",
+    "image": "image/gd_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Ấm siêu tốc nhỏ gọn",
+    "price": "280000đ",
+    "image": "image/gd_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Máy xay sinh tố cầm tay",
+    "price": "390000đ",
+    "image": "image/gd_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Bàn là hơi nước du lịch",
+    "price": "320000đ",
+    "image": "image/gd_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Quạt mini để bàn",
+    "price": "150000đ",
+    "image": "image/gd_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Đèn ngủ cảm ứng",
+    "price": "180000đ",
+    "image": "image/gd_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Máy hút bụi mini cầm tay",
+    "price": "550000đ",
+    "image": "image/gd_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Cân điện tử nhà bếp",
+    "price": "210000đ",
+    "image": "image/gd_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Máy pha cà phê mini",
+    "price": "620000đ",
+    "image": "image/gd_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Bếp điện từ đơn",
+    "price": "750000đ",
+    "image": "image/gd_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Máy sấy tóc gấp gọn",
+    "price": "290000đ",
+    "image": "image/gd_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Đèn diệt côn trùng",
+    "price": "250000đ",
+    "image": "image/gd_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Máy tạo độ ẩm mini",
+    "price": "310000đ",
+    "image": "image/gd_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Chuông cửa không dây",
+    "price": "480000đ",
+    "image": "image/gd_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Ổ cắm điện đa năng",
+    "price": "120000đ",
+    "image": "image/gd_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Bàn chải điện cơ bản",
+    "price": "350000đ",
+    "image": "image/gd_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Máy ép hoa quả cầm tay",
+    "price": "590000đ",
+    "image": "image/gd_18.jpg"
+  }
+]

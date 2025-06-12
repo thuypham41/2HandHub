@@ -1,0 +1,111 @@
+[
+{
+"id": 1,
+"name": "Mũ lưỡi trai trơn basic",
+"price": "80000đ",
+"image": "image/pq_1.jpg"
+},
+{
+"id": 2,
+"name": "Khăn choàng cổ mỏng nhẹ",
+"price": "90000đ",
+"image": "image/pq_2.jpg"
+},
+{
+"id": 3,
+"name": "Thắt lưng da PU đơn giản",
+"price": "120000đ",
+"image": "image/pq_3.jpg"
+},
+{
+"id": 4,
+"name": "Tất chân cotton (combo nhiều đôi)",
+"price": "70000đ",
+"image": "image/pq_4.jpg"
+},
+{
+"id": 5,
+"name": "Găng tay len mỏng",
+"price": "60000đ",
+"image": "image/pq_5.jpg"
+},
+{
+"id": 6,
+"name": "Kính râm thời trang giá rẻ",
+"price": "150000đ",
+"image": "image/pq_6.jpg"
+},
+{
+"id": 7,
+"name": "Ví cầm tay nhỏ gọn",
+"price": "180000đ",
+"image": "image/pq_7.jpg"
+},
+{
+"id": 8,
+"name": "Dây nịt vải bố",
+"price": "50000đ",
+"image": "image/pq_8.jpg"
+},
+{
+"id": 9,
+"name": "Nơ cài áo vest",
+"price": "40000đ",
+"image": "image/pq_9.jpg"
+},
+{
+"id": 10,
+"name": "Kẹp tóc/Bờm tóc đơn giản",
+"price": "30000đ",
+"image": "image/pq_10.jpg"
+},
+{
+"id": 11,
+"name": "Ô (dù) gấp gọn",
+"price": "130000đ",
+"image": "image/pq_11.jpg"
+},
+{
+"id": 12,
+"name": "Khăn bandana đa năng",
+"price": "35000đ",
+"image": "image/pq_12.jpg"
+},
+{
+"id": 13,
+"name": "Móc khóa thời trang",
+"price": "20000đ",
+"image": "image/pq_13.jpg"
+},
+{
+"id": 14,
+"name": "Huy hiệu cài áo",
+"price": "15000đ",
+"image": "image/pq_14.jpg"
+},
+{
+"id": 15,
+"name": "Túi vải tote basic",
+"price": "100000đ",
+"image": "image/pq_15.jpg"
+},
+{
+"id": 16,
+"name": "Dây chuyền/Vòng cổ đơn giản",
+"price": "95000đ",
+"image": "image/pq_16.jpg"
+},
+{
+"id": 17,
+"name": "Nhẫn đeo tay thời trang",
+"price": "65000đ",
+"image": "image/pq_17.jpg"
+},
+{
+"id": 18,
+"name": "Bông tai nhỏ xinh",
+"price": "75000đ",
+"image": "image/pq_18.jpg"
+}
+
+]

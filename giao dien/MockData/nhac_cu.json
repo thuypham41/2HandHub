@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Đàn Ukulele cơ bản",
+    "price": "500000đ",
+    "image": "image/st_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Kèn Harmonica",
+    "price": "250000đ",
+    "image": "image/st_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Sáo trúc / Sáo nhựa",
+    "price": "150000đ",
+    "image": "image/st_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Dây đàn guitar dự phòng",
+    "price": "70000đ",
+    "image": "image/st_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Bộ phím gảy guitar",
+    "price": "30000đ",
+    "image": "image/st_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Giá đỡ bản nhạc di động",
+    "price": "180000đ",
+    "image": "image/st_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Mô hình ô tô cổ điển mini",
+    "price": "200000đ",
+    "image": "image/st_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Tem thư sưu tầm (bộ cơ bản)",
+    "price": "100000đ",
+    "image": "image/st_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Tiền xu cổ (giá trị sưu tầm thấp)",
+    "price": "150000đ",
+    "image": "image/st_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Bộ thẻ bài sưu tập (ví dụ: thẻ bài Pokémon)",
+    "price": "90000đ",
+    "image": "image/st_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Hộp trưng bày mô hình/đồ sưu tầm",
+    "price": "280000đ",
+    "image": "image/st_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Album đựng tem/tiền xu",
+    "price": "120000đ",
+    "image": "image/st_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Đồng hồ cát trang trí",
+    "price": "75000đ",
+    "image": "image/st_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Bộ trống đồ chơi trẻ em",
+    "price": "350000đ",
+    "image": "image/st_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Giá đỡ đàn guitar đứng",
+    "price": "190000đ",
+    "image": "image/st_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Bộ sưu tập mô hình nhân vật nhỏ",
+    "price": "220000đ",
+    "image": "image/st_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Hộp nhạc (Music box) cổ điển",
+    "price": "400000đ",
+    "image": "image/st_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Bản đồ thế giới cào",
+    "price": "130000đ",
+    "image": "image/st_18.jpg"
+  }
+]

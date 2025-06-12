@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Máy xay sinh tố cầm tay",
+    "price": "320000đ",
+    "image": "image/bep_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Máy ép trái cây chậm",
+    "price": "980000đ",
+    "image": "image/bep_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Máy pha cà phê nhỏ gọn",
+    "price": "750000đ",
+    "image": "image/bep_3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Nồi chiên không dầu",
+    "price": "1290000đ",
+    "image": "image/bep_4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Máy làm sữa hạt",
+    "price": "890000đ",
+    "image": "image/bep_5.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Máy đánh trứng để bàn",
+    "price": "560000đ",
+    "image": "image/bep_6.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Máy nướng bánh mì",
+    "price": "620000đ",
+    "image": "image/bep_7.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Lò nướng mini",
+    "price": "470000đ",
+    "image": "image/bep_8.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Nồi cơm điện tử",
+    "price": "850000đ",
+    "image": "image/bep_9.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Bếp từ đơn",
+    "price": "490000đ",
+    "image": "image/bep_10.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Máy hút mùi nhà bếp",
+    "price": "1500000đ",
+    "image": "image/bep_11.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Máy tiệt trùng dao thớt",
+    "price": "320000đ",
+    "image": "image/bep_12.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Bình đun siêu tốc 1.7L",
+    "price": "210000đ",
+    "image": "image/bep_13.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Bếp gas mini du lịch",
+    "price": "270000đ",
+    "image": "image/bep_14.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Máy niêm phong túi thực phẩm",
+    "price": "180000đ",
+    "image": "image/bep_15.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Máy trộn bột đa năng",
+    "price": "1150000đ",
+    "image": "image/bep_16.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Máy làm bánh waffle",
+    "price": "390000đ",
+    "image": "image/bep_17.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Lò vi sóng cơ",
+    "price": "1300000đ",
+    "image": "image/bep_18.jpg"
+  }
+]

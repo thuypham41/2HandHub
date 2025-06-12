@@ -145,7 +145,7 @@
 <!-- HEADER -->
 <div class="header">
   <a href="home.html" class="back-button">&#8249;</a>
-  <a href="index.html" class="logout-button">Đăng xuất</a>
+  <button class="logout-button" onclick="logout()">Đăng xuất</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -261,5 +261,20 @@
   </div>
 </div>
 
+  <script>
+    function logout() {
+      // Xóa trạng thái đăng nhập khỏi sessionStorage
+      localStorage.removeItem("isUserLoggedIn");
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+
+      window.onload = function() {
+    // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
+    if (localStorage.getItem("isUserLoggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+  };
+  </script>
 </body>
 </html>

@@ -230,9 +230,21 @@
         </div>
       </div>
       <script>
+  // Lưu trạng thái đăng nhập vào sessionStorage khi đăng nhập thành công
   function logout() {
+    // Xóa trạng thái đăng nhập khỏi sessionStorage
+    localStorage.removeItem("isAdminLoggedIn");
+    localStorage.removeItem("user");
     window.location.href = "index.html";
   }
+
+  // Kiểm tra trạng thái đăng nhập khi vào trang admin
+  window.onload = function() {
+    // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
+    if (localStorage.getItem("isAdminLoggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+  };
 </script>
 
     </div>

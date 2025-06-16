@@ -1,110 +1,22 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sách - 2HandHub</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>2HandHub.com</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f7f7f7;
+    .latest-products h2 {
+      font-size: 26px;
+      text-align: left;
+      color: #222;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
-
-    .navbar {
-      display: flex;
-      align-items: center;
-      padding: 12px 24px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      gap: 40px;
-    }
-
-    .logo img {
-      height: 75px;
-    }
-
-   .search-bar {
-  display: flex;
-  align-items: center;
-  width: 50px; /* ✅ Thu ngắn thanh tìm kiếm */
-  background: #f5f5f5;
-  border-radius: 6px;
-  padding: 6px 12px;
-}
-
-.search-bar input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 14px;
-}
-
-.search-bar i {
-  color: #888;
-}
-
-    .right-icons {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .right-icons span {
-      font-size: 14px;
-      color: #333;
-    }
-
-    .right-icons i {
-      font-size: 16px;
-      color: #333;
-      cursor: pointer;
-    }
-
-    .post-button {
-      background-color: #ff3b30;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .sub-menu {
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0;
-      background: #fff;
-      border-bottom: 1px solid #eee;
-    }
-
-    .menu-link {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      position: relative;
-      padding: 6px 12px;
-    }
-
-    .menu-link.active,
-    .menu-link:hover {
-      color: #e60023;
-    }
-
-    .menu-link.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 2px;
-      background-color: #e60023;
-    }
-
-    .latest-products {
+     .latest-products {
       padding: 40px 24px 0;
     }
 
@@ -159,74 +71,58 @@
       font-size: 15px;
     }
 
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .search-bar {
-        width: 100%;
-        max-width: none;
-      }
-
-      .right-icons {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 12px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <div class="logo"><img src="image/2hand.png" alt="logo"></div>
-    <!--<div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm sản phẩm...">
-      <i class="fas fa-search"></i>
-    </div>-->
-      
-  <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm sản phẩm...">
-    <i class="fas fa-search"></i>
+    <div class="logo">
+      <img src="image/2hand.png" alt="Logo">
+    </div>
+   <div class="sub-menu">
+    <a href="index.html" class="menu-link">GỢI Ý</a>
+    <a href="index_style.html" class="menu-link active">THỜI TRANG</a>
+    <a href="index_book.html" class="menu-link">SÁCH</a>
+    <a href="index_hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
+    <a href="index_elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
+    <a href="index_play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
   </div>
-    <div class="right-icons">
-      <a href="user.html" class="username" target="_blank">Mizu</a>
-      <i class="fa fa-bell"></i>
-      <i class="fa fa-shopping-bag"></i>
-      <a href="post.html" class="post-button">Đăng bán</a>
+    <div class="others">
+      <div class="search-box">
+        <input type="text" placeholder="Tìm kiếm">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="language-dropdown">
+        <select onchange="changeLanguage(this.value)">
+          <option value="vi">Tiếng Việt</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
+      <a class="fa fa-user" href="login.html" title="Đăng nhập"></a>
+      <a class="fa fa-shopping-bag" href="#"></a>
     </div>
   </div>
 
-  <div class="sub-menu">
-    <a href="home.html" class="menu-link">GỢI Ý</a>
-    <a href="style.html" class="menu-link ">THỜI TRANG</a>
-    <a href="book.html" class="menu-link active">SÁCH</a>
-    <a href="hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
-    <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
-    <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
-  </div>
 
-  <section class="latest-products">
-    <h2>TIỂU THUYẾT</h2>
+   <section class="latest-products">
+    <h2>QUẦN ÁO NAM</h2>
     <div id="productList" class="suggest-grid"></div>
  </section>
  <section class="latest-products">
-    <h2>PHI HƯ CẤU</h2>
+    <h2>QUẦN ÁO NỮ</h2>
     <div id="productList1" class="suggest-grid"></div>
  </section>
  <section class="latest-products">
-    <h2>TỰ LỰC- PHÁT TRIỂN BẢN THÂN</h2>
+    <h2>GIÀY DÉP</h2>
     <div id="productList2" class="suggest-grid"></div>
  </section>
  <section class="latest-products">
-    <h2>GIÁO DỤC - HỌC THUẬT</h2>
+    <h2>PHỤ KIỆN</h2>
     <div id="productList3" class="suggest-grid"></div>
  </section>
   
   <script>
-  fetch('MockData/sach_tieu_thuyet.json')
+  
+  fetch('MockData/quan_ao_nam.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList');
@@ -247,7 +143,7 @@
     });
   });
 
- fetch('MockData/sach_phi_hu_cau.json')
+ fetch('MockData/quan_ao_nu.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList1');
@@ -268,7 +164,7 @@
     });
   });
 
- fetch('MockData/sach_tu_luc_phat_trien.json')
+ fetch('MockData/giay_dep.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList2');
@@ -291,7 +187,7 @@
 
   
 
- fetch('MockData/sach_giao_duc_hoc_thuat.json')
+ fetch('MockData/phu_kien_quan_ao.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList3');
@@ -311,6 +207,18 @@
       container.appendChild(card);
     });
   });
-</script>
+
+
+    const slider = document.querySelector('.slider-wrapper');
+    const images = slider.querySelectorAll('img');
+    let index = 0;
+
+    function slideImages() {
+      index = (index + 1) % images.length;
+      slider.style.transform = `translateX(-${index * 100}vw)`;
+    }
+
+    setInterval(slideImages, 4000);
+  </script>
 </body>
 </html>

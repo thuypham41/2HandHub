@@ -11,6 +11,32 @@
       margin: 0;
       padding: 0;
     }
+   .header {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  gap: 12px; /* giảm khoảng cách giữa icon và logo */
+}
+
+.back-icon {
+  font-size: 36px;
+  background: none;
+  border: none;
+  color: #222;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 75px; /* giảm chiều cao để vừa với icon hơn */
+}
+
+
 
     .container {
       max-width: 800px;
@@ -107,6 +133,13 @@
   </style>
 </head>
 <body>
+    <div class="header">
+   <a href="sp.html" class="back-icon">‹</a>
+
+    <div class="logo">
+      <img src="image/2hand.png" alt="2HandHub Logo">
+    </div>
+  </div>
   <div class="container">
     <h2>Mua sản phẩm</h2>
 

@@ -2,55 +2,174 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script src="https://kit.fontawesome.com//1147679ae7.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
   <title>Chi tiết sản phẩm - 2HandHub</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f2f6f9;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
     }
 
-    /* Header với nút back và logo */
     .header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 16px 24px;
-      background-color: #fff;
+      padding: 12px 24px;
+      background: #fff;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      gap: 20px;
     }
 
     .back-icon {
-      font-family: Arial, sans-serif;
-      background: none;
-      border: none;
-      font-size: 28px;
-      color: #222;
-      cursor: pointer;
-      padding: 6px 10px;
+      font-size: 36px; /* Tăng kích thước icon */
+      color: #333;
+      text-decoration: none;
+      padding: 8px 10px;
       border-radius: 6px;
-      transition: background-color 0.2s ease;
+      transition: background 0.2s ease;
     }
 
     .back-icon:hover {
-      background-color: #eaeaea;
+      background: #eee;
+      text-decoration: none;
     }
 
     .logo img {
       height: 75px;
     }
 
+    .search-bar {
+      flex: 2; /* tăng flex để thanh dài hơn */
+      display: flex;
+      align-items: center;
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 8px 12px;
+      gap: 8px;
+      max-width: 900px; /* tăng max-width */
+      min-width: 300px;
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .search-bar i {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .right-icons i {
+      font-size: 18px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .username {
+      font-weight: 600;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .post-button {
+      background: #ff3c2b;
+      color: white;
+      padding: 8px 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .cart-icon-container {
+      position: relative;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    #cartPopup {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 16px;
+      width: 320px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      display: none;
+      z-index: 999;
+      animation: slideDown 0.3s ease;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .remove-btn {
+      color: #e60023;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      background: none;
+    }
+
+    .total-price {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
     .container {
       max-width: 1200px;
       margin: 30px auto;
-      background-color: #fff;
+      background: #fff;
       padding: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
       display: flex;
       flex-wrap: wrap;
       gap: 40px;
@@ -73,13 +192,6 @@
       font-weight: 700;
       margin-bottom: 12px;
       color: #222;
-    }
-
-    .product-category,
-    .product-condition {
-      font-size: 15px;
-      color: #666;
-      margin-bottom: 6px;
     }
 
     .product-price {
@@ -116,108 +228,123 @@
       gap: 6px;
     }
 
-    .action-button.add {
-      background-color: #f5f5f5;
-      color: #333;
-    }
-
-    .action-button.add:hover {
-      background-color: #e2e2e2;
-    }
-
-    .action-button.discount {
-      background-color: #fff0f0;
-      color: #cc0033;
-    }
-
-    .action-button.discount:hover {
-      background-color: #ffe5e5;
-    }
-
-    .action-button.primary {
-      background-color: #e60023;
-      color: #fff;
-    }
-
-    .action-button.primary:hover {
-      background-color: #c4001c;
-    }
-
-    @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        padding: 20px;
-        margin: 20px;
-      }
-
-      .header {
-        justify-content: space-between;
-        padding: 12px 16px;
-      }
-
-      .product-info {
-        max-width: 100%;
-      }
-    }
+    .action-button.add { background: #f5f5f5; color: #333; }
+    .action-button.add:hover { background: #e2e2e2; }
+    .action-button.discount { background: #fff0f0; color: #cc0033; }
+    .action-button.discount:hover { background: #ffe5e5; }
+    .action-button.primary { background: #e60023; color: #fff; }
+    .action-button.primary:hover { background: #c4001c; }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <!--<button class="back-icon" onclick="history.back()">‹</button>-->
     <a href="home.html" class="back-icon">‹</a>
     <div class="logo">
-      <img src="image/2hand.png" alt="2HandHub Logo">
+      <img src="image/2hand.png" alt="2HandHub Logo" />
     </div>
-    <!-- Thanh tìm kiếm -->
-  <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm sản phẩm...">
-    <i class="fas fa-search"></i>
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="right-icons">
+      <i class="fas fa-bell"></i>
+      <a href="user.html" class="username" target="_blank">Mizu</a>
+      <div class="cart-icon-container">
+        <i class="fa fa-shopping-bag"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </div>
+      <a href="post.html" class="post-button">Đăng bán</a>
+    </div>
   </div>
 
-  <!-- Menu icon bên phải -->
-  <div class="right-icons">
-    <a href="user.html" class="username" target="_blank">Mizu</a>
-    <i class="fa fa-bell"></i>
-    <i class="fa fa-shopping-bag"></i>
-    <a href="post.html" class="post-button">Đăng bán</a>
-  </div>
-</div>
-  </div>
+  <div id="cartPopup"></div>
 
   <div class="container">
     <div class="product-images">
-  <img id="productImage" src="image/post1.jpg" alt="Đồng hồ treo tường cũ" />
-  </div>
-
-
+      <img id="productImage" src="" alt="Ảnh sản phẩm" />
+    </div>
     <div class="product-info">
-      <h1 class="product-title" id="productName">Đồng hồ treo tường cũ</h1>
-<p class="product-price" id="productPrice">99.000đ</p>
-<p class="product-description" id="productDesc">
-  Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu...
-</p>
-
-
+      <h1 class="product-title" id="productName"></h1>
+      <p class="product-price" id="productPrice"></p>
+      <p class="product-description" id="productDesc"></p>
       <div class="button-group">
         <button class="action-button add">🛒 Thêm vào giỏ</button>
         <button class="action-button discount" onclick="window.location.href='sale.html'">💬 Yêu cầu giảm giá</button>
         <button class="action-button primary" onclick="window.location.href='buy.html'">🛍️ Mua ngay</button>
-
       </div>
     </div>
   </div>
-<script>
-  const product = JSON.parse(localStorage.getItem('selectedProduct'));
-  if (product) {
-    document.getElementById("productName").textContent = product.name;
-    document.getElementById("productPrice").textContent = product.price + 'đ';
-    document.getElementById("productImage").src = product.image;
-    document.getElementById("productDesc").textContent = product.description;
-  } else {
-    alert("Không có dữ liệu sản phẩm.");
-  }
-</script>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (product) {
+      document.getElementById("productName").textContent = product.name;
+      document.getElementById("productPrice").textContent = product.price + 'đ';
+      document.getElementById("productImage").src = product.image;
+      document.getElementById("productDesc").textContent = product.description;
+    } else {
+      alert("Không có dữ liệu sản phẩm.");
+    }
+
+    const cartCount = document.getElementById('cartCount');
+    const cartPopup = document.getElementById('cartPopup');
+    let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function updateCartUI() {
+      cartCount.textContent = cart.length;
+      let html = '<h4>Sản phẩm trong giỏ:</h4>';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += parseInt(item.price);
+        html += `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="cart-item-info">
+              <strong>${item.name}</strong><br>
+              ${item.price}đ
+            </div>
+            <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+          </div>
+        `;
+      });
+
+      html += `<div class="total-price">Tổng: ${total.toLocaleString()}đ</div>`;
+      cartPopup.innerHTML = html;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cartItems', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    updateCartUI();
+
+    document.querySelector('.action-button.add').addEventListener('click', () => {
+      if (product) {
+        cart.push(product);
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        updateCartUI();
+        cartPopup.style.display = 'block';
+      }
+    });
+
+    document.querySelector('.cart-icon-container').addEventListener('click', (e) => {
+      cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', function(event) {
+      const isClickInside = cartPopup.contains(event.target) || event.target.closest('.cart-icon-container');
+      if (!isClickInside) {
+        cartPopup.style.display = 'none';
+      }
+    });
+
+    window.removeItem = removeItem;
+  </script>
 
 </body>
 </html>

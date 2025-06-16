@@ -119,17 +119,24 @@
  </section>
   
   <script>
-  fetch('MockData/thiet_bi_nghe_nhin.json')
+  fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=17&PageNumber=1&PageSize=20')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList');
-    data.forEach(product => {
+    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
+      // Format price to "117.000 đ"
+      function formatPrice(price) {
+        if (typeof price === "number") price = price.toString();
+        price = price.replace(/\D/g, "");
+        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price}</p>
+        <p>${formatPrice(product.price)}</p>
       `;
       card.style.cursor = "pointer";
       card.onclick = function() {
@@ -138,19 +145,30 @@
       };
       container.appendChild(card);
     });
+  })
+  .catch(error => {
+    console.error('Lỗi khi tải bài đăng mới:', error);
   });
+  
 
- fetch('MockData/thiet_bi_choi_game.json')
+ fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=18&PageNumber=1&PageSize=20')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList1');
-    data.forEach(product => {
+    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
+      // Format price to "117.000 đ"
+      function formatPrice(price) {
+        if (typeof price === "number") price = price.toString();
+        price = price.replace(/\D/g, "");
+        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price}</p>
+        <p>${formatPrice(product.price)}</p>
       `;
       card.style.cursor = "pointer";
       card.onclick = function() {
@@ -159,19 +177,30 @@
       };
       container.appendChild(card);
     });
+  })
+  .catch(error => {
+    console.error('Lỗi khi tải bài đăng mới:', error);
   });
+  
 
- fetch('MockData/dung_cu_the_thao.json')
+ fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=19&PageNumber=1&PageSize=20')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList2');
-    data.forEach(product => {
+    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
+      // Format price to "117.000 đ"
+      function formatPrice(price) {
+        if (typeof price === "number") price = price.toString();
+        price = price.replace(/\D/g, "");
+        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price}</p>
+        <p>${formatPrice(product.price)}</p>
       `;
       card.style.cursor = "pointer";
       card.onclick = function() {
@@ -180,21 +209,32 @@
       };
       container.appendChild(card);
     });
+  })
+  .catch(error => {
+    console.error('Lỗi khi tải bài đăng mới:', error);
   });
+  
 
   
 
- fetch('MockData/nhac_cu.json')
+  fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=20&PageNumber=1&PageSize=20')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList3');
-    data.forEach(product => {
+    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
+      // Format price to "117.000 đ"
+      function formatPrice(price) {
+        if (typeof price === "number") price = price.toString();
+        price = price.replace(/\D/g, "");
+        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price}</p>
+        <p>${formatPrice(product.price)}</p>
       `;
       card.style.cursor = "pointer";
       card.onclick = function() {
@@ -203,9 +243,11 @@
       };
       container.appendChild(card);
     });
+  })
+  .catch(error => {
+    console.error('Lỗi khi tải bài đăng mới:', error);
   });
-
-
+  
 
     const slider = document.querySelector('.slider-wrapper');
     const images = slider.querySelectorAll('img');

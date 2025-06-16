@@ -139,5 +139,24 @@
     <button class="submit-btn">Gửi yêu cầu giảm giá</button>
   </div>
 
+  <script>
+  document.querySelector('.submit-btn').addEventListener('click', function () {
+    const offer = document.getElementById('offer').value;
+    
+    // Kiểm tra nếu chưa nhập giá hoặc giá không hợp lệ
+    if (!offer || offer < 50000 || offer > 99000) {
+      alert("Vui lòng nhập mức giá hợp lệ (từ 50.000đ đến 99.000đ)");
+      return;
+    }
+
+    // Hiển thị thông báo thành công
+    alert("🎉 Gửi yêu cầu giảm giá thành công!\nBạn sẽ nhận được phản hồi trong vòng 24 giờ.");
+
+    // Chuyển hướng về trang sản phẩm
+    window.location.href = "sp.html";
+  });
+</script>
+
+
 </body>
 </html>

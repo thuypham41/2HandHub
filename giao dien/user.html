@@ -118,10 +118,73 @@
         font-size: 18px;
         font-weight: bold;
       }
+        #cancel-popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+  .cancel-popup-content {
+    background-color: #ffffff;
+    width: 420px;
+    max-width: 90%;
+    margin: 100px auto;
+    padding: 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
+  .cancel-popup-content h3 {
+    margin-top: 0;
+    color: #2a7f62;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .cancel-popup-content p {
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #333;
+  }
+  .cancel-popup-content label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #333;
+  }
+  .cancel-popup-content input[type="radio"] {
+    margin-right: 8px;
+  }
+  .cancel-popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .cancel-popup-buttons button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .btn-cancel-confirm {
+    background-color: #e53935;
+    color: white;
+  }
+  .btn-cancel-close {
+    background-color: #ccc;
+    color: #333;
+  }
     </style>
     <script>
       function showCancelPopup(orderId) {
         document.getElementById("cancel-popup").style.display = "block";
+        
         document.getElementById("cancel-order-id").innerText = orderId;
       }
 
@@ -735,5 +798,219 @@
         }
       };
     </script>
+     <div class="section">
+      <h3>Bài đăng bán</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã SP</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Ngày đăng</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="user-products-body">
+          <tr><td colspan="5">Đang tải bài đăng bán...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+
+   function loadUserPostedProducts() {
+  const tbody = document.getElementById("user-products-body");
+
+  // Fake dữ liệu sản phẩm tạm thời
+  const fakeProducts = [
+    {
+      id: 101,
+      name: "Áo khoác denim",
+      price: 250000,
+      createdAt: "2024-12-01T10:00:00Z"
+    },
+    {
+      id: 102,
+      name: "Giày sneaker trắng",
+      price: 450000,
+      createdAt: "2025-01-15T14:30:00Z"
+    }
+  ];
+
+  tbody.innerHTML = fakeProducts.slice(0, 2).map((p) => `
+    <tr>
+      <td>${p.id}</td>
+      <td><a href="sp.html?id=${p.id}" style="color:#2a7f62; font-weight:bold;">${p.name}</a></td>
+      <td>${formatPrice(p.price)}</td>
+      <td>${new Date(p.createdAt).toLocaleDateString("vi-VN")}</td>
+      <td>
+        <button onclick="editProduct(${p.id})"
+          style="background-color: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;">
+          Sửa
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+
+    function editProduct(productId) {
+      window.location.href = `edit-product.html?id=${productId}`;
+    }
+
+    function logout() {
+      localStorage.removeItem("isUserLoggedIn");
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+
+    window.onload = function () {
+      if (localStorage.getItem("isUserLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      } else {
+        loadUserPostedProducts();
+      }
+    };
+  </script>
+
+  <!-- POPUP SỬA BÀI ĐĂNG -->
+<div id="edit-product-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
+  <div style="background:#fff; width:480px; max-width:95vw; margin:60px auto; padding:28px 28px 18px 28px; border-radius:14px; position:relative; box-shadow:0 8px 32px rgba(42,127,98,0.15);">
+    <button onclick="closeEditProductPopup()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;color:#aaa;cursor:pointer;" title="Đóng">&times;</button>
+    <h3 style="margin-bottom: 18px; color:#2a7f62; text-align:center; font-size:1.3rem; letter-spacing:0.5px;">Chỉnh sửa bài đăng</h3>
+    <form id="edit-product-form" autocomplete="off" onsubmit="event.preventDefault(); submitEditProduct();"></form>
+      <div style="margin-bottom:14px;">
+        <label for="edit-name" style="font-weight:500; color:#2a7f62;">Tên sản phẩm:</label>
+        <input type="text" id="edit-name" name="name" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required />
+      </div>
+      <div style="margin-bottom:14px;">
+        <label for="edit-category" style="font-weight:500; color:#2a7f62;">Danh mục:</label>
+        <select id="edit-category" name="category" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required>
+          <option value="">-- Chọn danh mục --</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label for="edit-subcategory" style="font-weight:500; color:#2a7f62;">Danh mục con:</label>
+        <select id="edit-subcategory" name="subcategory" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;">
+          <option value="">-- Chọn danh mục con --</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label for="edit-description" style="font-weight:500; color:#2a7f62;">Mô tả sản phẩm:</label>
+        <textarea id="edit-description" name="description" rows="3" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px; resize:vertical;"></textarea>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label for="edit-price" style="font-weight:500; color:#2a7f62;">Giá bán (VNĐ):</label>
+        <input type="number" id="edit-price" name="price" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required />
+      </div>
+      <div style="margin-bottom:18px;">
+        <label for="edit-image" style="font-weight:500; color:#2a7f62;">Ảnh đại diện sản phẩm:</label>
+        <input type="file" id="edit-image" name="image" style="margin-top:4px;" accept="image/*" />
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:10px;">
+        <button type="submit" style="background-color:#2a7f62; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Xác nhận</button>
+        <button type="button" onclick="closeEditProductPopup()" style="background-color:#e53935; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Thoát</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  // Giả lập dữ liệu danh mục và danh mục con
+  const categories = [
+    { id: 1, name: "Quần áo", sub: [{ id: 11, name: "Áo" }, { id: 12, name: "Quần" }] },
+    { id: 2, name: "Giày dép", sub: [{ id: 21, name: "Giày" }, { id: 22, name: "Dép" }] }
+  ];
+
+  let currentEditProductId = null;
+
+  function editProduct(productId) {
+    // Lấy dữ liệu sản phẩm (ở đây dùng fakeProducts, thực tế gọi API)
+    const product = [
+      {
+        id: 101,
+        name: "Áo khoác denim",
+        price: 250000,
+        createdAt: "2024-12-01T10:00:00Z",
+        categoryId: 1,
+        subcategoryId: 11,
+        description: "Áo khoác denim phong cách trẻ trung.",
+        image: ""
+      },
+      {
+        id: 102,
+        name: "Giày sneaker trắng",
+        price: 450000,
+        createdAt: "2025-01-15T14:30:00Z",
+        categoryId: 2,
+        subcategoryId: 21,
+        description: "Giày sneaker trắng năng động.",
+        image: ""
+      }
+    ].find(p => p.id === productId);
+
+    if (!product) return;
+
+    currentEditProductId = productId;
+
+    // Đổ dữ liệu vào form
+    document.getElementById("edit-name").value = product.name || "";
+    document.getElementById("edit-price").value = product.price || "";
+    document.getElementById("edit-description").value = product.description || "";
+
+    // Đổ danh mục
+    const catSelect = document.getElementById("edit-category");
+    catSelect.innerHTML = `<option value="">-- Chọn danh mục --</option>` +
+      categories.map(c => `<option value="${c.id}" ${product.categoryId === c.id ? "selected" : ""}>${c.name}</option>`).join("");
+
+    // Đổ danh mục con
+    const subSelect = document.getElementById("edit-subcategory");
+    const selectedCat = categories.find(c => c.id === product.categoryId);
+    subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+      (selectedCat ? selectedCat.sub.map(s => `<option value="${s.id}" ${product.subcategoryId === s.id ? "selected" : ""}>${s.name}</option>`).join("") : "");
+
+    // Khi đổi danh mục thì load lại danh mục con
+    catSelect.onchange = function () {
+      const catId = parseInt(this.value);
+      const cat = categories.find(c => c.id === catId);
+      subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+        (cat ? cat.sub.map(s => `<option value="${s.id}">${s.name}</option>`).join("") : "");
+    };
+
+    document.getElementById("edit-product-popup").style.display = "block";
+  }
+
+  function closeEditProductPopup() {
+    document.getElementById("edit-product-popup").style.display = "none";
+    currentEditProductId = null;
+  }
+
+  function submitEditProduct() {
+    // Lấy dữ liệu từ form
+    const name = document.getElementById("edit-name").value.trim();
+    const price = document.getElementById("edit-price").value;
+    const description = document.getElementById("edit-description").value.trim();
+    const categoryId = document.getElementById("edit-category").value;
+    const subcategoryId = document.getElementById("edit-subcategory").value;
+    const imageInput = document.getElementById("edit-image");
+    const imageFile = imageInput.files[0];
+
+    if (!name || !price || !categoryId) {
+      alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
+      return;
+    }
+
+    // Xử lý upload ảnh và gửi dữ liệu lên server (ở đây chỉ alert demo)
+    alert("Đã cập nhật sản phẩm (demo).");
+
+    closeEditProductPopup();
+    // Sau khi cập nhật, có thể reload lại danh sách sản phẩm
+    loadUserPostedProducts && loadUserPostedProducts();
+  }
+</script>
   </body>
 </html>

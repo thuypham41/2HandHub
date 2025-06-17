@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,12 +43,12 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 40px auto;
       padding: 20px;
       background-color: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     h2 {
@@ -83,7 +84,8 @@
       border-collapse: collapse;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px;
       text-align: left;
       border-bottom: 1px solid #ddd;
@@ -119,147 +121,273 @@
     }
   </style>
   <script>
-  function showCancelPopup(orderId) {
-    document.getElementById('cancel-popup').style.display = 'block';
-    document.getElementById('cancel-order-id').innerText = orderId;
-  }
-
-  function closeCancelPopup() {
-    document.getElementById('cancel-popup').style.display = 'none';
-  }
-
-  function submitCancelReason() {
-    const reason = document.querySelector('input[name="cancel-reason"]:checked');
-    if (reason) {
-      alert(`Đơn ${document.getElementById('cancel-order-id').innerText} đã được yêu cầu hủy với lý do: ${reason.value}`);
-      closeCancelPopup();
-    } else {
-      alert("Vui lòng chọn lý do hủy đơn.");
+    function showCancelPopup(orderId) {
+      document.getElementById('cancel-popup').style.display = 'block';
+      document.getElementById('cancel-order-id').innerText = orderId;
     }
-  }
-</script>
+
+    function closeCancelPopup() {
+      document.getElementById('cancel-popup').style.display = 'none';
+    }
+
+    function submitCancelReason() {
+      const reason = document.querySelector('input[name="cancel-reason"]:checked');
+      if (reason) {
+        alert(`Đơn ${document.getElementById('cancel-order-id').innerText} đã được yêu cầu hủy với lý do: ${reason.value}`);
+        closeCancelPopup();
+      } else {
+        alert("Vui lòng chọn lý do hủy đơn.");
+      }
+    }
+  </script>
 
 </head>
+
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <a href="home.html" class="back-button">&#8249;</a>
-  <button class="logout-button" onclick="logout()">Đăng xuất</button>
-</div>
+  <!-- HEADER -->
+  <div class="header">
+    <a href="home.html" class="back-button">&#8249;</a>
+    <button class="logout-button" onclick="logout()">Đăng xuất</button>
+  </div>
 
-<!-- MAIN CONTENT -->
-<div class="container">
-  <h2>Tài khoản của tôi</h2>
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <h2>Tài khoản của tôi</h2>
 
-  <!-- Thông tin cá nhân -->
+    <!-- Thông tin cá nhân -->
+    <div class="section">
+      <h3>Thông tin cá nhân</h3>
+      <div id="user-info">
+        Đang tải thông tin...
+      </div>
+    </div>
+    <script>
+      // Gọi API để lấy thông tin người dùng (ví dụ lấy user đầu tiên từ API sản phẩm)
+      // Lấy user từ localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user && user.id ? user.id : 1; // fallback nếu không có user
+
+      fetch(`https://localhost:7238/api/User/get-user-by-id?id=${userId}`)
+        .then(res => res.json())
+        .then(data => {
+          // Giả sử thông tin user nằm trong data.data hoặc bạn thay bằng API user thật
+          const userInfo = data.data
+            ? data.data
+            : {
+              fullName: "Nguyễn Văn A",
+              email: "nguyenvana@example.com",
+              dob: "01/01/1995",
+              address: "123 Lê Lợi, Đà Nẵng",
+              phone: "0901234567"
+            };
+          // Hàm định dạng ngày theo dd/MM/yyyy
+          function formatDate(dateStr) {
+            if (!dateStr) return "";
+            const date = new Date(dateStr);
+            if (isNaN(date)) return dateStr; // fallback nếu không phải dạng ISO
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+          }
+
+          document.getElementById('user-info').innerHTML = `
+        <div class="info-row"><span class="info-label">Họ và tên:</span><span>${userInfo.fullName}</span></div>
+        <div class="info-row"><span class="info-label">Email:</span><span>${userInfo.email}</span></div>
+        <div class="info-row"><span class="info-label">Ngày sinh:</span><span>${formatDate(userInfo.dateOfBirth)}</span></div>
+        <div class="info-row"><span class="info-label">Địa chỉ:</span><span>${userInfo.address}</span></div>
+        <div class="info-row"><span class="info-label">Số điện thoại:</span><span>${userInfo.phoneNumber}</span></div>
+      `;
+        })
+        .catch(error => {
+          document.getElementById('user-info').innerHTML = "Không thể tải thông tin cá nhân.";
+          console.error('Lỗi khi tải thông tin cá nhân:', error);
+        });
+    </script>
+
+    <!-- Đơn hàng của tôi -->
+    <div class="section">
+      <h3>Đơn hàng của tôi</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+            <th>Xem chi tiết</th>
+          </tr>
+        </thead>
+        <tbody id="my-orders-body">
+          <tr>
+            <td colspan="5">Đang tải đơn hàng...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Popup Container -->
+    <div id="order-detail-popup"
+      style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:9999; min-width:320px; min-height:120px; border-radius:8px;">
+      <h3>Chi tiết đơn hàng</h3>
+      <div id="order-detail-content">Đang tải...</div>
+      <button onclick="closeOrderDetailPopup()">Đóng</button>
+  </div>
+
+  <script>
+    // Lấy user từ localStorage
+    const userOrder = JSON.parse(localStorage.getItem("user"));
+    const userOrderId = userOrder && userOrder.id ? userOrder.id : 1;
+    function showOrderDetailPopup(orderId) {
+      const popup = document.getElementById("order-detail-popup");
+      const content = document.getElementById("order-detail-content");
+
+      popup.style.display = "block";
+      content.innerHTML = "Đang tải...";
+
+      fetch(`https://localhost:7238/api/Order/detail?orderId=${orderId}`)
+        .then(res => res.json())
+        .then(order => {
+          // Hiển thị dữ liệu chi tiết đơn hàng
+          content.innerHTML = `
+        <p><strong>Mã đơn hàng:</strong> ${order.orderId}</p>
+        <p><strong>Trạng thái:</strong> ${order.status}</p>
+        <p><strong>Ngày đặt:</strong> ${new Date(order.createdDate).toLocaleString()}</p>
+        <p><strong>Tổng tiền:</strong> ${formatPrice(order.price)}</p>
+        <p><strong>Sản phẩm:</strong></p>
+        <ul>
+          ${order.productName.map((name, idx) =>
+            `<li>${name} - SL: ${order.productQuantity[idx]}</li>`
+          ).join('')}
+        </ul>
+      `;
+        })
+        .catch(err => {
+          console.error("Lỗi khi tải chi tiết đơn hàng:", err);
+          content.innerHTML = "Không thể tải chi tiết đơn hàng.";
+        });
+    }
+
+    function closeOrderDetailPopup() {
+      document.getElementById("order-detail-popup").style.display = "none";
+    }
+    fetch(`https://localhost:7238/api/Order/get-all-orders?PageNumber=1&PageSize=20&CustomerId=${userOrderId}`)
+      .then(res => res.json())
+      .then(data => {
+        const orders = data.data || [];
+        const tbody = document.getElementById('my-orders-body');
+        if (orders.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5">Không có đơn hàng nào.</td></tr>`;
+          return;
+        }
+        function formatPrice(price) {
+          if (typeof price === "number") price = price.toString();
+          price = price.replace(/\D/g, "");
+          return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+        }
+        tbody.innerHTML = orders.map(order => {
+          // Giả sử order có các trường: id, productName, price, status
+          let action = "—";
+          if (order.status === "Đang giao" || order.status === "Đang xử lý") {
+            action = `<button onclick="showCancelPopup('${order.id}')">Hủy</button>`;
+          }
+          return `
+            <tr>
+            <td>${order.orderId}</td>
+            <td style="white-space: pre-line;">
+              ${Array.isArray(order.productName)
+              ? order.productName.map((name, idx) => `${name}${order.productQuantity && order.productQuantity[idx] ? ' - ' + order.productQuantity[idx] : ''}`).join(', ')
+              : order.productName}
+            </td>
+            <td>${formatPrice(order.price)}</td>
+            <td>${order.status}</td>
+            <td>${action}</td>
+            <td>
+                <button onclick="showOrderDetailPopup('${order.orderId}')" title="Xem chi tiết" style="background:none;border:none;cursor:pointer;">
+                <span style="font-size:18px;">&#128065;</span>
+                </button>
+            </td>
+            </tr>
+        `;
+        }).join('');
+      })
+      .catch(error => {
+        document.getElementById('my-orders-body').innerHTML = `<tr><td colspan="5">Không thể tải đơn hàng.</td></tr>`;
+        console.error('Lỗi khi tải đơn hàng:', error);
+      });
+  </script>
   <div class="section">
-    <h3>Thông tin cá nhân</h3>
-    <div class="info-row"><span class="info-label">Họ và tên:</span><span>Nguyễn Văn A</span></div>
-    <div class="info-row"><span class="info-label">Email:</span><span>nguyenvana@example.com</span></div>
-    <div class="info-row"><span class="info-label">Ngày sinh:</span><span>01/01/1995</span></div>
-    <div class="info-row"><span class="info-label">Địa chỉ:</span><span>123 Lê Lợi, Đà Nẵng</span></div>
-    <div class="info-row"><span class="info-label">Số điện thoại:</span><span>0901234567</span></div>
+    <h3>Đơn hàng đã bán</h3>
+    <div style="margin-bottom: 10px;">
+      <label>Lọc theo thời gian:
+        <select>
+          <option>Tất cả</option>
+          <option>7 ngày qua</option>
+          <option>30 ngày qua</option>
+        </select>
+      </label>
+      <label style="margin-left: 20px;">Trạng thái:
+        <select>
+          <option>Tất cả</option>
+          <option>Đã giao</option>
+          <option>Đang xử lý</option>
+          <option>Đã hủy</option>
+        </select>
+      </label>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Mã đơn</th>
+          <th>Người mua</th>
+          <th>Sản phẩm</th>
+          <th>Giá</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#B001</td>
+          <td>Trần Thị B</td>
+          <td>Áo thun basic</td>
+          <td>130.000đ</td>
+          <td>Đã giao</td>
+        </tr>
+        <tr>
+          <td>#B002</td>
+          <td>Lê Văn C</td>
+          <td>Túi tote canvas</td>
+          <td>80.000đ</td>
+          <td>Đang xử lý</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- Đơn hàng của tôi -->
-<div class="section">
-  <h3>Đơn hàng của tôi</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Mã đơn</th>
-        <th>Sản phẩm</th>
-        <th>Giá</th>
-        <th>Trạng thái</th>
-        <th>Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>#DH001</td>
-        <td>Áo hoodie nam</td>
-        <td>150.000đ</td>
-        <td>Đang giao</td>
-        <td><button onclick="showCancelPopup('#DH001')">Hủy</button></td>
-      </tr>
-      <tr>
-        <td>#DH002</td>
-        <td>Sách Lập trình Java</td>
-        <td>95.000đ</td>
-        <td>Hoàn tất</td>
-        <td>—</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-  <!-- Đơn hàng đã bán -->
-<div class="section">
-  <h3>Đơn hàng đã bán</h3>
-  <div style="margin-bottom: 10px;">
-    <label>Lọc theo thời gian:
-      <select>
-        <option>Tất cả</option>
-        <option>7 ngày qua</option>
-        <option>30 ngày qua</option>
-      </select>
-    </label>
-    <label style="margin-left: 20px;">Trạng thái:
-      <select>
-        <option>Tất cả</option>
-        <option>Đã giao</option>
-        <option>Đang xử lý</option>
-        <option>Đã hủy</option>
-      </select>
-    </label>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Mã đơn</th>
-        <th>Người mua</th>
-        <th>Sản phẩm</th>
-        <th>Giá</th>
-        <th>Trạng thái</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>#B001</td>
-        <td>Trần Thị B</td>
-        <td>Áo thun basic</td>
-        <td>130.000đ</td>
-        <td>Đã giao</td>
-      </tr>
-      <tr>
-        <td>#B002</td>
-        <td>Lê Văn C</td>
-        <td>Túi tote canvas</td>
-        <td>80.000đ</td>
-        <td>Đang xử lý</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-</div>
-<div id="cancel-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4); z-index:1000;">
-  <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:8px; position:relative;">
-    <h3>Hủy đơn <span id="cancel-order-id"></span></h3>
-    <p>Vui lòng chọn lý do:</p>
-    <form>
-      <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ"> Cập nhật lại địa chỉ</label><br>
-      <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối"> Thủ tục thanh toán rắc rối</label><br>
-      <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn"> Tìm chỗ mua khác tốt hơn</label><br>
-      <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa"> Không có nhu cầu mua nữa</label><br>
-      <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy"> Không tìm thấy lý do hủy</label>
-    </form>
-    <br>
-    <button onclick="submitCancelReason()">Xác nhận hủy</button>
-    <button onclick="closeCancelPopup()" style="margin-left:10px;">Đóng</button>
+  <div id="cancel-popup"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4); z-index:1000;">
+    <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:8px; position:relative;">
+      <h3>Hủy đơn <span id="cancel-order-id"></span></h3>
+      <p>Vui lòng chọn lý do:</p>
+      <form>
+        <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ"> Cập nhật lại địa chỉ</label><br>
+        <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối"> Thủ tục thanh toán rắc
+          rối</label><br>
+        <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn"> Tìm chỗ mua khác tốt
+          hơn</label><br>
+        <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa"> Không có nhu cầu mua
+          nữa</label><br>
+        <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy"> Không tìm thấy lý do
+          hủy</label>
+      </form>
+      <br>
+      <button onclick="submitCancelReason()">Xác nhận hủy</button>
+      <button onclick="closeCancelPopup()" style="margin-left:10px;">Đóng</button>
+    </div>
   </div>
-</div>
 
   <script>
     function logout() {
@@ -269,12 +397,13 @@
       window.location.href = "index.html";
     }
 
-      window.onload = function() {
-    // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
-    if (localStorage.getItem("isUserLoggedIn") !== "true") {
-      window.location.href = "login.html";
-    }
-  };
+    window.onload = function () {
+      // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
+      if (localStorage.getItem("isUserLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+    };
   </script>
 </body>
+
 </html>

@@ -159,10 +159,15 @@
       <h2>Tài khoản của tôi</h2>
 
       <!-- Thông tin cá nhân -->
-      <div class="section">
-        <h3>Thông tin cá nhân</h3>
-        <div id="user-info">Đang tải thông tin...</div>
+      <div class="section" style="display: flex; align-items: center; justify-content: space-between;">
+        <h3 style="margin-bottom: 0;">Thông tin cá nhân</h3>
+        <button title="Chỉnh sửa hồ sơ" style="background: none; border: none; cursor: pointer; margin-left: auto; padding: 0;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 2px solid #2a7f62; border-radius: 50%; font-size: 22px; color: #2a7f62; background: #f4f7fa;">
+            &#9998;
+          </span>
+        </button>
       </div>
+      <div id="user-info">Đang tải thông tin...</div>
       <script>
         // Gọi API để lấy thông tin người dùng (ví dụ lấy user đầu tiên từ API sản phẩm)
         // Lấy user từ localStorage
@@ -453,7 +458,10 @@
                 ? "Đang giao hàng"
                 : order.status === 2
                 ? "Đã giao hàng"
-                : order.status
+                : order.status == -1
+                ? "Đã hủy"
+                :order.status
+
             }</td>
               <td>
                 ${

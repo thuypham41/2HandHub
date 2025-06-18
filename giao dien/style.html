@@ -187,7 +187,14 @@
       <i class="fas fa-search"></i>
     </div>
     <div class="right-icons">
-      <a href="user.html" class="username" target="_blank">Mizu</a>
+       <a href="user.html" class="username" target="_blank" id="username-link"></a>
+      <script>
+        // Lấy tên người dùng từ localStorage và hiển thị
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
+        const username = user.fullName || "Mizu";
+        document.getElementById('username-link').textContent = username;
+      </script>
       <i class="fa fa-bell"></i>
       <i class="fa fa-shopping-bag"></i>
       <a href="post.html" class="post-button">Đăng bán</a>

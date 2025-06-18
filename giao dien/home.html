@@ -211,6 +211,95 @@
   text-align: right;
   margin-bottom: 12px;
 }
+.cart-icon-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+#cartPopup {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 16px;
+  width: 320px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  display: none;
+  z-index: 999;
+  animation: slideDown 0.3s ease;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.remove-btn {
+  color: #e60023;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  background: none;
+}
+
+.total-price {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 12px;
+}
+#cartPopup {
+  position: absolute;
+  top: 36px; /* hoặc 40px */
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 16px;
+  width: 320px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  display: none;
+  z-index: 999;
+  animation: slideDown 0.3s ease;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+
 
   </style>
 </head>
@@ -239,22 +328,25 @@
           </div>
         </div>
       </div>
-      <a href="user.html" class="username" target="_blank">Mizu</a>
-      <div class="cart-wrapper">
+       <a href="user.html" class="username" target="_blank" id="username-link"></a>
+      <script>
+        // Lấy tên người dùng từ localStorage và hiển thị
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
+        const username = user.fullName || "Mizu";
+        document.getElementById('username-link').textContent = username;
+      </script>
+     <div class="cart-icon-container">
   <i class="fa fa-shopping-bag" id="cartIcon"></i>
-  <div class="cart-popup hidden" id="cartBox">
-    <p><strong>🛒 Giỏ hàng của bạn:</strong></p>
-    <div class="cart-items" id="cartItems">
-      <p>🧥 Áo Hoodie 2Hand - 89.000đ</p>
-      <p>📘 Sách Atomic Habits - 49.000đ</p>
-    </div>
-    <div class="cart-total" id="cartTotal">Tổng: 138.000đ</div>
-    <div class="action-buttons">
-      <button onclick="checkout()">🧾 Thanh toán</button>
-      <button onclick="closeCart()">❌ Đóng</button>
-    </div>
-  </div>
+  <span class="cart-badge" id="cartCount">0</span>
+
+  <!-- ✅ Move this popup INSIDE the cart container -->
+  <div id="cartPopup" class="cart-popup hidden"></div>
+
+
 </div>
+
+
 
       <a href="post.html" class="post-button">Đăng bán</a>
     </div>
@@ -370,78 +462,196 @@ fetch('https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageS
 
 // ...existing code...
 
+window.onload = function () {
+  // === Notification icon ===
+  const bellIcon = document.getElementById('notifIcon');
+  const notificationBox = document.getElementById('notificationBox');
+  const notifDot = document.getElementById('notifDot');
 
-  window.onload = function () {
-    const bellIcon = document.getElementById('notifIcon');
-    const notificationBox = document.getElementById('notificationBox');
-    const notifDot = document.getElementById('notifDot');
+  let bellClickCount = 0; //thong báo số lần click chuột vào biểu tượng chuông
+let bellClickTimer;
+bellIcon.addEventListener('click', (e) => {
+  e.stopPropagation();
+  bellClickCount++;
 
-    bellIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
+  clearTimeout(bellClickTimer); // reset timer mỗi khi click
+
+  bellClickTimer = setTimeout(() => {
+    if (bellClickCount === 1) {
       notificationBox.classList.toggle('hidden');
       notifDot.style.display = 'none';
-    });
+    } else if (bellClickCount === 2) {
+      showAgreedPopup();
+    } else if (bellClickCount === 3) {
+      showRejectedPopup();
+    }
+    bellClickCount = 0; // reset lại sau xử lý
+  }, 300); // 300ms để phát hiện chuỗi click
+});
 
-    document.addEventListener('click', (e) => {
-      if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
-        notificationBox.classList.add('hidden');
-      }
-    });
-
-    window.respond = function(action) {
-      switch (action) {
-        case 'accepted':
-          alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
-          break;
-        case 'rejected':
-          alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
-          break;
-        case 'chat':
-          window.location.href = "chat.html";
-          break;
-        default:
-          alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
-      }
+  
+  document.addEventListener('click', (e) => {
+    if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
       notificationBox.classList.add('hidden');
     }
-  };
-      const cartIcon = document.getElementById('cartIcon');
-    const cartBox = document.getElementById('cartBox');
+  });
 
-    cartIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      cartBox.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!cartBox.contains(e.target) && !cartIcon.contains(e.target)) {
-        cartBox.classList.add('hidden');
-      }
-    });
-
-    window.closeCart = function() {
-      cartBox.classList.add('hidden');
+  window.respond = function (action) {
+    switch (action) {
+      case 'accepted':
+        alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
+        break;
+      case 'rejected':
+        alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
+        break;
+      case 'chat':
+        window.location.href = "chat.html";
+        break;
+      default:
+        alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
     }
-
-    window.checkout = function() {
-  window.location.href = "buy.html";
- }
-
-function viewProductDetail(productId) {
-  const productMock = {
-    id: 1,
-    name: "Đồng hồ treo tường cũ",
-    price: "99.000",
-    image: "image/post1.jpg",
-    description: "Đồng hồ treo tường phong cách vintage, hoạt động bình thường, pin lâu, phù hợp trang trí phòng khách hoặc quán cà phê."
+    notificationBox.classList.add('hidden');
   };
-  localStorage.setItem('selectedProduct', JSON.stringify(productMock));
-  window.location.href = 'sp.html';
+function showAgreedPopup() { //thong bao dong y thuong luong
+  notificationBox.innerHTML = `
+    <div style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    ">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 20px;"></i>
+        <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+          Người bán đã đồng ý với yêu cầu thương lượng giá của bạn.
+        </p>
+      </div>
+      <button onclick="proceedToPayment()" style="
+        background-color: #e60023;
+        color: #fff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s ease;
+      ">Mua ngay</button>
+    </div>
+  `;
+  notificationBox.classList.remove('hidden');
+}
+function showRejectedPopup() {
+  notificationBox.innerHTML = `
+    <div style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    ">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 20px;"></i>
+        <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+          Người bán đã từ chối yêu cầu thương lượng của bạn.
+        </p>
+      </div>
+    </div>
+  `;
+  notificationBox.classList.remove('hidden');
 }
 
 
+
+
+  // === Giỏ hàng ===
+  const cartCount = document.getElementById('cartCount');
+  const cartPopup = document.getElementById('cartPopup');
+  const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  function formatPrice(price) {
+    if (typeof price === "number") price = price.toString();
+    price = price.replace(/\D/g, "");
+    return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+  }
+
+  function updateCartUI() {
+    cartCount.textContent = cart.length;
+    if (cart.length === 0) {
+      cartPopup.innerHTML = '<p>🛒 Giỏ hàng của bạn đang trống.</p>';
+      return;
+    }
+    let html = '<h4 style="margin-top:0;">🛒 Giỏ hàng:</h4>';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += parseInt(item.price.replace(/\D/g, ''));
+      html += `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="cart-item-info" onclick="viewProduct(${index})" style="cursor:pointer;">
+            <strong>${item.name}</strong><br>
+            ${formatPrice(item.price)}
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+        </div>
+      `;
+    });
+
+    html += `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap: 12px;">
+        <div class="total-price" style="margin:0;">Tổng: ${formatPrice(total.toString())}</div>
+        <button class="action-button primary" onclick="proceedToPayment()" style="flex-shrink: 0;">Thanh toán</button>
+      </div>
+    `;
+
+    cartPopup.innerHTML = html;
+  }
+
+  window.removeItem = function (index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    updateCartUI();
+  };
+
+  window.viewProduct = function (index) {
+    const product = cart[index];
+    localStorage.setItem('selectedProduct', JSON.stringify(product));
+    window.location.href = 'sp.html';
+  };
+
+  window.proceedToPayment = function () {
+    if (cart.length === 0) {
+      alert("Giỏ hàng trống!");
+      return;
+    }
+    localStorage.setItem('cartToPay', JSON.stringify(cart));
+    window.location.href = 'pay.html';
+  };
+
+  document.querySelector('.cart-icon-container').addEventListener('click', (e) => {
+    cartPopup.classList.toggle('hidden');
+    e.stopPropagation();
+  });
+
+  document.addEventListener('click', function (event) {
+    const isInside = cartPopup.contains(event.target) || event.target.closest('.cart-icon-container');
+    if (!isInside) cartPopup.classList.add('hidden');
+  });
+
+  updateCartUI();
+};
+  </script>
+
+  <footer>
+    <p>&copy; 2023 2HandHub.com - All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Cập nhật số lượng giỏ hàng
+    const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    document.getElementById('cartCount').textContent = cart.length;
 </script>
-  
 
 </body>
 </html>

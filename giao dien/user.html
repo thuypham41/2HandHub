@@ -708,79 +708,97 @@
           </script>
         </table>
       </div>
-    <div
-      id="cancel-popup"
-      style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 1000;
-      "
-    >
-      <div
-        style="
-          background: #fff;
-          width: 400px;
-          margin: 100px auto;
-          padding: 20px;
-          border-radius: 8px;
-          position: relative;
-        "
-      >
-        <h3>Hủy đơn <span id="cancel-order-id"></span></h3>
-        <p>Vui lòng chọn lý do:</p>
-        <form>
-          <label
-            ><input
-              type="radio"
-              name="cancel-reason"
-              value="Cập nhật lại địa chỉ"
-            />
-            Cập nhật lại địa chỉ</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="cancel-reason"
-              value="Thủ tục thanh toán rắc rối"
-            />
-            Thủ tục thanh toán rắc rối</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="cancel-reason"
-              value="Tìm chỗ mua khác tốt hơn"
-            />
-            Tìm chỗ mua khác tốt hơn</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="cancel-reason"
-              value="Không có nhu cầu mua nữa"
-            />
-            Không có nhu cầu mua nữa</label
-          ><br />
-          <label
-            ><input
-              type="radio"
-              name="cancel-reason"
-              value="Không tìm thấy lý do hủy"
-            />
-            Không tìm thấy lý do hủy</label
-          >
-        </form>
-        <br />
-        <button onclick="submitCancelReason()">Xác nhận hủy</button>
-        <button onclick="closeCancelPopup()" style="margin-left: 10px">
-          Đóng
-        </button>
-      </div>
+   <!-- POPUP HỦY ĐƠN -->
+<div id="cancel-popup">
+  <div id="cancel-popup-box" class="cancel-popup-content">
+    <div id="cancel-popup-header" style="cursor: move; font-weight: bold; font-size: 18px; margin-bottom: 12px; color: #2a7f62;">
+      Hủy đơn <span id="cancel-order-id"></span>
+    </div>
+    <p style="font-weight: 500;">Vui lòng chọn lý do:</p>
+    <form id="cancel-reason-form" style="margin-bottom: 12px;">
+      <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ" /> Cập nhật lại địa chỉ</label><br />
+      <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối" /> Thủ tục thanh toán rắc rối</label><br />
+      <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn" /> Tìm chỗ mua khác tốt hơn</label><br />
+      <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa" /> Không có nhu cầu mua nữa</label><br />
+      <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy" /> Không tìm thấy lý do hủy</label>
+    </form>
+    <div class="cancel-popup-buttons">
+      <button class="btn-cancel-confirm" onclick="submitCancelReason()">Xác nhận</button>
+      <button class="btn-cancel-close" onclick="closeCancelPopup()">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #cancel-popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+  .cancel-popup-content {
+    background-color: #ffffff;
+    width: 420px;
+    max-width: 90%;
+    margin: 100px auto;
+    padding: 24px 28px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
+  .cancel-popup-content label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #333;
+    padding-left: 4px;
+  }
+  .cancel-popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .cancel-popup-buttons button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-cancel-confirm {
+    background-color: #e53935;
+    color: white;
+  }
+  .btn-cancel-close {
+    background-color: #ccc;
+    color: #333;
+  }
+</style>
+ <div class="section">
+      <h3>Bài đăng bán</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã SP</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Ngày đăng</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="user-products-body">
+          <tr><td colspan="5">Đang tải bài đăng bán...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     </div>
 
     <script>
@@ -798,23 +816,7 @@
         }
       };
     </script>
-     <div class="section">
-      <h3>Bài đăng bán</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Mã SP</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Ngày đăng</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody id="user-products-body">
-          <tr><td colspan="5">Đang tải bài đăng bán...</td></tr>
-        </tbody>
-      </table>
-    </div>
+    
   </div>
   <script>
     function formatPrice(price) {
@@ -878,12 +880,13 @@
     };
   </script>
 
-  <!-- POPUP SỬA BÀI ĐĂNG -->
+ 
+<!-- POPUP Sửa BÀI ĐĂNG -->
 <div id="edit-product-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
-  <div style="background:#fff; width:480px; max-width:95vw; margin:60px auto; padding:28px 28px 18px 28px; border-radius:14px; position:relative; box-shadow:0 8px 32px rgba(42,127,98,0.15);">
+  <div id="edit-product-popup-box" style="background:#fff; width:480px; max-width:95vw; top:100px; left:calc(50% - 240px); padding:28px 28px 18px 28px; border-radius:14px; position:fixed; box-shadow:0 8px 32px rgba(42,127,98,0.15);">
     <button onclick="closeEditProductPopup()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;color:#aaa;cursor:pointer;" title="Đóng">&times;</button>
-    <h3 style="margin-bottom: 18px; color:#2a7f62; text-align:center; font-size:1.3rem; letter-spacing:0.5px;">Chỉnh sửa bài đăng</h3>
-    <form id="edit-product-form" autocomplete="off" onsubmit="event.preventDefault(); submitEditProduct();"></form>
+    <h3 id="edit-product-popup-header" style="margin-bottom: 18px; color:#2a7f62; text-align:center; font-size:1.3rem; letter-spacing:0.5px; cursor:move;">Chỉnh sửa bài đăng</h3>
+    <form id="edit-product-form" autocomplete="off" onsubmit="event.preventDefault(); submitEditProduct();">
       <div style="margin-bottom:14px;">
         <label for="edit-name" style="font-weight:500; color:#2a7f62;">Tên sản phẩm:</label>
         <input type="text" id="edit-name" name="name" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required />
@@ -919,66 +922,48 @@
     </form>
   </div>
 </div>
+
 <script>
-  // Giả lập dữ liệu danh mục và danh mục con
   const categories = [
-    { id: 1, name: "Quần áo", sub: [{ id: 11, name: "Áo" }, { id: 12, name: "Quần" }] },
-    { id: 2, name: "Giày dép", sub: [{ id: 21, name: "Giày" }, { id: 22, name: "Dép" }] }
+    { id: "thoitrang", name: "Thời trang", sub: ["Quần áo nam", "Quần áo nữ", "Giày dép", "Phụ kiện"] },
+    { id: "sach", name: "Sách", sub: ["Tiểu thuyết", "Phi hư cấu", "Tự lực - Phát triển bản thân", "Giáo dục - Học thuật"] },
+    { id: "giadung", name: "Gia dụng", sub: ["Thiết bị nhà bếp", "Thiết bị làm sạch & chăm sóc nhà cửa", "Thiết bị giặt ủi", "Thiết bị sinh hoạt & chăm sóc cá nhân"] },
+    { id: "dientu", name: "Điện tử", sub: ["Thiết bị điện từ gia dụng", "Thiết bị điện từ cá nhân", "Phụ kiện điện từ", "Thiết bị công nghệ - Văn phòng"] },
+    { id: "giaitri", name: "Giải trí", sub: ["Thiết bị nghe nhìn", "Thiết bị chơi game", "Dụng cụ thể thao - Giải trí tại nhà", "Nhạc cụ - Đồ sưu tầm"] }
   ];
 
   let currentEditProductId = null;
 
   function editProduct(productId) {
-    // Lấy dữ liệu sản phẩm (ở đây dùng fakeProducts, thực tế gọi API)
-    const product = [
-      {
-        id: 101,
-        name: "Áo khoác denim",
-        price: 250000,
-        createdAt: "2024-12-01T10:00:00Z",
-        categoryId: 1,
-        subcategoryId: 11,
-        description: "Áo khoác denim phong cách trẻ trung.",
-        image: ""
-      },
-      {
-        id: 102,
-        name: "Giày sneaker trắng",
-        price: 450000,
-        createdAt: "2025-01-15T14:30:00Z",
-        categoryId: 2,
-        subcategoryId: 21,
-        description: "Giày sneaker trắng năng động.",
-        image: ""
-      }
-    ].find(p => p.id === productId);
-
-    if (!product) return;
+    const product = {
+      id: productId,
+      name: "Giày sneaker trắng",
+      price: 450000,
+      categoryId: "thoitrang",
+      subcategoryId: "Giày dép",
+      description: "Giày sneaker trắng năng động.",
+      image: ""
+    };
 
     currentEditProductId = productId;
+    document.getElementById("edit-name").value = product.name;
+    document.getElementById("edit-price").value = product.price;
+    document.getElementById("edit-description").value = product.description;
 
-    // Đổ dữ liệu vào form
-    document.getElementById("edit-name").value = product.name || "";
-    document.getElementById("edit-price").value = product.price || "";
-    document.getElementById("edit-description").value = product.description || "";
-
-    // Đổ danh mục
     const catSelect = document.getElementById("edit-category");
     catSelect.innerHTML = `<option value="">-- Chọn danh mục --</option>` +
       categories.map(c => `<option value="${c.id}" ${product.categoryId === c.id ? "selected" : ""}>${c.name}</option>`).join("");
 
-    // Đổ danh mục con
     const subSelect = document.getElementById("edit-subcategory");
     const selectedCat = categories.find(c => c.id === product.categoryId);
     subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-      (selectedCat ? selectedCat.sub.map(s => `<option value="${s.id}" ${product.subcategoryId === s.id ? "selected" : ""}>${s.name}</option>`).join("") : "");
+      (selectedCat ? selectedCat.sub.map(s => `<option value="${s}" ${product.subcategoryId === s ? "selected" : ""}>${s}</option>`).join("") : "");
 
-    // Khi đổi danh mục thì load lại danh mục con
     catSelect.onchange = function () {
-      const catId = parseInt(this.value);
+      const catId = this.value;
       const cat = categories.find(c => c.id === catId);
       subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-        (cat ? cat.sub.map(s => `<option value="${s.id}">${s.name}</option>`).join("") : "");
+        (cat ? cat.sub.map(s => `<option value="${s}">${s}</option>`).join("") : "");
     };
 
     document.getElementById("edit-product-popup").style.display = "block";
@@ -990,7 +975,6 @@
   }
 
   function submitEditProduct() {
-    // Lấy dữ liệu từ form
     const name = document.getElementById("edit-name").value.trim();
     const price = document.getElementById("edit-price").value;
     const description = document.getElementById("edit-description").value.trim();
@@ -1004,13 +988,67 @@
       return;
     }
 
-    // Xử lý upload ảnh và gửi dữ liệu lên server (ở đây chỉ alert demo)
     alert("Đã cập nhật sản phẩm (demo).");
-
     closeEditProductPopup();
-    // Sau khi cập nhật, có thể reload lại danh sách sản phẩm
-    loadUserPostedProducts && loadUserPostedProducts();
   }
+
+  // Cho popup sửa bài đăng di chuyển được
+  (function () {
+    let isDragging = false;
+    let offsetX = 0, offsetY = 0;
+    const popupBox = document.getElementById("edit-product-popup-box");
+    const header = document.getElementById("edit-product-popup-header");
+
+    header.addEventListener("mousedown", function (e) {
+      isDragging = true;
+      const rect = popupBox.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      document.body.style.userSelect = "none";
+    });
+
+    document.addEventListener("mousemove", function (e) {
+      if (isDragging) {
+        popupBox.style.left = (e.clientX - offsetX) + "px";
+        popupBox.style.top = (e.clientY - offsetY) + "px";
+      }
+    });
+
+    document.addEventListener("mouseup", function () {
+      isDragging = false;
+      document.body.style.userSelect = "auto";
+    });
+  })();
 </script>
+
+<script>
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  const popup = document.getElementById("cancel-popup-box");
+  const header = document.getElementById("cancel-popup-header");
+
+  header.addEventListener("mousedown", function (e) {
+    isDragging = true;
+    const rect = popup.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", function () {
+    isDragging = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", function (e) {
+    if (isDragging) {
+      popup.style.position = "fixed";
+      popup.style.left = `${e.clientX - offsetX}px`;
+      popup.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+</script>
+
   </body>
 </html>

@@ -249,7 +249,14 @@
     </div>
     <div class="right-icons">
       <i class="fas fa-bell"></i>
-      <a href="user.html" class="username" target="_blank">Mizu</a>
+       <a href="user.html" class="username" target="_blank" id="username-link"></a>
+      <script>
+        // Lấy tên người dùng từ localStorage và hiển thị
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
+        const username = user.fullName || "Mizu";
+        document.getElementById('username-link').textContent = username;
+      </script>
       <div class="cart-icon-container">
         <i class="fa fa-shopping-bag"></i>
         <span class="cart-badge" id="cartCount">0</span>
@@ -310,7 +317,14 @@
         `;
       });
 
-      html += `<div class="total-price">Tổng: ${total.toLocaleString()}đ</div>`;
+    html += `
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 12px;">
+    <div class="total-price" style="margin: 0;">Tổng: ${total.toLocaleString()}đ</div>
+    <button class="action-button primary" onclick="proceedToPayment()" style="flex-shrink: 0;">Thanh toán</button>
+  </div>
+`;
+
+
       cartPopup.innerHTML = html;
     }
 
@@ -344,6 +358,18 @@
     });
 
     window.removeItem = removeItem;
+
+    function proceedToPayment() {
+  if (cart.length === 0) {
+    alert("Giỏ hàng đang trống!");
+    return;
+  }
+  // Lưu giỏ hàng vào localStorage với tên khác để dùng ở pay.html
+  localStorage.setItem('cartToPay', JSON.stringify(cart));
+  // Chuyển hướng sang trang thanh toán
+  window.location.href = 'pay.html';
+}
+
   </script>
 
 </body>

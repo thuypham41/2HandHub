@@ -1,316 +1,342 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tài khoản của tôi</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background: #f4f7fa;
-        margin: 0;
-        padding: 0;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tài khoản của tôi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .back-button {
+      font-size: 24px;
+      text-decoration: none;
+      color: #2a7f62;
+    }
+
+    .logout-button {
+      text-decoration: none;
+      color: #fff;
+      background-color: #2a7f62;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background-color: #256f57;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2a7f62;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h3 {
+      border-bottom: 2px solid #2a7f62;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      color: #2a7f62;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #444;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #2a7f62;
+      color: white;
+    }
+
+    .stat-box {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #f0f8f4;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item h4 {
+      margin: 0;
+      color: #2a7f62;
+    }
+
+    .stat-item p {
+      margin: 5px 0 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #cancel-popup {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .cancel-popup-content {
+      background-color: #ffffff;
+      width: 420px;
+      max-width: 90%;
+      margin: 100px auto;
+      padding: 24px 28px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+
+    .cancel-popup-content h3 {
+      margin-top: 0;
+      color: #2a7f62;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .cancel-popup-content p {
+      margin-bottom: 10px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .cancel-popup-content label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .cancel-popup-content input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    .cancel-popup-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .cancel-popup-buttons button {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-cancel-confirm {
+      background-color: #e53935;
+      color: white;
+    }
+
+    .btn-cancel-close {
+      background-color: #ccc;
+      color: #333;
+    }
+  </style>
+  <script>
+    function showCancelPopup(orderId) {
+      document.getElementById("cancel-popup").style.display = "block";
+
+      document.getElementById("cancel-order-id").innerText = orderId;
+    }
+
+    function closeCancelPopup() {
+      document.getElementById("cancel-popup").style.display = "none";
+    }
+
+    function submitCancelReason() {
+      const reason = document.querySelector('input[name="cancel-reason"]:checked');
+      const orderId = document.getElementById("cancel-order-id").innerText;
+      if (!reason) {
+        alert("Vui lòng chọn lý do hủy đơn.");
+        return;
       }
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #ddd;
-      }
+      fetch("https://localhost:7238/api/Order/cancel-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          reason: reason.value
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success || data.status === 200) {
+            alert(`Đơn ${orderId} đã được yêu cầu hủy với lý do: ${reason.value}`);
+            closeCancelPopup();
+            // Reload orders table
+            location.reload();
+          } else {
+            alert("Hủy đơn thất bại. Vui lòng thử lại.");
+          }
+        })
+        .catch(() => {
+          alert("Có lỗi xảy ra khi gửi yêu cầu hủy đơn.");
+        });
+    }
+  </script>
+</head>
 
-      .back-button {
-        font-size: 24px;
-        text-decoration: none;
-        color: #2a7f62;
-      }
+<body>
+  <!-- HEADER -->
+  <div class="header">
+    <a href="home.html" class="back-button">&#8249;</a>
+    <button class="logout-button" onclick="logout()">Đăng xuất</button>
+  </div>
 
-      .logout-button {
-        text-decoration: none;
-        color: #fff;
-        background-color: #2a7f62;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-      }
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <h2>Tài khoản của tôi</h2>
 
-      .logout-button:hover {
-        background-color: #256f57;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      }
-
-      h2 {
-        text-align: center;
-        color: #2a7f62;
-      }
-
-      .section {
-        margin-top: 30px;
-      }
-
-      .section h3 {
-        border-bottom: 2px solid #2a7f62;
-        padding-bottom: 8px;
-        margin-bottom: 16px;
-        color: #2a7f62;
-      }
-
-      .info-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-        border-bottom: 1px dashed #ccc;
-      }
-
-      .info-label {
-        font-weight: bold;
-        color: #444;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      th,
-      td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      th {
-        background-color: #2a7f62;
-        color: white;
-      }
-
-      .stat-box {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-        background-color: #f0f8f4;
-        border-radius: 10px;
-        margin-top: 10px;
-      }
-
-      .stat-item {
-        text-align: center;
-      }
-
-      .stat-item h4 {
-        margin: 0;
-        color: #2a7f62;
-      }
-
-      .stat-item p {
-        margin: 5px 0 0;
-        font-size: 18px;
-        font-weight: bold;
-      }
-        #cancel-popup {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-  }
-  .cancel-popup-content {
-    background-color: #ffffff;
-    width: 420px;
-    max-width: 90%;
-    margin: 100px auto;
-    padding: 24px 28px;
-    border-radius: 12px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-    position: relative;
-    font-family: Arial, sans-serif;
-  }
-  .cancel-popup-content h3 {
-    margin-top: 0;
-    color: #2a7f62;
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
-  .cancel-popup-content p {
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: #333;
-  }
-  .cancel-popup-content label {
-    display: block;
-    margin-bottom: 8px;
-    cursor: pointer;
-    color: #333;
-  }
-  .cancel-popup-content input[type="radio"] {
-    margin-right: 8px;
-  }
-  .cancel-popup-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 18px;
-  }
-  .cancel-popup-buttons button {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  .btn-cancel-confirm {
-    background-color: #e53935;
-    color: white;
-  }
-  .btn-cancel-close {
-    background-color: #ccc;
-    color: #333;
-  }
-    </style>
-    <script>
-      function showCancelPopup(orderId) {
-        document.getElementById("cancel-popup").style.display = "block";
-        
-        document.getElementById("cancel-order-id").innerText = orderId;
-      }
-
-      function closeCancelPopup() {
-        document.getElementById("cancel-popup").style.display = "none";
-      }
-
-      function submitCancelReason() {
-        const reason = document.querySelector(
-          'input[name="cancel-reason"]:checked'
-        );
-        if (reason) {
-          alert(
-            `Đơn ${
-              document.getElementById("cancel-order-id").innerText
-            } đã được yêu cầu hủy với lý do: ${reason.value}`
-          );
-          closeCancelPopup();
-        } else {
-          alert("Vui lòng chọn lý do hủy đơn.");
-        }
-      }
-    </script>
-  </head>
-
-  <body>
-    <!-- HEADER -->
-    <div class="header">
-      <a href="home.html" class="back-button">&#8249;</a>
-      <button class="logout-button" onclick="logout()">Đăng xuất</button>
+    <!-- Thông tin cá nhân -->
+    <div class="section" style="display: flex; align-items: center; justify-content: space-between;">
+      <h3 style="margin-bottom: 0;">Thông tin cá nhân</h3>
+      <button title="Chỉnh sửa hồ sơ"
+        style="background: none; border: none; cursor: pointer; margin-left: auto; padding: 0;">
+        <span
+          style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 2px solid #2a7f62; border-radius: 50%; font-size: 22px; color: #2a7f62; background: #f4f7fa;">
+          &#9998;
+        </span>
+      </button>
     </div>
+    <div id="user-info">Đang tải thông tin...</div>
+    <script>
+      // Gọi API để lấy thông tin người dùng (ví dụ lấy user đầu tiên từ API sản phẩm)
+      // Lấy user từ localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user && user.id ? user.id : 1; // fallback nếu không có user
 
-    <!-- MAIN CONTENT -->
-    <div class="container">
-      <h2>Tài khoản của tôi</h2>
+      fetch(`https://localhost:7238/api/User/get-user-by-id?id=${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          // Giả sử thông tin user nằm trong data.data hoặc bạn thay bằng API user thật
+          const userInfo = data.data
+            ? data.data
+            : {
+              fullName: "Nguyễn Văn A",
+              email: "nguyenvana@example.com",
+              dob: "01/01/1995",
+              address: "123 Lê Lợi, Đà Nẵng",
+              phone: "0901234567",
+            };
+          // Hàm định dạng ngày theo dd/MM/yyyy
+          function formatDate(dateStr) {
+            if (!dateStr) return "";
+            const date = new Date(dateStr);
+            if (isNaN(date)) return dateStr; // fallback nếu không phải dạng ISO
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+          }
 
-      <!-- Thông tin cá nhân -->
-      <div class="section" style="display: flex; align-items: center; justify-content: space-between;">
-        <h3 style="margin-bottom: 0;">Thông tin cá nhân</h3>
-        <button title="Chỉnh sửa hồ sơ" style="background: none; border: none; cursor: pointer; margin-left: auto; padding: 0;">
-          <span style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 2px solid #2a7f62; border-radius: 50%; font-size: 22px; color: #2a7f62; background: #f4f7fa;">
-            &#9998;
-          </span>
-        </button>
-      </div>
-      <div id="user-info">Đang tải thông tin...</div>
-      <script>
-        // Gọi API để lấy thông tin người dùng (ví dụ lấy user đầu tiên từ API sản phẩm)
-        // Lấy user từ localStorage
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : 1; // fallback nếu không có user
-
-        fetch(`https://localhost:7238/api/User/get-user-by-id?id=${userId}`)
-          .then((res) => res.json())
-          .then((data) => {
-            // Giả sử thông tin user nằm trong data.data hoặc bạn thay bằng API user thật
-            const userInfo = data.data
-              ? data.data
-              : {
-                  fullName: "Nguyễn Văn A",
-                  email: "nguyenvana@example.com",
-                  dob: "01/01/1995",
-                  address: "123 Lê Lợi, Đà Nẵng",
-                  phone: "0901234567",
-                };
-            // Hàm định dạng ngày theo dd/MM/yyyy
-            function formatDate(dateStr) {
-              if (!dateStr) return "";
-              const date = new Date(dateStr);
-              if (isNaN(date)) return dateStr; // fallback nếu không phải dạng ISO
-              const day = String(date.getDate()).padStart(2, "0");
-              const month = String(date.getMonth() + 1).padStart(2, "0");
-              const year = date.getFullYear();
-              return `${day}/${month}/${year}`;
-            }
-
-            document.getElementById("user-info").innerHTML = `
-        <div class="info-row"><span class="info-label">Họ và tên:</span><span>${
-          userInfo.fullName
-        }</span></div>
-        <div class="info-row"><span class="info-label">Email:</span><span>${
-          userInfo.email
-        }</span></div>
+          document.getElementById("user-info").innerHTML = `
+        <div class="info-row"><span class="info-label">Họ và tên:</span><span>${userInfo.fullName
+            }</span></div>
+        <div class="info-row"><span class="info-label">Email:</span><span>${userInfo.email
+            }</span></div>
         <div class="info-row"><span class="info-label">Ngày sinh:</span><span>${formatDate(
-          userInfo.dateOfBirth
-        )}</span></div>
-        <div class="info-row"><span class="info-label">Địa chỉ:</span><span>${
-          userInfo.address
-        }</span></div>
-        <div class="info-row"><span class="info-label">Số điện thoại:</span><span>${
-          userInfo.phoneNumber
-        }</span></div>
+              userInfo.dateOfBirth
+            )}</span></div>
+        <div class="info-row"><span class="info-label">Địa chỉ:</span><span>${userInfo.address
+            }</span></div>
+        <div class="info-row"><span class="info-label">Số điện thoại:</span><span>${userInfo.phoneNumber
+            }</span></div>
       `;
-          })
-          .catch((error) => {
-            document.getElementById("user-info").innerHTML =
-              "Không thể tải thông tin cá nhân.";
-            console.error("Lỗi khi tải thông tin cá nhân:", error);
-          });
-      </script>
+        })
+        .catch((error) => {
+          document.getElementById("user-info").innerHTML =
+            "Không thể tải thông tin cá nhân.";
+          console.error("Lỗi khi tải thông tin cá nhân:", error);
+        });
+    </script>
 
-      <!-- Đơn hàng của tôi -->
-      <div class="section">
-        <h3>Đơn hàng của tôi</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Mã đơn</th>
-              <th>Sản phẩm</th>
-              <th>Giá</th>
-              <th>Trạng thái</th>
-              <th>Hành động</th>
-              <th>Xem chi tiết</th>
-            </tr>
-          </thead>
-          <tbody id="my-orders-body">
-            <tr>
-              <td colspan="5">Đang tải đơn hàng...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- Popup đơn hàng chi tiết -->
-      <div
-        id="order-detail-popup"
-        style="
+    <!-- Đơn hàng của tôi -->
+    <div class="section">
+      <h3>Đơn hàng của tôi</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+            <th>Xem chi tiết</th>
+          </tr>
+        </thead>
+        <tbody id="my-orders-body">
+          <tr>
+            <td colspan="5">Đang tải đơn hàng...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Popup đơn hàng chi tiết -->
+    <div id="order-detail-popup" style="
           display: none;
           position: fixed;
           top: 50%;
@@ -324,70 +350,75 @@
           min-width: 320px;
           min-height: 120px;
           border-radius: 8px;
-        "
-      >
-        <h3>Chi tiết đơn hàng</h3>
-        <div id="order-detail-content">Đang tải...</div>
-        <button id="order-detail-close-btn" onclick="closeOrderDetailPopup()">
-          Đóng
-        </button>
-        <script>
-          // Optional: Style the close button here if needed
-          document.addEventListener("DOMContentLoaded", function () {
-            var btn = document.getElementById("order-detail-close-btn");
-            if (btn) {
-              btn.style.backgroundColor = "#f44336";
-              btn.style.color = "white";
-              btn.style.marginTop = "10px";
-              btn.style.padding = "6px 12px";
-              btn.style.border = "none";
-              btn.style.borderRadius = "4px";
-              btn.style.cursor = "pointer";
-              btn.style.opacity = 1;
-              btn.style.display = "block";
-              btn.style.marginLeft = "auto";
-            }
-          });
-        </script>
-      </div>
+        ">
+      <h3>Chi tiết đơn hàng</h3>
+      <div id="order-detail-content">Đang tải...</div>
+      <button id="order-detail-close-btn" onclick="closeOrderDetailPopup()">
+        Đóng
+      </button>
       <script>
-        // Lấy user từ localStorage
-        const userOrder = JSON.parse(localStorage.getItem("user"));
-        const userOrderId = userOrder && userOrder.id ? userOrder.id : 1;
-        function showOrderDetailPopup(orderId) {
-          const popup = document.getElementById("order-detail-popup");
-          const content = document.getElementById("order-detail-content");
-
-          popup.style.display = "block";
-          content.innerHTML = "Đang tải...";
-
-          // Tạo overlay nếu chưa có
-          let overlay = document.getElementById("order-detail-overlay");
-          if (!overlay) {
-            overlay = document.createElement("div");
-            overlay.id = "order-detail-overlay";
-            overlay.style.position = "fixed";
-            overlay.style.top = "0";
-            overlay.style.left = "0";
-            overlay.style.width = "100vw";
-            overlay.style.height = "100vh";
-            overlay.style.background = "rgba(0,0,0,0.4)";
-            overlay.style.zIndex = "9998";
-            overlay.onclick = function () {
-              closeOrderDetailPopup();
-              overlay.style.display = "none";
-            };
-            document.body.appendChild(overlay);
-          } else {
-            overlay.style.display = "block";
+        // Optional: Style the close button here if needed
+        document.addEventListener("DOMContentLoaded", function () {
+          var btn = document.getElementById("order-detail-close-btn");
+          if (btn) {
+            btn.style.backgroundColor = "#f44336";
+            btn.style.color = "white";
+            btn.style.marginTop = "10px";
+            btn.style.padding = "6px 12px";
+            btn.style.border = "none";
+            btn.style.borderRadius = "4px";
+            btn.style.cursor = "pointer";
+            btn.style.opacity = 1;
+            btn.style.display = "block";
+            btn.style.marginLeft = "auto";
           }
+        });
+      </script>
+    </div>
+    <script>
+      // Lấy user từ localStorage
+      const userOrder = JSON.parse(localStorage.getItem("user"));
+      const userOrderId = userOrder && userOrder.id ? userOrder.id : 1;
+      function showOrderDetailPopup(orderId) {
+        const popup = document.getElementById("order-detail-popup");
+        const content = document.getElementById("order-detail-content");
 
-          fetch(
-            `https://localhost:7238/api/Order/get-order-detail-by-id?orderId=${orderId}`
-          )
-            .then((res) => res.json())
-            .then((order) => {
-              content.innerHTML = `
+        popup.style.display = "block";
+        content.innerHTML = "Đang tải...";
+
+        window.handleProductClick = function (event, product) {
+          event.stopPropagation();
+          if (!product) return;
+          localStorage.setItem('selectedProduct', JSON.stringify(product));
+          window.location.href = 'sp.html';
+        };
+        // Tạo overlay nếu chưa có
+        let overlay = document.getElementById("order-detail-overlay");
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.id = "order-detail-overlay";
+          overlay.style.position = "fixed";
+          overlay.style.top = "0";
+          overlay.style.left = "0";
+          overlay.style.width = "100vw";
+          overlay.style.height = "100vh";
+          overlay.style.background = "rgba(0,0,0,0.4)";
+          overlay.style.zIndex = "9998";
+          overlay.onclick = function () {
+            closeOrderDetailPopup();
+            overlay.style.display = "none";
+          };
+          document.body.appendChild(overlay);
+        } else {
+          overlay.style.display = "block";
+        }
+
+        fetch(
+          `https://localhost:7238/api/Order/get-order-detail-by-id?orderId=${orderId}`
+        )
+          .then((res) => res.json())
+          .then((order) => {
+            content.innerHTML = `
               <table style="width:100%; border-collapse:collapse;">
           <thead>
             <tr>
@@ -402,134 +433,123 @@
           </thead>
           <tbody>
             ${order.data.items
-              .map(
-                (item) => `
+                .map(
+                  (item) => `
               <tr>
-          <td style="padding:8px; border-bottom:1px solid #eee;">${
-            item.orderDetailId
-          }</td>
-          <td style="padding:8px; border-bottom:1px solid #eee;">${
-            item.orderId
-          }</td>
+          <td style="padding:8px; border-bottom:1px solid #eee;">${item.orderDetailId
+                    }</td>
+          <td style="padding:8px; border-bottom:1px solid #eee;">${item.orderId
+                    }</td>
             <td style="padding:8px; border-bottom:1px solid #eee;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <div>
-                <a href="sp.html?id=${
-                  item.product && item.product.id ? item.product.id : ""
-                }" style="color:#2a7f62; text-decoration: none !important; text-decoration:underline; font-weight:bold;">
+                <a
+                  style="color:#2a7f62; text-decoration: none !important; text-decoration:underline; font-weight:bold; cursor:pointer;"
+                  onclick='handleProductClick(event, ${JSON.stringify(item.product).replace(/'/g, "\\'")})'
+                >
                   ${item.product && item.product.name ? item.product.name : ""}
                 </a>
                 <div style="font-size:13px; color:#888;">
-                  Mã SP: ${
-                    item.product && item.product.id ? item.product.id : ""
-                  }
+                  Mã SP: ${item.product && item.product.id ? item.product.id : ""
+                    }
                 </div>
               </div>
             </div>
             </td>
-          <td style="padding:8px; border-bottom:1px solid #eee;">${
-            item.quantity
-          }</td>
-          <td style="padding:8px; border-bottom:1px solid #eee;">${
-            item.price
-          }</td>
-          <td style="padding:8px; border-bottom:1px solid #eee;">${
-            item.totalMoney
-          }</td>
+          <td style="padding:8px; border-bottom:1px solid #eee;">${item.quantity
+                    }</td>
+          <td style="padding:8px; border-bottom:1px solid #eee;">${item.price
+                    }</td>
+          <td style="padding:8px; border-bottom:1px solid #eee;">${item.totalMoney
+                    }</td>
           <td style="padding:8px; border-bottom:1px solid #eee;">
-            <img src="${
-              item.product && item.product.image ? item.product.image : ""
-            }" alt="${
-                  item.product && item.product.name ? item.product.name : ""
-                }" style="max-width:100px; max-height:100px;">
+            <img src="${item.product && item.product.image ? item.product.image : ""
+                    }" alt="${item.product && item.product.name ? item.product.name : ""
+                    }" style="max-width:100px; max-height:100px;">
           </td>
               </tr>
             `
-              )
-              .join("")}
+                )
+                .join("")}
           </tbody>
               </table>
             `;
-            })
-            .catch((err) => {
-              console.error("Lỗi khi tải chi tiết đơn hàng:", err);
-              content.innerHTML = "Không thể tải chi tiết đơn hàng.";
-            });
-        }
+          })
+          .catch((err) => {
+            console.error("Lỗi khi tải chi tiết đơn hàng:", err);
+            content.innerHTML = "Không thể tải chi tiết đơn hàng.";
+          });
+      }
 
-        function closeOrderDetailPopup() {
-          document.getElementById("order-detail-popup").style.display = "none";
-          const overlay = document.getElementById("order-detail-overlay");
-          if (overlay) {
-            overlay.style.display = "none";
+      function closeOrderDetailPopup() {
+        document.getElementById("order-detail-popup").style.display = "none";
+        const overlay = document.getElementById("order-detail-overlay");
+        if (overlay) {
+          overlay.style.display = "none";
+        }
+      }
+
+      function closeOrderDetailPopup() {
+        document.getElementById("order-detail-popup").style.display = "none";
+      }
+      fetch(
+        `https://localhost:7238/api/Order/get-all-orders?PageNumber=1&PageSize=20&CustomerId=${userOrderId}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const orders = data.data || [];
+          const tbody = document.getElementById("my-orders-body");
+          if (orders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5">Không có đơn hàng nào.</td></tr>`;
+            return;
           }
-        }
-
-        function closeOrderDetailPopup() {
-          document.getElementById("order-detail-popup").style.display = "none";
-        }
-        fetch(
-          `https://localhost:7238/api/Order/get-all-orders?PageNumber=1&PageSize=20&CustomerId=${userOrderId}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            const orders = data.data || [];
-            const tbody = document.getElementById("my-orders-body");
-            if (orders.length === 0) {
-              tbody.innerHTML = `<tr><td colspan="5">Không có đơn hàng nào.</td></tr>`;
-              return;
-            }
-            function formatPrice(price) {
-              if (typeof price === "number") price = price.toString();
-              price = price.replace(/\D/g, "");
-              return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-            }
-            tbody.innerHTML = orders
-              .map((order) => {
-                // Giả sử order có các trường: id, productName, price, status
-                let action = "—";
-                if (
-                  order.status === "Đang giao" ||
-                  order.status === "Đang xử lý"
-                ) {
-                  action = `<button onclick="showCancelPopup('${order.orderId}')">Hủy</button>`;
-                }
-                return `
+          function formatPrice(price) {
+            if (typeof price === "number") price = price.toString();
+            price = price.replace(/\D/g, "");
+            return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+          }
+          tbody.innerHTML = orders
+            .map((order) => {
+              // Giả sử order có các trường: id, productName, price, status
+              let action = "—";
+              if (
+                order.status === "Đang giao" ||
+                order.status === "Đang xử lý"
+              ) {
+                action = `<button onclick="showCancelPopup('${order.orderId}')">Hủy</button>`;
+              }
+              return `
             <tr>
             <td>${order.orderId}</td>
             <td style="white-space: pre-line;">
-              ${
-                Array.isArray(order.productName)
+              ${Array.isArray(order.productName)
                   ? order.productName
-                      .map(
-                        (name, idx) =>
-                          `${name}${
-                            order.productQuantity && order.productQuantity[idx]
-                              ? " - " + order.productQuantity[idx]
-                              : ""
-                          }`
-                      )
-                      .join(", ")
+                    .map(
+                      (name, idx) =>
+                        `${name}${order.productQuantity && order.productQuantity[idx]
+                          ? " - " + order.productQuantity[idx]
+                          : ""
+                        }`
+                    )
+                    .join(", ")
                   : order.productName
-              }
+                }
             </td>
             <td>${formatPrice(order.price)}</td>
-            <td>${
-              order.status === 0
-                ? "Đang xử lý"
-                : order.status === 1
-                ? "Đang giao hàng"
-                : order.status === 2
-                ? "Đã giao hàng"
-                : order.status == -1
-                ? "Đã hủy"
-                :order.status
+            <td>${order.status === 0
+                  ? "Đang xử lý"
+                  : order.status === 1
+                    ? "Đang giao hàng"
+                    : order.status === 2
+                      ? "Đã giao hàng"
+                      : order.status == -1
+                        ? "Đã hủy"
+                        : order.status
 
-            }</td>
+                }</td>
               <td>
-                ${
-                  order.status === 2
-                    ? `<button
+                ${order.status === 2
+                  ? `<button
                         onclick="buyAgain('${order.id}')"
                         style="
                           background-color: #4CAF50;
@@ -540,248 +560,256 @@
                           cursor: pointer;">
                         Mua lại
                       </button>`
-                    : `<button
+                  : `<button
                         onclick="showCancelPopup('${order.orderId}')"
                         ${order.status === 0 ? "" : "disabled"}
                         style="
-                          background-color: ${
-                            order.status === 0 ? "#f44336" : "#ccc"
-                          };
+                          background-color: ${order.status === 0 ? "#f44336" : "#ccc"
+                  };
                           color: white;
                           padding: 6px 12px;
                           border: none;
                           border-radius: 4px;
-                          cursor: ${
-                            order.status === 0 ? "pointer" : "not-allowed"
-                          };
+                          cursor: ${order.status === 0 ? "pointer" : "not-allowed"
+                  };
                           opacity: ${order.status === 0 ? 1 : 0.6};">
                         Hủy
                       </button>`
                 }
               </td>
             <td>
-                <button onclick="showOrderDetailPopup('${
-                  order.orderId
+                <button onclick="showOrderDetailPopup('${order.orderId
                 }')" title="Xem chi tiết" style="background:none;border:none;cursor:pointer;">
                 <span style="font-size:18px;">&#128065;</span>
                 </button>
             </td>
             </tr>
         `;
-              })
-              .join("");
-          })
-          .catch((error) => {
-            document.getElementById(
-              "my-orders-body"
-            ).innerHTML = `<tr><td colspan="5">Không thể tải đơn hàng.</td></tr>`;
-            console.error("Lỗi khi tải đơn hàng:", error);
-          });
-      </script>
+            })
+            .join("");
+        })
+        .catch((error) => {
+          document.getElementById(
+            "my-orders-body"
+          ).innerHTML = `<tr><td colspan="5">Không thể tải đơn hàng.</td></tr>`;
+          console.error("Lỗi khi tải đơn hàng:", error);
+        });
+    </script>
 
-      <!-- Đơn hàng đã bán  -->
-      <div class="section">
-        <h3>Đơn hàng đã bán</h3>
-        <div style="margin-bottom: 10px">
-          <label>
-        Lọc theo thời gian:
-        <select id="sold-filter-time">
-          <option value="all">Tất cả</option>
-          <option value="7">7 ngày qua</option>
-          <option value="30">30 ngày qua</option>
-        </select>
-          </label>
-          <label style="margin-left: 20px">
-        Trạng thái:
-        <select id="sold-filter-status">
-          <option value="3">Tất cả</option>
-          <option value="1">Đang giao hàng</option>
-          <option value="0">Đang xử lý</option>
-          <option value="2">Đã giao hàng</option>
-          <option value="-1">Đã hủy</option>
-        </select>
-          </label>
-          <button id="sold-filter-btn" style="margin-left: 20px; padding: 6px 14px; background: #2a7f62; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Lọc</button>
-        </div>
-        <table>
-          <thead>
-        <tr>
-          <th>Mã đơn</th>
-          <th>Người mua</th>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Trạng thái</th>
-        </tr>
-          </thead>
-          <tbody id="sold-orders-body">
-        <tr>
-          <td colspan="5">Đang tải đơn hàng đã bán...</td>
-        </tr>
-          </tbody>
-          <script>
-        // Lấy user từ localStorage
-        const userSoldFilter = JSON.parse(localStorage.getItem("user"));
-        const userSoldIdFilter = userSoldFilter && userSoldFilter.id ? userSoldFilter.id : 0;
+    <!-- Đơn hàng đã bán  -->
+    <div class="section">
+      <h3>Đơn hàng đã bán</h3>
+      <div style="margin-bottom: 10px">
+        <label>
+          Lọc theo thời gian:
+          <select id="sold-filter-time">
+            <option value="all">Tất cả</option>
+            <option value="7">7 ngày qua</option>
+            <option value="30">30 ngày qua</option>
+          </select>
+        </label>
+        <label style="margin-left: 20px">
+          Trạng thái:
+          <select id="sold-filter-status">
+            <option value="3">Tất cả</option>
+            <option value="1">Đang giao hàng</option>
+            <option value="0">Đang xử lý</option>
+            <option value="2">Đã giao hàng</option>
+            <option value="-1">Đã hủy</option>
+          </select>
+        </label>
+        <button id="sold-filter-btn"
+          style="margin-left: 20px; padding: 6px 14px; background: #2a7f62; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Lọc</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Người mua</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody id="sold-orders-body">
+          <tr>
+            <td colspan="5">Đang tải đơn hàng đã bán...</td>
+          </tr>
+        </tbody>
+        <script>
+          // Lấy user từ localStorage
+          const userSoldFilter = JSON.parse(localStorage.getItem("user"));
+          const userSoldIdFilter = userSoldFilter && userSoldFilter.id ? userSoldFilter.id : 0;
 
-        function getDateParam(days) {
-          if (days === "all") return "";
-          const d = new Date();
-          d.setDate(d.getDate() - parseInt(days));
-          return d.toISOString().split("T")[0];
-        }
-
-        function loadSoldOrders() {
-          const timeVal = document.getElementById("sold-filter-time").value;
-          const statusVal = document.getElementById("sold-filter-status").value;
-          let dateParam = getDateParam(timeVal);
-          let statusParam = statusVal === "all" ? "" : statusVal;
-
-          let url = `https://localhost:7238/api/Order/get-all-sold-orders?PageNumber=1&PageSize=20&CurrentUserId=${userSoldIdFilter}`;
-          if (dateParam) url += `&date=${dateParam}`;
-          if (statusParam !== "") url += `&Status=${statusParam}`;
-
-          const tbody = document.getElementById("sold-orders-body");
-          tbody.innerHTML = `<tr><td colspan="5">Đang tải đơn hàng đã bán...</td></tr>`;
-
-          fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-          const orders = data.data || [];
-          if (orders.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5">Không có đơn hàng đã bán nào.</td></tr>`;
-            return;
+          function getDateParam(days) {
+            if (days === "all") return "";
+            const d = new Date();
+            d.setDate(d.getDate() - parseInt(days));
+            return d.toISOString().split("T")[0];
           }
-          function formatPrice(price) {
-            if (typeof price === "number") price = price.toString();
-            price = price.replace(/\D/g, "");
-            return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-          }
-          tbody.innerHTML = orders
-            .map(
-              (order) => `
+
+          function loadSoldOrders() {
+            const timeVal = document.getElementById("sold-filter-time").value;
+            const statusVal = document.getElementById("sold-filter-status").value;
+            let dateParam = getDateParam(timeVal);
+            let statusParam = statusVal === "all" ? "" : statusVal;
+
+            let url = `https://localhost:7238/api/Order/get-all-sold-orders?PageNumber=1&PageSize=20&CurrentUserId=${userSoldIdFilter}`;
+            if (dateParam) url += `&date=${dateParam}`;
+            if (statusParam !== "") url += `&Status=${statusParam}`;
+
+            const tbody = document.getElementById("sold-orders-body");
+            tbody.innerHTML = `<tr><td colspan="5">Đang tải đơn hàng đã bán...</td></tr>`;
+
+            fetch(url)
+              .then((res) => res.json())
+              .then((data) => {
+                const orders = data.data || [];
+                if (orders.length === 0) {
+                  tbody.innerHTML = `<tr><td colspan="5">Không có đơn hàng đã bán nào.</td></tr>`;
+                  return;
+                }
+                function formatPrice(price) {
+                  if (typeof price === "number") price = price.toString();
+                  price = price.replace(/\D/g, "");
+                  return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+                }
+                tbody.innerHTML = orders
+                  .map(
+                    (order) => `
           <tr>
         <td>${order.orderId || order.id || ""}</td>
         <td>${order.buyerName || order.buyerName || ""}</td>
         <td style="white-space: pre-line;">
-          ${
-            Array.isArray(order.productName)
-          ? order.productName
-              .map(
-            (name, idx) =>
-              `${name}${
-                order.productQuantity && order.productQuantity[idx]
-              ? " - " + order.productQuantity[idx]
-              : ""
-              }`
-              )
-              .join(", ")
-          : (order.product && order.product.name) || ""
-          }
+          ${Array.isArray(order.productName)
+                        ? order.productName
+                          .map(
+                            (name, idx) =>
+                              `${name}${order.productQuantity && order.productQuantity[idx]
+                                ? " - " + order.productQuantity[idx]
+                                : ""
+                              }`
+                          )
+                          .join(", ")
+                        : (order.product && order.product.name) || ""
+                      }
         </td>
         <td>${formatPrice(order.price)}</td>
-        <td>${
-          order.status === 0
-            ? "Đang xử lý"
-            : order.status === 1
-            ? "Đang giao hàng"
-            : order.status === 2
-            ? "Đã giao hàng"
-            : order.status === 3
-            ? "Đã hủy"
-            : order.status
-        }</td>
+        <td>${order.status === 0
+                        ? "Đang xử lý"
+                        : order.status === 1
+                          ? "Đang giao hàng"
+                          : order.status === 2
+                            ? "Đã giao hàng"
+                            : order.status === 3
+                              ? "Đã hủy"
+                              : order.status
+                      }</td>
           </tr>
           `
-            )
-            .join("");
-            })
-            .catch((error) => {
-          tbody.innerHTML = `<tr><td colspan="5">Không thể tải đơn hàng đã bán.</td></tr>`;
-          console.error("Lỗi khi tải đơn hàng đã bán:", error);
-            });
-        }
+                  )
+                  .join("");
+              })
+              .catch((error) => {
+                tbody.innerHTML = `<tr><td colspan="5">Không thể tải đơn hàng đã bán.</td></tr>`;
+                console.error("Lỗi khi tải đơn hàng đã bán:", error);
+              });
+          }
 
-        // Load lần đầu
-        loadSoldOrders();
+          // Load lần đầu
+          loadSoldOrders();
 
-        document.getElementById("sold-filter-btn").onclick = loadSoldOrders;
-          </script>
-        </table>
+          document.getElementById("sold-filter-btn").onclick = loadSoldOrders;
+        </script>
+      </table>
+    </div>
+    <!-- POPUP HỦY ĐƠN -->
+    <div id="cancel-popup">
+      <div id="cancel-popup-box" class="cancel-popup-content">
+        <div id="cancel-popup-header"
+          style="cursor: move; font-weight: bold; font-size: 18px; margin-bottom: 12px; color: #2a7f62;">
+          Hủy đơn <span id="cancel-order-id"></span>
+        </div>
+        <p style="font-weight: 500;">Vui lòng chọn lý do:</p>
+        <form id="cancel-reason-form" style="margin-bottom: 12px;">
+          <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ" /> Cập nhật lại địa
+            chỉ</label><br />
+          <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối" /> Thủ tục thanh toán rắc
+            rối</label><br />
+          <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn" /> Tìm chỗ mua khác tốt
+            hơn</label><br />
+          <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa" /> Không có nhu cầu mua
+            nữa</label><br />
+          <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy" /> Không tìm thấy lý do
+            hủy</label>
+        </form>
+        <div class="cancel-popup-buttons">
+          <button class="btn-cancel-confirm" onclick="submitCancelReason()">Xác nhận</button>
+          <button class="btn-cancel-close" onclick="closeCancelPopup()">Đóng</button>
+        </div>
       </div>
-   <!-- POPUP HỦY ĐƠN -->
-<div id="cancel-popup">
-  <div id="cancel-popup-box" class="cancel-popup-content">
-    <div id="cancel-popup-header" style="cursor: move; font-weight: bold; font-size: 18px; margin-bottom: 12px; color: #2a7f62;">
-      Hủy đơn <span id="cancel-order-id"></span>
     </div>
-    <p style="font-weight: 500;">Vui lòng chọn lý do:</p>
-    <form id="cancel-reason-form" style="margin-bottom: 12px;">
-      <label><input type="radio" name="cancel-reason" value="Cập nhật lại địa chỉ" /> Cập nhật lại địa chỉ</label><br />
-      <label><input type="radio" name="cancel-reason" value="Thủ tục thanh toán rắc rối" /> Thủ tục thanh toán rắc rối</label><br />
-      <label><input type="radio" name="cancel-reason" value="Tìm chỗ mua khác tốt hơn" /> Tìm chỗ mua khác tốt hơn</label><br />
-      <label><input type="radio" name="cancel-reason" value="Không có nhu cầu mua nữa" /> Không có nhu cầu mua nữa</label><br />
-      <label><input type="radio" name="cancel-reason" value="Không tìm thấy lý do hủy" /> Không tìm thấy lý do hủy</label>
-    </form>
-    <div class="cancel-popup-buttons">
-      <button class="btn-cancel-confirm" onclick="submitCancelReason()">Xác nhận</button>
-      <button class="btn-cancel-close" onclick="closeCancelPopup()">Đóng</button>
-    </div>
-  </div>
-</div>
 
-<style>
-  #cancel-popup {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-  }
-  .cancel-popup-content {
-    background-color: #ffffff;
-    width: 420px;
-    max-width: 90%;
-    margin: 100px auto;
-    padding: 24px 28px;
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    position: relative;
-    font-family: Arial, sans-serif;
-  }
-  .cancel-popup-content label {
-    display: block;
-    margin-bottom: 8px;
-    cursor: pointer;
-    color: #333;
-    padding-left: 4px;
-  }
-  .cancel-popup-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 18px;
-  }
-  .cancel-popup-buttons button {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-cancel-confirm {
-    background-color: #e53935;
-    color: white;
-  }
-  .btn-cancel-close {
-    background-color: #ccc;
-    color: #333;
-  }
-</style>
- <div class="section">
+    <style>
+      #cancel-popup {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .cancel-popup-content {
+        background-color: #ffffff;
+        width: 420px;
+        max-width: 90%;
+        margin: 100px auto;
+        padding: 24px 28px;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        position: relative;
+        font-family: Arial, sans-serif;
+      }
+
+      .cancel-popup-content label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+        color: #333;
+        padding-left: 4px;
+      }
+
+      .cancel-popup-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .cancel-popup-buttons button {
+        padding: 8px 18px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn-cancel-confirm {
+        background-color: #e53935;
+        color: white;
+      }
+
+      .btn-cancel-close {
+        background-color: #ccc;
+        color: #333;
+      }
+    </style>
+    <div class="section">
       <h3>Bài đăng bán</h3>
       <table>
         <thead>
@@ -794,75 +822,115 @@
           </tr>
         </thead>
         <tbody id="user-products-body">
-          <tr><td colspan="5">Đang tải bài đăng bán...</td></tr>
+          <tr>
+            <td colspan="5">Đang tải bài đăng bán...</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    </div>
+  </div>
 
-    <script>
-      function logout() {
-        // Xóa trạng thái đăng nhập khỏi sessionStorage
-        localStorage.removeItem("isUserLoggedIn");
-        localStorage.removeItem("user");
-        window.location.href = "index.html";
+  <script>
+    function logout() {
+      // Xóa trạng thái đăng nhập khỏi sessionStorage
+      localStorage.removeItem("isUserLoggedIn");
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+
+    window.onload = function () {
+      // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
+      if (localStorage.getItem("isUserLoggedIn") !== "true") {
+        window.location.href = "login.html";
       }
+    };
+  </script>
 
-      window.onload = function () {
-        // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
-        if (localStorage.getItem("isUserLoggedIn") !== "true") {
-          window.location.href = "login.html";
-        }
-      };
-    </script>
-    
   </div>
   <script>
+    window.handleProductClick = function (event, product) {
+      event.stopPropagation();
+      if (!product) return;
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
+      window.location.href = 'sp.html';
+    };
     function formatPrice(price) {
       if (typeof price === "number") price = price.toString();
       price = price.replace(/\D/g, "");
       return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
     }
 
-   function loadUserPostedProducts() {
-  const tbody = document.getElementById("user-products-body");
+    function loadUserPostedProducts() {
+      const tbody = document.getElementById("user-products-body");
+      tbody.innerHTML = `<tr><td colspan="5">Đang tải bài đăng bán...</td></tr>`;
 
-  // Fake dữ liệu sản phẩm tạm thời
-  const fakeProducts = [
-    {
-      id: 101,
-      name: "Áo khoác denim",
-      price: 250000,
-      createdAt: "2024-12-01T10:00:00Z"
-    },
-    {
-      id: 102,
-      name: "Giày sneaker trắng",
-      price: 450000,
-      createdAt: "2025-01-15T14:30:00Z"
+      // Lấy user từ localStorage để lấy SellerId
+      const user = JSON.parse(localStorage.getItem("user"));
+      const sellerId = user && user.id ? user.id : 2;
+
+      fetch(`https://localhost:7238/api/Product/get-products-by-seller-without-order?PageNumber=1&PageSize=20&SellerId=${sellerId}`)
+        .then(res => res.json())
+        .then(data => {
+          const products = data.data || [];
+          if (products.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5">Không có bài đăng bán nào.</td></tr>`;
+            return;
+          }
+          tbody.innerHTML = products.map(p => `
+            <tr>
+              <td>${p.id}</td>
+              <td><a  style="color:#2a7f62; text-decoration: none !important; text-decoration:underline; font-weight:bold; cursor:pointer;"
+                  onclick='handleProductClick(event, ${JSON.stringify(p).replace(/'/g, "\\'")})'>${p.name}</a></td>
+              <td>${formatPrice(p.price)}</td>
+              <td>${p.createdAt ? new Date(p.createdAt).toLocaleDateString("vi-VN") : ""}</td>
+                <td>
+                ${
+                  p.isDeleted
+                  ? `<button disabled
+                  style="background-color: #ccc; color: #888; padding: 6px 12px; border: none; border-radius: 4px; cursor: not-allowed;">
+                  Đã gỡ
+                  </button>`
+                  : `<button onclick="editProduct(${p.id})"
+                  style="background-color: #2a7f62; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;">
+                  Sửa
+                  </button>
+                  <button onclick="removeProduct(${p.id})"
+                  style="background-color: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;">
+                  Gỡ
+                  </button>`
+                }
+                </td>
+            </tr>
+          `).join("");
+        })
+        .catch(error => {
+          tbody.innerHTML = `<tr><td colspan="5">Không thể tải bài đăng bán.</td></tr>`;
+          console.error("Lỗi khi tải bài đăng bán:", error);
+        });
     }
-  ];
 
-  tbody.innerHTML = fakeProducts.slice(0, 2).map((p) => `
-    <tr>
-      <td>${p.id}</td>
-      <td><a href="sp.html?id=${p.id}" style="color:#2a7f62; font-weight:bold;">${p.name}</a></td>
-      <td>${formatPrice(p.price)}</td>
-      <td>${new Date(p.createdAt).toLocaleDateString("vi-VN")}</td>
-      <td>
-        <button onclick="editProduct(${p.id})"
-          style="background-color: #e53935; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;">
-          Sửa
-        </button>
-      </td>
-    </tr>
-  `).join("");
-}
+    function removeProduct(productId) {
+      if (!confirm("Bạn có chắc chắn muốn gỡ bài đăng này?")) return;
 
-
-    function editProduct(productId) {
-      window.location.href = `edit-product.html?id=${productId}`;
+      fetch(`https://localhost:7238/api/Product/delete-product?Id=${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+      })
+      .then(res => res.json())
+      .then(data => {
+      if (data.success || data.status === 200) {
+        alert("Đã gỡ bài đăng thành công.");
+        loadUserPostedProducts();
+      } else {
+        alert("Gỡ bài đăng thất bại. Vui lòng thử lại.");
+      }
+      })
+      .catch(() => {
+      alert("Có lỗi xảy ra khi gỡ bài đăng.");
+      });
     }
 
     function logout() {
@@ -880,175 +948,232 @@
     };
   </script>
 
- 
-<!-- POPUP Sửa BÀI ĐĂNG -->
-<div id="edit-product-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
-  <div id="edit-product-popup-box" style="background:#fff; width:480px; max-width:95vw; top:100px; left:calc(50% - 240px); padding:28px 28px 18px 28px; border-radius:14px; position:fixed; box-shadow:0 8px 32px rgba(42,127,98,0.15);">
-    <button onclick="closeEditProductPopup()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;color:#aaa;cursor:pointer;" title="Đóng">&times;</button>
-    <h3 id="edit-product-popup-header" style="margin-bottom: 18px; color:#2a7f62; text-align:center; font-size:1.3rem; letter-spacing:0.5px; cursor:move;">Chỉnh sửa bài đăng</h3>
-    <form id="edit-product-form" autocomplete="off" onsubmit="event.preventDefault(); submitEditProduct();">
-      <div style="margin-bottom:14px;">
-        <label for="edit-name" style="font-weight:500; color:#2a7f62;">Tên sản phẩm:</label>
-        <input type="text" id="edit-name" name="name" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required />
-      </div>
-      <div style="margin-bottom:14px;">
-        <label for="edit-category" style="font-weight:500; color:#2a7f62;">Danh mục:</label>
-        <select id="edit-category" name="category" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required>
-          <option value="">-- Chọn danh mục --</option>
-        </select>
-      </div>
-      <div style="margin-bottom:14px;">
-        <label for="edit-subcategory" style="font-weight:500; color:#2a7f62;">Danh mục con:</label>
-        <select id="edit-subcategory" name="subcategory" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;">
-          <option value="">-- Chọn danh mục con --</option>
-        </select>
-      </div>
-      <div style="margin-bottom:14px;">
-        <label for="edit-description" style="font-weight:500; color:#2a7f62;">Mô tả sản phẩm:</label>
-        <textarea id="edit-description" name="description" rows="3" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px; resize:vertical;"></textarea>
-      </div>
-      <div style="margin-bottom:14px;">
-        <label for="edit-price" style="font-weight:500; color:#2a7f62;">Giá bán (VNĐ):</label>
-        <input type="number" id="edit-price" name="price" style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required />
-      </div>
-      <div style="margin-bottom:18px;">
-        <label for="edit-image" style="font-weight:500; color:#2a7f62;">Ảnh đại diện sản phẩm:</label>
-        <input type="file" id="edit-image" name="image" style="margin-top:4px;" accept="image/*" />
-      </div>
-      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:10px;">
-        <button type="submit" style="background-color:#2a7f62; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Xác nhận</button>
-        <button type="button" onclick="closeEditProductPopup()" style="background-color:#e53935; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Thoát</button>
-      </div>
-    </form>
+
+  <!-- POPUP Sửa BÀI ĐĂNG -->
+  <div id="edit-product-popup"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
+    <div id="edit-product-popup-box"
+      style="background:#fff; width:480px; max-width:95vw; top:100px; left:calc(50% - 240px); padding:28px 28px 18px 28px; border-radius:14px; position:fixed; box-shadow:0 8px 32px rgba(42,127,98,0.15);">
+      <button onclick="closeEditProductPopup()"
+        style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;color:#aaa;cursor:pointer;"
+        title="Đóng">&times;</button>
+      <h3 id="edit-product-popup-header"
+        style="margin-bottom: 18px; color:#2a7f62; text-align:center; font-size:1.3rem; letter-spacing:0.5px; cursor:move;">
+        Chỉnh sửa bài đăng</h3>
+      <form id="edit-product-form" autocomplete="off" onsubmit="event.preventDefault(); submitEditProduct();">
+        <div style="margin-bottom:14px;">
+          <label for="edit-name" style="font-weight:500; color:#2a7f62;">Tên sản phẩm:</label>
+          <input type="text" id="edit-name" name="name"
+            style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;"
+            required />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label for="edit-category" style="font-weight:500; color:#2a7f62;">Danh mục:</label>
+          <select id="edit-category" name="category"
+            style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;" required>
+            <option value="">-- Chọn danh mục --</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label for="edit-subcategory" style="font-weight:500; color:#2a7f62;">Danh mục con:</label>
+          <select id="edit-subcategory" name="subcategory"
+            style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;">
+            <option value="">-- Chọn danh mục con --</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label for="edit-description" style="font-weight:500; color:#2a7f62;">Mô tả sản phẩm:</label>
+          <textarea id="edit-description" name="description" rows="3"
+            style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px; resize:vertical;"></textarea>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label for="edit-price" style="font-weight:500; color:#2a7f62;">Giá bán (VNĐ):</label>
+          <input type="number" id="edit-price" name="price"
+            style="width:100%; padding:9px 10px; border:1px solid #cce3db; border-radius:6px; margin-top:4px;"
+            required />
+        </div>
+        <div style="margin-bottom:18px;">
+          <label for="edit-image" style="font-weight:500; color:#2a7f62;">Ảnh đại diện sản phẩm:</label>
+          <input type="file" id="edit-image" name="image" style="margin-top:4px;" accept="image/*" />
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:10px;">
+          <button type="submit"
+            style="background-color:#2a7f62; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Xác
+            nhận</button>
+          <button type="button" onclick="closeEditProductPopup()"
+            style="background-color:#e53935; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Thoát</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-<script>
-  const categories = [
-    { id: "thoitrang", name: "Thời trang", sub: ["Quần áo nam", "Quần áo nữ", "Giày dép", "Phụ kiện"] },
-    { id: "sach", name: "Sách", sub: ["Tiểu thuyết", "Phi hư cấu", "Tự lực - Phát triển bản thân", "Giáo dục - Học thuật"] },
-    { id: "giadung", name: "Gia dụng", sub: ["Thiết bị nhà bếp", "Thiết bị làm sạch & chăm sóc nhà cửa", "Thiết bị giặt ủi", "Thiết bị sinh hoạt & chăm sóc cá nhân"] },
-    { id: "dientu", name: "Điện tử", sub: ["Thiết bị điện từ gia dụng", "Thiết bị điện từ cá nhân", "Phụ kiện điện từ", "Thiết bị công nghệ - Văn phòng"] },
-    { id: "giaitri", name: "Giải trí", sub: ["Thiết bị nghe nhìn", "Thiết bị chơi game", "Dụng cụ thể thao - Giải trí tại nhà", "Nhạc cụ - Đồ sưu tầm"] }
-  ];
+  <script>
+    let categories = [];
 
-  let currentEditProductId = null;
+    // Fetch categories from server
+    fetch("https://localhost:7238/api/Category/get-all-categories")
+      .then(res => res.json())
+      .then(data => {
+        categories = data.data || [];
+      })
+      .catch(error => {
+        console.error("Error loading categories:", error);
+        // Fallback to default categories
+        categories = [
+          { id: "thoitrang", name: "Thời trang", sub: ["Quần áo nam", "Quần áo nữ", "Giày dép", "Phụ kiện"] },
+          { id: "sach", name: "Sách", sub: ["Tiểu thuyết", "Phi hư cấu", "Tự lực - Phát triển bản thân", "Giáo dục - Học thuật"] },
+          { id: "giadung", name: "Gia dụng", sub: ["Thiết bị nhà bếp", "Thiết bị làm sạch & chăm sóc nhà cửa", "Thiết bị giặt ủi", "Thiết bị sinh hoạt & chăm sóc cá nhân"] },
+          { id: "dientu", name: "Điện tử", sub: ["Thiết bị điện từ gia dụng", "Thiết bị điện từ cá nhân", "Phụ kiện điện từ", "Thiết bị công nghệ - Văn phòng"] },
+          { id: "giaitri", name: "Giải trí", sub: ["Thiết bị nghe nhìn", "Thiết bị chơi game", "Dụng cụ thể thao - Giải trí tại nhà", "Nhạc cụ - Đồ sưu tầm"] }
+        ];
+      });
 
-  function editProduct(productId) {
-    const product = {
-      id: productId,
-      name: "Giày sneaker trắng",
-      price: 450000,
-      categoryId: "thoitrang",
-      subcategoryId: "Giày dép",
-      description: "Giày sneaker trắng năng động.",
-      image: ""
-    };
+      // Fetch categories and subcategories from server
+    let currentEditProductId = null;
 
-    currentEditProductId = productId;
-    document.getElementById("edit-name").value = product.name;
-    document.getElementById("edit-price").value = product.price;
-    document.getElementById("edit-description").value = product.description;
+    async function editProduct(productId) {
+      // Fetch product data from API
+      const response = await fetch(`https://localhost:7238/api/Product/get-product-by-id?Id=${productId}`);
+      const data = await response.json();
+      const product = data.data || {
+        id: productId,
+        name: "Giày sneaker trắng",
+        price: 450000,
+        categoryId: "thoitrang",
+        subcategoryId: "Giày dép",
+        description: "Giày sneaker trắng năng động.",
+        image: ""
+      };
 
-    const catSelect = document.getElementById("edit-category");
-    catSelect.innerHTML = `<option value="">-- Chọn danh mục --</option>` +
-      categories.map(c => `<option value="${c.id}" ${product.categoryId === c.id ? "selected" : ""}>${c.name}</option>`).join("");
+      currentEditProductId = productId;
+      document.getElementById("edit-name").value = product.name;
+      document.getElementById("edit-price").value = product.price;
+      document.getElementById("edit-description").value = product.description;
 
-    const subSelect = document.getElementById("edit-subcategory");
-    const selectedCat = categories.find(c => c.id === product.categoryId);
-    subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-      (selectedCat ? selectedCat.sub.map(s => `<option value="${s}" ${product.subcategoryId === s ? "selected" : ""}>${s}</option>`).join("") : "");
+      const catSelect = document.getElementById("edit-category");
+      catSelect.innerHTML = `<option value="">-- Chọn danh mục --</option>` +
+        categories.map(c => `<option value="${c.id}" ${product.categoryId === c.id ? "selected" : ""}>${c.name}</option>`).join("");
 
-    catSelect.onchange = function () {
-      const catId = this.value;
-      const cat = categories.find(c => c.id === catId);
-      subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-        (cat ? cat.sub.map(s => `<option value="${s}">${s}</option>`).join("") : "");
-    };
+      // Update the onchange event to fetch subcategories from API
+      catSelect.onchange = async function () {
+        const categoryId = this.value;
+        const subSelect = document.getElementById("edit-subcategory");
 
-    document.getElementById("edit-product-popup").style.display = "block";
-  }
+        if (!categoryId) {
+          subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>`;
+          return;
+        }
 
-  function closeEditProductPopup() {
-    document.getElementById("edit-product-popup").style.display = "none";
-    currentEditProductId = null;
-  }
+        try {
+          subSelect.innerHTML = `<option value="">Đang tải...</option>`;
+          const response = await fetch(`https://localhost:7238/api/Category/get-all-sub-categories?CategoryId=${categoryId}&PageNumber=1&PageSize=20`);
+          const data = await response.json();
+          const subcategories = data.data || [];
 
-  function submitEditProduct() {
-    const name = document.getElementById("edit-name").value.trim();
-    const price = document.getElementById("edit-price").value;
-    const description = document.getElementById("edit-description").value.trim();
-    const categoryId = document.getElementById("edit-category").value;
-    const subcategoryId = document.getElementById("edit-subcategory").value;
-    const imageInput = document.getElementById("edit-image");
-    const imageFile = imageInput.files[0];
+          subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+            subcategories.map(sub => `<option value="${sub.id}">${sub.name || sub.subCategoryName}</option>`).join("");
+        } catch (error) {
+          console.error("Error loading subcategories:", error);
+          subSelect.innerHTML = `<option value="">Lỗi tải danh mục con</option>`;
+        }
+      };
 
-    if (!name || !price || !categoryId) {
-      alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
-      return;
+      const subSelect = document.getElementById("edit-subcategory");
+      // const selectedCat = categories.find(c => c.id === product.categoryId);
+      // subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+      //   (selectedCat ? selectedCat.sub.map(s => `<option value="${s}" ${product.subcategoryId === s ? "selected" : ""}>${s}</option>`).join("") : "");
+
+      catSelect.onchange = function () {
+        const catId = this.value;
+        const cat = categories.find(c => c.id === catId);
+        subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+          (cat ? cat.sub.map(s => `<option value="${s}">${s}</option>`).join("") : "");
+      };
+
+      document.getElementById("edit-product-popup").style.display = "block";
     }
 
-    alert("Đã cập nhật sản phẩm (demo).");
-    closeEditProductPopup();
-  }
+    function closeEditProductPopup() {
+      document.getElementById("edit-product-popup").style.display = "none";
+      currentEditProductId = null;
+    }
 
-  // Cho popup sửa bài đăng di chuyển được
-  (function () {
+    function submitEditProduct() {
+      const name = document.getElementById("edit-name").value.trim();
+      const price = document.getElementById("edit-price").value;
+      const description = document.getElementById("edit-description").value.trim();
+      const categoryId = document.getElementById("edit-category").value;
+      const subcategoryId = document.getElementById("edit-subcategory").value;
+      const imageInput = document.getElementById("edit-image");
+      const imageFile = imageInput.files[0];
+
+      if (!name || !price || !categoryId) {
+        alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
+        return;
+      }
+
+      alert("Đã cập nhật sản phẩm (demo).");
+      closeEditProductPopup();
+    }
+
+    // Cho popup sửa bài đăng di chuyển được
+    (function () {
+      let isDragging = false;
+      let offsetX = 0, offsetY = 0;
+      const popupBox = document.getElementById("edit-product-popup-box");
+      const header = document.getElementById("edit-product-popup-header");
+
+      header.addEventListener("mousedown", function (e) {
+        isDragging = true;
+        const rect = popupBox.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        document.body.style.userSelect = "none";
+      });
+
+      document.addEventListener("mousemove", function (e) {
+        if (isDragging) {
+          popupBox.style.left = (e.clientX - offsetX) + "px";
+          popupBox.style.top = (e.clientY - offsetY) + "px";
+        }
+      });
+
+      document.addEventListener("mouseup", function () {
+        isDragging = false;
+        document.body.style.userSelect = "auto";
+      });
+    })();
+  </script>
+
+  <script>
     let isDragging = false;
-    let offsetX = 0, offsetY = 0;
-    const popupBox = document.getElementById("edit-product-popup-box");
-    const header = document.getElementById("edit-product-popup-header");
+    let offsetX, offsetY;
+
+    const popup = document.getElementById("cancel-popup-box");
+    const header = document.getElementById("cancel-popup-header");
 
     header.addEventListener("mousedown", function (e) {
       isDragging = true;
-      const rect = popupBox.getBoundingClientRect();
+      const rect = popup.getBoundingClientRect();
       offsetX = e.clientX - rect.left;
       offsetY = e.clientY - rect.top;
       document.body.style.userSelect = "none";
-    });
-
-    document.addEventListener("mousemove", function (e) {
-      if (isDragging) {
-        popupBox.style.left = (e.clientX - offsetX) + "px";
-        popupBox.style.top = (e.clientY - offsetY) + "px";
-      }
     });
 
     document.addEventListener("mouseup", function () {
       isDragging = false;
       document.body.style.userSelect = "auto";
     });
-  })();
-</script>
 
-<script>
-  let isDragging = false;
-  let offsetX, offsetY;
+    document.addEventListener("mousemove", function (e) {
+      if (isDragging) {
+        popup.style.position = "fixed";
+        popup.style.left = `${e.clientX - offsetX}px`;
+        popup.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+  </script>
 
-  const popup = document.getElementById("cancel-popup-box");
-  const header = document.getElementById("cancel-popup-header");
+</body>
 
-  header.addEventListener("mousedown", function (e) {
-    isDragging = true;
-    const rect = popup.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    document.body.style.userSelect = "none";
-  });
-
-  document.addEventListener("mouseup", function () {
-    isDragging = false;
-    document.body.style.userSelect = "auto";
-  });
-
-  document.addEventListener("mousemove", function (e) {
-    if (isDragging) {
-      popup.style.position = "fixed";
-      popup.style.left = `${e.clientX - offsetX}px`;
-      popup.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
-</script>
-
-  </body>
 </html>

@@ -56,6 +56,12 @@
       text-align: center;
     }
 
+    .note {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+
     .alert {
       background: #fff3f3;
       color: #b30000;
@@ -69,6 +75,21 @@
       border-top: 1px solid #eee;
       padding-top: 20px;
       font-size: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .product img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .product-info {
+      flex: 1;
     }
 
     .price-box {
@@ -99,18 +120,61 @@
       background: #cc001f;
     }
 
-    .note {
-      font-size: 14px;
-      color: #666;
+    #successText {
+      display: none;
+      margin-top: 12px;
+      color: #2ecc71;
       text-align: center;
+      font-weight: 500;
+    }
+
+    /* Popup */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      display: none;
+    }
+
+    .popup {
+      background: white;
+      padding: 28px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    }
+
+    .popup h3 {
+      color: #e60023;
+      margin-bottom: 10px;
+    }
+
+    .popup button {
+      margin-top: 20px;
+      padding: 10px 18px;
+      background: #e60023;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .popup button:hover {
+      background: #c4001c;
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-   <a href="sp.html" class="back-icon">‹</a>
-
+    <a href="sp.html" class="back-icon">‹</a>
     <div class="logo">
       <img src="image/2hand.png" alt="2HandHub Logo">
     </div>
@@ -125,38 +189,77 @@
       Nếu bạn không mua sau khi đồng ý, các hạn chế sử dụng có thể được áp dụng.
     </div>
 
-    <div class="product">
-      <strong>Đồng hồ treo tường cũ</strong><br>
-      Đã bao gồm phí vận chuyển (người bán trả)<br>
-      <strong>Giá: 99.000đ</strong>
+    <div class="product" id="productBox">
+      <!-- Nội dung sản phẩm sẽ render bằng JS -->
     </div>
 
     <div class="price-box">
       <label for="offer">Giá chào hàng:</label>
-      <input type="number" id="offer" placeholder="Nhập giá mong muốn (50.000đ - 99.000đ)">
+      <input type="number" id="offer" placeholder="Nhập giá mong muốn ...">
     </div>
 
     <button class="submit-btn">Gửi yêu cầu giảm giá</button>
+
+    <p id="successText">✅ Gửi yêu cầu thành công!</p>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup">
+      <h3>🎉 Yêu cầu đã được gửi!</h3>
+      <p>Bạn sẽ nhận được phản hồi từ người bán trong vòng 24 giờ.</p>
+      <button onclick="closePopup()">Quay lại sản phẩm</button>
+    </div>
   </div>
 
   <script>
-  document.querySelector('.submit-btn').addEventListener('click', function () {
-    const offer = document.getElementById('offer').value;
-    
-    // Kiểm tra nếu chưa nhập giá hoặc giá không hợp lệ
-    if (!offer || offer < 50000 || offer > 99000) {
-      alert("Vui lòng nhập mức giá hợp lệ (từ 50.000đ đến 99.000đ)");
-      return;
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    const productBox = document.getElementById("productBox");
+
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
     }
 
-    // Hiển thị thông báo thành công
-    alert("🎉 Gửi yêu cầu giảm giá thành công!\nBạn sẽ nhận được phản hồi trong vòng 24 giờ.");
+    if (product) {
+      productBox.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <div class="product-info">
+          <strong>${product.name}</strong><br>
+          Đã bao gồm phí vận chuyển (người bán trả)<br>
+          <strong>Giá: ${formatPrice(product.price)}</strong>
+        </div>
+      `;
+    } else {
+      alert("Không tìm thấy thông tin sản phẩm.");
+      window.location.href = "sp.html";
+    }
 
-    // Chuyển hướng về trang sản phẩm
-    window.location.href = "sp.html";
-  });
-</script>
+    document.querySelector('.submit-btn').addEventListener('click', function () {
+      const offer = document.getElementById('offer').value;
+      const maxPrice = parseInt(product.price.replace(/\D/g, ""));
+      const minPrice = 50000;
 
+      if (!offer || offer < minPrice || offer > maxPrice) {
+        alert(`Vui lòng nhập mức giá hợp lệ (từ 50.000đ đến ${formatPrice(product.price)})`);
+        return;
+      }
+
+      // Hiển thị thông báo chữ
+      document.getElementById("successText").style.display = "block";
+
+      // Hiện popup sau 0.7s
+      setTimeout(() => {
+        document.getElementById("popup").style.display = "flex";
+      }, 700);
+    });
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+      window.location.href = "sp.html";
+    }
+  </script>
 
 </body>
 </html>

@@ -412,7 +412,7 @@ fetch('MockData/kham_pha.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList2');
-    data.forEach(product => {
+    data.forEach((product, index) => {
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
@@ -421,13 +421,31 @@ fetch('MockData/kham_pha.json')
         <p>${product.price}</p>
       `;
       card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
+
+      // Gán đường dẫn tương ứng dựa theo index
+      card.onclick = function () {
+        switch (index) {
+          case 0:
+            window.location.href = 'style.html';
+            break;
+          case 1:
+            window.location.href = 'book.html';
+            break;
+          case 2:
+            window.location.href = 'hh.html';
+            break;
+          case 3:
+            window.location.href = 'play.html';
+            break;
+          default:
+            alert("Danh mục chưa được gán liên kết.");
+        }
       };
+
       container.appendChild(card);
     });
   });
+
 
 fetch('https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageSize=20')
   .then(res => res.json())

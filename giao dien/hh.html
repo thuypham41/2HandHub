@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đồ gia dụng - 2HandHub</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
-  <style>
+  <style> 
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -27,27 +26,26 @@
       height: 75px;
     }
 
-    .search-bar {
-      display: flex;
-      align-items: center;
-      width: 50px;
-      /* ✅ Thu ngắn thanh tìm kiếm */
-      background: #f5f5f5;
-      border-radius: 6px;
-      padding: 6px 12px;
-    }
+   .search-bar {
+  display: flex;
+  align-items: center;
+  width: 300px; /* ✅ Tăng chiều rộng để nhập liệu dễ dàng */
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
 
-    .search-bar input {
-      border: none;
-      outline: none;
-      background: transparent;
-      width: 100%;
-      font-size: 14px;
-    }
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+}
 
-    .search-bar i {
-      color: #888;
-    }
+.search-bar i {
+  color: #888;
+}
 
     .right-icons {
       display: flex;
@@ -178,54 +176,21 @@
         justify-content: flex-start;
         gap: 12px;
       }
-      .suggest-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.product-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-.product-card:hover {
-  transform: scale(1.02);
-}
-.product-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
     }
   </style>
 </head>
-
 <body>
   <div class="navbar">
     <div class="logo"><img src="image/2hand.png" alt="logo"></div>
-    <!--<div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm sản phẩm...">
-      <i class="fas fa-search"></i>
-    </div>-->
-
     <div class="search-bar">
       <input type="text" placeholder="Tìm kiếm sản phẩm...">
       <i class="fas fa-search"></i>
     </div>
     <div class="right-icons">
-       <a href="user.html" class="username" target="_blank" id="username-link"></a>
+      <a href="user.html" class="username" target="_blank" id="username-link"></a>
       <script>
-        // Lấy tên người dùng từ localStorage và hiển thị
         const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : 1;
-        const username = user.fullName || "Mizu";
+        const username = user?.fullName || "Mizu";
         document.getElementById('username-link').textContent = username;
       </script>
       <i class="fa fa-bell"></i>
@@ -236,164 +201,104 @@
 
   <div class="sub-menu">
     <a href="home.html" class="menu-link">GỢI Ý</a>
-    <a href="style.html" class="menu-link ">THỜI TRANG</a>
-    <a href="book.html" class="menu-link ">SÁCH</a>
+    <a href="style.html" class="menu-link">THỜI TRANG</a>
+    <a href="book.html" class="menu-link">SÁCH</a>
     <a href="hh.html" class="menu-link active">ĐỒ GIA DỤNG</a>
     <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
     <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
   </div>
 
+  <section class="latest-products" id="search-results" style="display:none">
+    <h2>KẾt Quả Tìm Kiếm</h2>
+    <div class="suggest-grid" id="searchList"></div>
+  </section>
 
   <section class="latest-products">
     <h2>THIẾT BỊ NHÀ BẾP</h2>
     <div id="productList" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
-    <h2>THIẾT BỊ LÀM SẠCH & CHĂM SÓC NHÀ CỬA</h2>
+  </section>
+  <section class="latest-products">
+    <h2>THIẾT BỊ LÀM SẠCH & CHĂM SÓC NHÀ CỬa</h2>
     <div id="productList1" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
+  </section>
+  <section class="latest-products">
     <h2>THIẾT BỊ GIẶT ỦI</h2>
     <div id="productList2" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
+  </section>
+  <section class="latest-products">
     <h2>THIẾT BỊ SINH HOẠT & CHĂM SÓC CÁ NHÂN</h2>
     <div id="productList3" class="suggest-grid"></div>
- </section>
-  
+  </section>
+
   <script>
-  fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=9&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
+    const subcategories = [9, 10, 11, 12];
+    const containerIds = ['productList', 'productList1', 'productList2', 'productList3'];
+
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+
+    function renderProduct(container, product) {
       const card = document.createElement('div');
       card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
+      card.onclick = () => {
         localStorage.setItem('selectedProduct', JSON.stringify(product));
         window.location.href = 'sp.html';
       };
       container.appendChild(card);
+    }
+
+    subcategories.forEach((subCatId, index) => {
+      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCatId}&PageNumber=1&PageSize=20`)
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById(containerIds[index]);
+          container.innerHTML = "";
+          (data.data || []).forEach(product => renderProduct(container, product));
+        })
+        .catch(error => console.error('Lỗi khi tải sản phẩm:', error));
     });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
 
- fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=10&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList1');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
+    const searchInput = document.querySelector('.search-bar input');
+    searchInput.addEventListener('input', () => {
+      clearTimeout(window.searchTimeout);
+      window.searchTimeout = setTimeout(() => {
+        const keyword = searchInput.value.trim();
+        const section = document.getElementById('search-results');
+        const list = document.getElementById('searchList');
+
+        if (!keyword) {
+          section.style.display = "none";
+          list.innerHTML = "";
+          return;
+        }
+
+        fetch(`https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(keyword)}`)
+          .then(res => res.json())
+          .then(data => {
+            list.innerHTML = "";
+            section.style.display = "block";
+            const products = data.data || [];
+            if (products.length === 0) {
+              list.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+              return;
+            }
+            products.forEach(product => renderProduct(list, product));
+          })
+          .catch(err => {
+            section.style.display = "block";
+            list.innerHTML = "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
+            console.error("Lỗi tìm kiếm:", err);
+          });
+      }, 300);
     });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
-
- fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=11&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList2');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
-
-  
-
-  fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=12&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList3');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
-</script>
-
+  </script>
 </body>
-
-
 </html>

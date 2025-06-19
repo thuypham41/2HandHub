@@ -26,26 +26,26 @@
       height: 75px;
     }
 
-   .search-bar {
-  display: flex;
-  align-items: center;
-  width: 50px; /* ✅ Thu ngắn thanh tìm kiếm */
-  background: #f5f5f5;
-  border-radius: 6px;
-  padding: 6px 12px;
-}
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 200px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      padding: 6px 12px;
+    }
 
-.search-bar input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 14px;
-}
+    .search-bar input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+    }
 
-.search-bar i {
-  color: #888;
-}
+    .search-bar i {
+      color: #888;
+    }
 
     .right-icons {
       display: flex;
@@ -168,7 +168,6 @@
 
       .search-bar {
         width: 100%;
-        max-width: none;
       }
 
       .right-icons {
@@ -182,22 +181,16 @@
 <body>
   <div class="navbar">
     <div class="logo"><img src="image/2hand.png" alt="logo"></div>
-    <!--<div class="search-bar">
+    <div class="search-bar">
       <input type="text" placeholder="Tìm kiếm sản phẩm...">
       <i class="fas fa-search"></i>
-    </div>-->
-      
-  <div class="search-bar">
-    <input type="text" placeholder="Tìm kiếm sản phẩm...">
-    <i class="fas fa-search"></i>
-  </div>
+    </div>
     <div class="right-icons">
-       <a href="user.html" class="username" target="_blank" id="username-link"></a>
+      <a href="user.html" class="username" target="_blank" id="username-link"></a>
       <script>
-        // Lấy tên người dùng từ localStorage và hiển thị
         const user = JSON.parse(localStorage.getItem("user"));
         const userId = user && user.id ? user.id : 1;
-        const username = user.fullName || "Mizu";
+        const username = user?.fullName || "Mizu";
         document.getElementById('username-link').textContent = username;
       </script>
       <i class="fa fa-bell"></i>
@@ -215,153 +208,106 @@
     <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
   </div>
 
+  <!-- ✅ Vùng kết quả tìm kiếm -->
+  <section class="latest-products" id="search-results" style="display:none">
+    <h2>KẾT QUẢ TÌM KIẾM</h2>
+    <div class="suggest-grid" id="searchList"></div>
+  </section>
+
+  <!-- ✅ Các danh mục -->
   <section class="latest-products">
     <h2>THIẾT BỊ ĐIỆN TỬ GIA DỤNG</h2>
     <div id="productList" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
+  </section>
+  <section class="latest-products">
     <h2>THIẾT BỊ ĐIỆN TỬ CÁ NHÂN</h2>
     <div id="productList1" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
+  </section>
+  <section class="latest-products">
     <h2>PHỤ KIỆN ĐIỆN TỬ</h2>
     <div id="productList2" class="suggest-grid"></div>
- </section>
- <section class="latest-products">
+  </section>
+  <section class="latest-products">
     <h2>THIẾT BỊ CÔNG NGHỆ - VĂN PHÒNG</h2>
     <div id="productList3" class="suggest-grid"></div>
- </section>
-  
+  </section>
+
+  <!-- ✅ Script -->
   <script>
- fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=13&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
+    const productEndpoints = [
+      { id: 'productList', subCategoryId: 13 },
+      { id: 'productList1', subCategoryId: 14 },
+      { id: 'productList2', subCategoryId: 15 },
+      { id: 'productList3', subCategoryId: 16 },
+    ];
 
- fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=14&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList1');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
 
- fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=15&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList2');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
+    function renderProducts(containerId, products) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${formatPrice(product.price)}</p>
+        `;
+        card.onclick = () => {
+          localStorage.setItem('selectedProduct', JSON.stringify(product));
+          window.location.href = 'sp.html';
+        };
+        container.appendChild(card);
+      });
+    }
 
-  
-
-  fetch('https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=16&PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList3');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
+    productEndpoints.forEach(({ id, subCategoryId }) => {
+      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCategoryId}&PageNumber=1&PageSize=20`)
+        .then(res => res.json())
+        .then(data => renderProducts(id, data.data || []))
+        .catch(err => console.error("Lỗi tải sản phẩm:", err));
     });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
-  });
-  
-</script>
+
+    const searchInput = document.querySelector('.search-bar input');
+    searchInput.addEventListener('input', () => {
+      clearTimeout(window.searchTimeout);
+      window.searchTimeout = setTimeout(() => {
+        const keyword = searchInput.value.trim();
+        const section = document.getElementById('search-results');
+        const list = document.getElementById('searchList');
+
+        if (!keyword) {
+          section.style.display = "none";
+          list.innerHTML = "";
+          return;
+        }
+
+        fetch(`https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(keyword)}`)
+          .then(res => res.json())
+          .then(data => {
+            list.innerHTML = "";
+            section.style.display = "block";
+
+            const products = data.data || [];
+            if (products.length === 0) {
+              list.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+              return;
+            }
+
+            renderProducts('searchList', products);
+          })
+          .catch(err => {
+            section.style.display = "block";
+            list.innerHTML = "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
+            console.error("Lỗi tìm kiếm:", err);
+          });
+      }, 300);
+    });
+  </script>
 </body>
 </html>

@@ -995,11 +995,107 @@
         <div style="margin-bottom:18px;">
           <label for="edit-image" style="font-weight:500; color:#2a7f62;">Ảnh đại diện sản phẩm:</label>
           <input type="file" id="edit-image" name="image" style="margin-top:4px;" accept="image/*" />
+          <div id="edit-image-preview" style="margin-top:8px;"></div>
         </div>
+        <script>
+          // Cloudinary config
+          const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/<your_cloud_name>/upload";
+          const CLOUDINARY_UPLOAD_PRESET = "<your_upload_preset>";
+
+          document.getElementById("edit-image").addEventListener("change", async function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Show preview
+            const preview = document.getElementById("edit-image-preview");
+            preview.innerHTML = `<span style="color:#888;">Đang tải ảnh lên...</span>`;
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+            try {
+              const res = await fetch(CLOUDINARY_URL, {
+          method: "POST",
+          body: formData
+              });
+              const data = await res.json();
+              if (data.secure_url) {
+          preview.innerHTML = `<img src="${data.secure_url}" alt="Ảnh sản phẩm" style="max-width:120px;max-height:120px;border-radius:6px;margin-top:4px;">`;
+          // Lưu URL vào input ẩn để submit
+          let hidden = document.getElementById("edit-image-url");
+          if (!hidden) {
+            hidden = document.createElement("input");
+            hidden.type = "hidden";
+            hidden.id = "edit-image-url";
+            hidden.name = "imageUrl";
+            document.getElementById("edit-product-form").appendChild(hidden);
+          }
+          hidden.value = data.secure_url;
+              } else {
+          preview.innerHTML = `<span style="color:#e53935;">Lỗi tải ảnh lên Cloudinary.</span>`;
+              }
+            } catch (err) {
+              preview.innerHTML = `<span style="color:#e53935;">Lỗi tải ảnh lên Cloudinary.</span>`;
+            }
+          });
+        </script>
         <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:10px;">
-          <button type="submit"
+            <button type="submit"
             style="background-color:#2a7f62; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Xác
             nhận</button>
+            <script>
+            async function submitEditProduct() {
+              const name = document.getElementById("edit-name").value.trim();
+              const price = document.getElementById("edit-price").value;
+              const description = document.getElementById("edit-description").value.trim();
+              const categoryId = document.getElementById("edit-category").value;
+              const subcategoryId = document.getElementById("edit-subcategory").value;
+              const imageUrlInput = document.getElementById("edit-image-url");
+              const imageUrl = imageUrlInput ? imageUrlInput.value : "";
+
+              if (!name || !price || !categoryId) {
+              alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
+              return;
+              }
+
+              // Lấy id sản phẩm đang sửa
+              if (!window.currentEditProductId) {
+              alert("Không xác định được sản phẩm cần sửa.");
+              return;
+              }
+
+              const payload = {
+              id: window.currentEditProductId,
+              name,
+              price: Number(price),
+              description,
+              categoryId,
+              subcategoryId,
+              image: imageUrl
+              };
+
+              try {
+              const res = await fetch("https://localhost:7238/api/Product/update-product", {
+                method: "PUT",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+              });
+              const data = await res.json();
+              if (data.success || data.status === 200) {
+                alert("Cập nhật sản phẩm thành công.");
+                closeEditProductPopup();
+                loadUserPostedProducts();
+              } else {
+                alert("Cập nhật sản phẩm thất bại. Vui lòng thử lại.");
+              }
+              } catch (err) {
+              alert("Có lỗi xảy ra khi cập nhật sản phẩm.");
+              }
+            }
+            </script>
           <button type="button" onclick="closeEditProductPopup()"
             style="background-color:#e53935; color:white; padding:8px 22px; border:none; border-radius:5px; font-weight:500; font-size:1rem; cursor:pointer; transition:background 0.2s;">Thoát</button>
         </div>
@@ -1045,7 +1141,7 @@
         image: ""
       };
 
-      currentEditProductId = productId;
+      window.currentEditProductId = productId;
       document.getElementById("edit-name").value = product.name;
       document.getElementById("edit-price").value = product.price;
       document.getElementById("edit-description").value = product.description;
@@ -1053,7 +1149,26 @@
       const catSelect = document.getElementById("edit-category");
       catSelect.innerHTML = `<option value="">-- Chọn danh mục --</option>` +
         categories.map(c => `<option value="${c.id}" ${product.categoryId === c.id ? "selected" : ""}>${c.name}</option>`).join("");
-
+        // Load subcategories for the current category if available
+        if (product.categoryId) {
+          try {
+            const subSelect = document.getElementById("edit-subcategory");
+            subSelect.innerHTML = `<option value="">Đang tải...</option>`;
+            const response = await fetch(`https://localhost:7238/api/Category/get-all-sub-categories?CategoryId=${product.categoryId}&PageNumber=1&PageSize=20`);
+            const data = await response.json();
+            const subcategories = data.data || [];
+            subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
+          subcategories.map(sub =>
+            `<option value="${sub.id}" ${product.subcategoryId === sub.id ? "selected" : ""}>${sub.name || sub.subCategoryName}</option>`
+          ).join("");
+          } catch (error) {
+            const subSelect = document.getElementById("edit-subcategory");
+            console.error("Error loading subcategories:", error);
+            subSelect.innerHTML = `<option value="">Lỗi tải danh mục con</option>`;
+          }
+        } else {
+          subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>`;
+        }
       // Update the onchange event to fetch subcategories from API
       catSelect.onchange = async function () {
         const categoryId = this.value;
@@ -1079,41 +1194,12 @@
       };
 
       const subSelect = document.getElementById("edit-subcategory");
-      // const selectedCat = categories.find(c => c.id === product.categoryId);
-      // subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-      //   (selectedCat ? selectedCat.sub.map(s => `<option value="${s}" ${product.subcategoryId === s ? "selected" : ""}>${s}</option>`).join("") : "");
-
-      catSelect.onchange = function () {
-        const catId = this.value;
-        const cat = categories.find(c => c.id === catId);
-        subSelect.innerHTML = `<option value="">-- Chọn danh mục con --</option>` +
-          (cat ? cat.sub.map(s => `<option value="${s}">${s}</option>`).join("") : "");
-      };
-
       document.getElementById("edit-product-popup").style.display = "block";
     }
 
     function closeEditProductPopup() {
       document.getElementById("edit-product-popup").style.display = "none";
       currentEditProductId = null;
-    }
-
-    function submitEditProduct() {
-      const name = document.getElementById("edit-name").value.trim();
-      const price = document.getElementById("edit-price").value;
-      const description = document.getElementById("edit-description").value.trim();
-      const categoryId = document.getElementById("edit-category").value;
-      const subcategoryId = document.getElementById("edit-subcategory").value;
-      const imageInput = document.getElementById("edit-image");
-      const imageFile = imageInput.files[0];
-
-      if (!name || !price || !categoryId) {
-        alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
-        return;
-      }
-
-      alert("Đã cập nhật sản phẩm (demo).");
-      closeEditProductPopup();
     }
 
     // Cho popup sửa bài đăng di chuyển được

@@ -33,7 +33,7 @@
   </div>
     <div class="others">
       <div class="search-box">
-        <input type="text" placeholder="Tìm kiếm">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm ">
         <i class="fas fa-search"></i>
       </div>
       <div class="language-dropdown">
@@ -144,6 +144,65 @@ fetch('https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageS
   .catch(error => {
     console.error('Lỗi khi tải bài đăng mới:', error);
   });
+
+   const searchInput = document.getElementById('searchInput');
+    const searchSection = document.getElementById('search-results');
+    const searchList = document.getElementById('searchList');
+
+    searchInput.addEventListener('input', () => {
+      clearTimeout(window.searchTimeout);
+      window.searchTimeout = setTimeout(() => {
+        const keyword = searchInput.value.trim();
+
+        if (!keyword) {
+          searchSection.style.display = "none";
+          searchList.innerHTML = "";
+          return;
+        }
+
+        fetch(`https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(keyword)}`)
+          .then(res => res.json())
+          .then(data => {
+            searchList.innerHTML = "";
+            const products = data.data || [];
+            searchSection.style.display = "block";
+            if (products.length === 0) {
+              searchList.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+              return;
+            }
+            products.forEach(product => renderProduct(searchList, product));
+          })
+          .catch(err => {
+            searchList.innerHTML = "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
+            searchSection.style.display = "block";
+            console.error("Lỗi tìm kiếm:", err);
+          });
+      }, 300);
+    });
+
+    
+
+    function renderProduct(container, product) {
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+    <h3>${product.name}</h3>
+    <p>${product.price ? formatPrice(product.price) : ''}</p>
+  `;
+  card.style.cursor = "pointer";
+  card.onclick = function () {
+    localStorage.setItem('selectedProduct', JSON.stringify(product));
+    window.location.href = 'sp.html';
+  };
+  container.appendChild(card);
+}
+
   </script>
+  <div id="search-results" style="display:none; padding: 20px;">
+  <h2>Kết quả tìm kiếm</h2>
+  <div id="searchList" class="suggest-grid"></div>
+</div>
+
 </body>
 </html>

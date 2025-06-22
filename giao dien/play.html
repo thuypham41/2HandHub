@@ -163,13 +163,13 @@
       <i class="fas fa-search"></i>
     </div>
     <div class="right-icons">
+        <i class="fa fa-bell"></i>
       <a href="user.html" class="username" target="_blank" id="username-link"></a>
       <script>
         const user = JSON.parse(localStorage.getItem("user"));
         const username = user?.fullName || "Mizu";
         document.getElementById('username-link').textContent = username;
       </script>
-      <i class="fa fa-bell"></i>
       <i class="fa fa-shopping-bag"></i>
       <a href="post.html" class="post-button">Đăng bán</a>
     </div>

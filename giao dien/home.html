@@ -387,17 +387,24 @@
 
   <script>
     // ...existing code...
-fetch('MockData/goi_y.json')
+fetch(`https://localhost:7238/api/Product/get-suggested-products?PageNumber=1&PageSize=12&UserId=${userId}`)
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList1');
-    data.forEach(product => {
+    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
+      // Format price to "117.000 đ"
+      function formatPrice(price) {
+        if (typeof price === "number") price = price.toString();
+        price = price.replace(/\D/g, "");
+        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+      }
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${product.price}</p>
+        <p>${formatPrice(product.price)}</p>
       `;
       card.style.cursor = "pointer";
       card.onclick = function() {
@@ -406,6 +413,9 @@ fetch('MockData/goi_y.json')
       };
       container.appendChild(card);
     });
+  })
+  .catch(error => {
+    console.error('Lỗi khi tải bài đăng mới:', error);
   });
 
 fetch('MockData/kham_pha.json')

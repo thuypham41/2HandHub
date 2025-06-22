@@ -404,8 +404,18 @@
                 }
               );
 
-              if (!response.ok) {
-                throw new Error("Lỗi khi thêm vào giỏ hàng trên server");
+              // if (!response.ok) {
+              //   throw new Error("Lỗi khi thêm vào giỏ hàng trên server");
+              // }
+
+              const result = await response.json();
+              if (
+                result &&
+                result.success === false &&
+                result.message === "Item is exist in cart"
+              ) {
+                alert("Sản phẩm đã có trong giỏ hàng!");
+                return;
               }
 
               // Nếu thành công, thêm vào cart local và cập nhật UI

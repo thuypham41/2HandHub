@@ -88,7 +88,7 @@
       font-weight: 700;
       letter-spacing: 0.5px;
     }
- 
+
    .action-buttons {
   display: flex;
   gap: 8px;            /* Khoảng cách giữa các nút */
@@ -517,7 +517,7 @@ bellIcon.addEventListener('click', (e) => {
   }, 300); // 300ms để phát hiện chuỗi click
 });
 
-  
+
   document.addEventListener('click', (e) => {
     if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
       notificationBox.classList.add('hidden');
@@ -595,7 +595,20 @@ function showRejectedPopup() {
   // === Giỏ hàng ===
   const cartCount = document.getElementById('cartCount');
   const cartPopup = document.getElementById('cartPopup');
-  const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    let cart = [];
+
+    fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        cart = data || [];
+        updateCartUI();
+      })
+      .catch(error => {
+        console.error('Error fetching cart items:', error);
+        // Fallback to localStorage if server request fails
+        cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        updateCartUI();
+      });
 
   function formatPrice(price) {
     if (typeof price === "number") price = price.toString();

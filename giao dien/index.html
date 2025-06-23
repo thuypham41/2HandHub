@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <title>2HandHub.com</title>
   <style>
     .latest-products h2 {
@@ -16,24 +16,48 @@
       font-weight: 700;
       letter-spacing: 0.5px;
     }
+    .suggest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      background-color: #fff;
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+     #productList1 .product-card {
+      min-width: 180px;
+      flex: 0 0 auto;
+    }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <div class="logo">
-      <img src="image/2hand.png" alt="Logo">
+    <div class="logo"><img src="image/2hand.png" alt="Logo" /></div>
+    <div class="sub-menu">
+      <a href="#" class="menu-link active">GỢI Ý</a>
+      <a href="index_style.html" class="menu-link">THỜI TRANG</a>
+      <a href="index_book.html" class="menu-link">SÁCH</a>
+      <a href="index_hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
+      <a href="index_elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
+      <a href="index_play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
     </div>
-   <div class="sub-menu">
-    <a href="#" class="menu-link active">GỢI Ý</a>
-    <a href="index_style.html" class="menu-link">THỜI TRANG</a>
-    <a href="index_book.html" class="menu-link">SÁCH</a>
-    <a href="index_hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
-    <a href="index_elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
-    <a href="index_play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
-  </div>
     <div class="others">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Tìm kiếm ">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm " />
         <i class="fas fa-search"></i>
       </div>
       <div class="language-dropdown">
@@ -49,21 +73,27 @@
 
   <section id="Slider">
     <div class="slider-wrapper">
-      <img src="image/menu00.jpg" alt="">
-      <img src="image/menu1.png" alt="">
-      <img src="image/menu2.png" alt="">
-      <img src="image/menu3.png" alt="">
+      <img src="image/menu00.jpg" alt="" />
+      <img src="image/menu1.png" alt="" />
+      <img src="image/menu2.png" alt="" />
+      <img src="image/menu3.png" alt="" />
     </div>
   </section>
+  <div id="search-results" style="display:none; padding: 20px;">
+    <h2>Kết quả tìm kiếm</h2>
+    <div id="searchList" class="suggest-grid"></div>
+  </div>
 
   <section class="latest-products">
     <h2>Gợi ý hôm nay dành cho bạn</h2>
-    <div id="productList1" class="suggest-grid"></div>
+    <div id="productList1" class="suggest-grid" style="overflow-x: unset; flex-wrap: wrap; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px;"></div>
+    </div>
   </section>
+
 
   <section class="latest-products">
     <h2>Khám phá danh mục</h2>
-    <div id="productList2" class="suggest-grid"></div>
+    <div id="productList2" class="suggest-grid" style="grid-template-columns: repeat(4, 1fr);"></div>
   </section>
 
   <section class="latest-products">
@@ -72,137 +102,123 @@
   </section>
 
   <script>
-    fetch('MockData/goi_y.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList1');
-    data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${product.price}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  });
-
-fetch('MockData/kham_pha.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList2');
-    data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${product.price}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
-      };
-      container.appendChild(card);
-    });
-  });
-
-fetch('https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageSize=20')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('productList3');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
-    data.data.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      // Format price to "117.000 đ"
+document.addEventListener("DOMContentLoaded", function () {
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
         return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
       }
+
+      function renderProduct(container, product) {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.price ? formatPrice(product.price) : ''}</p>
+        `;
+        card.style.cursor = "pointer";
+        card.onclick = function () {
+          localStorage.setItem("selectedProduct", JSON.stringify(product));
+          window.location.href = "sp.html";
+        };
+        container.appendChild(card);
+      }
+
+      fetch("MockData/goi_y.json")
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.getElementById("productList1");
+          data.forEach((product) => renderProduct(container, product));
+        });
+
+     fetch('MockData/kham_pha.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('productList2');
+    data.forEach((product, index) => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
       card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
-        <p>${formatPrice(product.price)}</p>
+        <p>${product.price}</p>
       `;
       card.style.cursor = "pointer";
-      card.onclick = function() {
-        localStorage.setItem('selectedProduct', JSON.stringify(product));
-        window.location.href = 'sp.html';
+
+      // Gán đường dẫn tương ứng dựa theo index
+      card.onclick = function () {
+        switch (index) {
+          case 0:
+            window.location.href = 'index_style.html';
+            break;
+          case 1:
+            window.location.href = 'index_book.html';
+            break;
+          case 2:
+            window.location.href = 'index_hh.html';
+            break;
+          case 3:
+            window.location.href = 'index_play.html';
+            break;
+          default:
+            alert("Danh mục chưa được gán liên kết.");
+        }
       };
+
       container.appendChild(card);
     });
-  })
-  .catch(error => {
-    console.error('Lỗi khi tải bài đăng mới:', error);
   });
 
-   const searchInput = document.getElementById('searchInput');
-    const searchSection = document.getElementById('search-results');
-    const searchList = document.getElementById('searchList');
 
-    searchInput.addEventListener('input', () => {
-      clearTimeout(window.searchTimeout);
-      window.searchTimeout = setTimeout(() => {
-        const keyword = searchInput.value.trim();
+      fetch("https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageSize=20")
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.getElementById("productList3");
+          container.innerHTML = "";
+          const products = data.data || [];
+          products.forEach((product) => renderProduct(container, product));
+        })
+        .catch((error) => {
+          console.error("Lỗi khi tải bài đăng mới:", error);
+        });
 
-        if (!keyword) {
-          searchSection.style.display = "none";
-          searchList.innerHTML = "";
-          return;
-        }
+      const searchInput = document.getElementById("searchInput");
+      const searchSection = document.getElementById("search-results");
+      const searchList = document.getElementById("searchList");
 
-        fetch(`https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(keyword)}`)
-          .then(res => res.json())
-          .then(data => {
+      searchInput.addEventListener("input", () => {
+        clearTimeout(window.searchTimeout);
+        window.searchTimeout = setTimeout(() => {
+          const keyword = searchInput.value.trim();
+          if (!keyword) {
+            searchSection.style.display = "none";
             searchList.innerHTML = "";
-            const products = data.data || [];
-            searchSection.style.display = "block";
-            if (products.length === 0) {
-              searchList.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
-              return;
-            }
-            products.forEach(product => renderProduct(searchList, product));
-          })
-          .catch(err => {
-            searchList.innerHTML = "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
-            searchSection.style.display = "block";
-            console.error("Lỗi tìm kiếm:", err);
-          });
-      }, 300);
+            return;
+          }
+
+          fetch(
+            `https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Nam...yword)}`
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              searchList.innerHTML = "";
+              const products = data.data || [];
+              searchSection.style.display = "block";
+              if (products.length === 0) {
+                searchList.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+                return;
+              }
+products.forEach((product) => renderProduct(searchList, product));
+            })
+            .catch((err) => {
+              searchList.innerHTML = "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
+              searchSection.style.display = "block";
+              console.error("Lỗi tìm kiếm:", err);
+            });
+        }, 300);
+      });
     });
-
-    
-
-    function renderProduct(container, product) {
-  const card = document.createElement('div');
-  card.className = 'product-card';
-  card.innerHTML = `
-    <img src="${product.image}" alt="${product.name}">
-    <h3>${product.name}</h3>
-    <p>${product.price ? formatPrice(product.price) : ''}</p>
-  `;
-  card.style.cursor = "pointer";
-  card.onclick = function () {
-    localStorage.setItem('selectedProduct', JSON.stringify(product));
-    window.location.href = 'sp.html';
-  };
-  container.appendChild(card);
-}
-
   </script>
-  <div id="search-results" style="display:none; padding: 20px;">
-  <h2>Kết quả tìm kiếm</h2>
-  <div id="searchList" class="suggest-grid"></div>
-</div>
-
 </body>
 </html>

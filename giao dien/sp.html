@@ -369,14 +369,14 @@
         cart.forEach((item, index) => {
           total += parseInt(item.price);
           html += `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.productName}" />
-            <div class="cart-item-info">
-              <strong>${item.productName}</strong><br>
-              ${item.price}đ
-            </div>
-            <button class="remove-btn" onclick="removeItem(${index})">✕</button>
-          </div>
+         <div class="cart-item" onclick="showProduct(${index})" style="cursor: pointer;">
+    <img src="${item.image}" alt="${item.productName}" />
+    <div class="cart-item-info">
+      <strong>${item.productName}</strong><br>
+      ${item.price}đ
+    </div>
+    <button class="remove-btn" onclick="event.stopPropagation(); removeItem(${index})">✕</button>
+  </div>
         `;
         });
 
@@ -501,6 +501,23 @@
         // Chuyển hướng sang trang thanh toán
         window.location.href = "pay.html";
       }
+
+      function showProduct(index) {
+  const productItem = cart[index];
+  if (productItem) {
+    // Đảm bảo bạn lưu dữ liệu ở định dạng tương thích với trang chi tiết
+    const selectedProduct = {
+      id: productItem.productId,
+      name: productItem.productName,
+      image: productItem.image,
+      price: productItem.price,
+      description: productItem.description || "Không có mô tả.",
+    };
+    localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
+    window.location.href = "sp.html"; // Đổi nếu trang bạn có tên khác
+  }
+}
+
     </script>
   </body>
 </html>

@@ -1,361 +1,374 @@
 <!DOCTYPE html>
 <html lang="vi">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
-  <title>Chi tiết sản phẩm - 2HandHub</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f9f9f9;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      padding: 12px 24px;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-      gap: 20px;
-    }
-
-    .back-icon {
-      font-size: 36px;
-      /* Tăng kích thước icon */
-      color: #333;
-      text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 6px;
-      transition: background 0.2s ease;
-    }
-
-    .back-icon:hover {
-      background: #eee;
-      text-decoration: none;
-    }
-
-    .logo img {
-      height: 75px;
-    }
-
-    .search-bar {
-      flex: 2;
-      /* tăng flex để thanh dài hơn */
-      display: flex;
-      align-items: center;
-      background: #f5f5f5;
-      border-radius: 10px;
-      padding: 8px 12px;
-      gap: 8px;
-      max-width: 900px;
-      /* tăng max-width */
-      min-width: 300px;
-    }
-
-    .search-bar input {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 16px;
-      width: 100%;
-    }
-
-    .search-bar i {
-      color: #666;
-      font-size: 16px;
-    }
-
-    .right-icons {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .right-icons i {
-      font-size: 18px;
-      color: #333;
-      cursor: pointer;
-    }
-
-    .username {
-      font-weight: 600;
-      color: #333;
-      text-decoration: none;
-    }
-
-    .post-button {
-      background: #ff3c2b;
-      color: white;
-      padding: 8px 16px;
-      font-weight: 600;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .cart-icon-container {
-      position: relative;
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: -6px;
-      right: -10px;
-      background: red;
-      color: white;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 50%;
-    }
-
-    #cartPopup {
-      position: absolute;
-      top: 80px;
-      right: 20px;
-      background: white;
-      border: 1px solid #ddd;
-      padding: 16px;
-      width: 320px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      border-radius: 12px;
-      display: none;
-      z-index: 999;
-      animation: slideDown 0.3s ease;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/1147679ae7.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Chi tiết sản phẩm - 2HandHub</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      .header {
+        display: flex;
+        align-items: center;
+        padding: 12px 24px;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        gap: 20px;
       }
-    }
 
-    .cart-item {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-      display: flex;
-      gap: 12px;
-      justify-content: space-between;
-      align-items: center;
-    }
+      .back-icon {
+        font-size: 36px;
+        /* Tăng kích thước icon */
+        color: #333;
+        text-decoration: none;
+        padding: 8px 10px;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+      }
 
-    .cart-item img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
+      .back-icon:hover {
+        background: #eee;
+        text-decoration: none;
+      }
 
-    .cart-item-info {
-      flex: 1;
-    }
+      .logo img {
+        height: 75px;
+      }
 
-    .remove-btn {
-      color: #e60023;
-      cursor: pointer;
-      font-size: 14px;
-      border: none;
-      background: none;
-    }
+      .search-bar {
+        flex: 2;
+        /* tăng flex để thanh dài hơn */
+        display: flex;
+        align-items: center;
+        background: #f5f5f5;
+        border-radius: 10px;
+        padding: 8px 12px;
+        gap: 8px;
+        max-width: 900px;
+        /* tăng max-width */
+        min-width: 300px;
+      }
 
-    .total-price {
-      text-align: right;
-      font-weight: bold;
-      margin-top: 12px;
-    }
+      .search-bar input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 16px;
+        width: 100%;
+      }
 
-    .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
+      .search-bar i {
+        color: #666;
+        font-size: 16px;
+      }
 
-    .product-images img {
-      width: 100%;
-      max-width: 450px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    }
+      .right-icons {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
 
-    .product-info {
-      flex: 1;
-      max-width: 600px;
-    }
+      .right-icons i {
+        font-size: 18px;
+        color: #333;
+        cursor: pointer;
+      }
 
-    .product-title {
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #222;
-    }
+      .username {
+        font-weight: 600;
+        color: #333;
+        text-decoration: none;
+      }
 
-    .product-price {
-      font-size: 24px;
-      color: #e60023;
-      font-weight: bold;
-      margin: 16px 0;
-    }
+      .post-button {
+        background: #ff3c2b;
+        color: white;
+        padding: 8px 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 14px;
+      }
 
-    .product-description {
-      font-size: 16px;
-      color: #444;
-      line-height: 1.6;
-      margin-top: 20px;
-    }
+      .cart-icon-container {
+        position: relative;
+      }
 
-    .button-group {
-      margin-top: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
+      .cart-badge {
+        position: absolute;
+        top: -6px;
+        right: -10px;
+        background: red;
+        color: white;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 50%;
+      }
 
-    .action-button {
-      padding: 12px 20px;
-      border-radius: 10px;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+      #cartPopup {
+        position: absolute;
+        top: 80px;
+        right: 20px;
+        background: white;
+        border: 1px solid #ddd;
+        padding: 16px;
+        width: 320px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        display: none;
+        z-index: 999;
+        animation: slideDown 0.3s ease;
+        max-height: 400px;
+        overflow-y: auto;
+      }
 
-    .action-button.add {
-      background: #f5f5f5;
-      color: #333;
-    }
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
 
-    .action-button.add:hover {
-      background: #e2e2e2;
-    }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    .action-button.discount {
-      background: #fff0f0;
-      color: #cc0033;
-    }
+      .cart-item {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-    .action-button.discount:hover {
-      background: #ffe5e5;
-    }
+      .cart-item img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
 
-    .action-button.primary {
-      background: #e60023;
-      color: #fff;
-    }
+      .cart-item-info {
+        flex: 1;
+      }
 
-    .action-button.primary:hover {
-      background: #c4001c;
-    }
-  </style>
-</head>
+      .remove-btn {
+        color: #e60023;
+        cursor: pointer;
+        font-size: 14px;
+        border: none;
+        background: none;
+      }
 
-<body>
-  <div class="header">
-    <a href="home.html" class="back-icon">‹</a>
-    <div class="logo">
-      <img src="image/2hand.png" alt="2HandHub Logo" />
-    </div>
-    <div class="search-bar">
-      <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-      <i class="fas fa-search"></i>
-    </div>
-    <div class="right-icons">
-      <i class="fas fa-bell"></i>
-      <a href="user.html" class="username" target="_blank" id="username-link"></a>
-      <script>
-        // Lấy tên người dùng từ localStorage và hiển thị
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : 1;
-        const username = user.fullName || "Mizu";
-        document.getElementById("username-link").textContent = username;
-      </script>
-      <div class="cart-icon-container">
-        <i class="fa fa-shopping-bag"></i>
-        <span class="cart-badge" id="cartCount">0</span>
+      .total-price {
+        text-align: right;
+        font-weight: bold;
+        margin-top: 12px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+      }
+
+      .product-images img {
+        width: 100%;
+        max-width: 450px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-info {
+        flex: 1;
+        max-width: 600px;
+      }
+
+      .product-title {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #222;
+      }
+
+      .product-price {
+        font-size: 24px;
+        color: #e60023;
+        font-weight: bold;
+        margin: 16px 0;
+      }
+
+      .product-description {
+        font-size: 16px;
+        color: #444;
+        line-height: 1.6;
+        margin-top: 20px;
+      }
+
+      .button-group {
+        margin-top: 32px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .action-button {
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .action-button.add {
+        background: #f5f5f5;
+        color: #333;
+      }
+
+      .action-button.add:hover {
+        background: #e2e2e2;
+      }
+
+      .action-button.discount {
+        background: #fff0f0;
+        color: #cc0033;
+      }
+
+      .action-button.discount:hover {
+        background: #ffe5e5;
+      }
+
+      .action-button.primary {
+        background: #e60023;
+        color: #fff;
+      }
+
+      .action-button.primary:hover {
+        background: #c4001c;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <a href="home.html" class="back-icon">‹</a>
+      <div class="logo">
+        <img src="image/2hand.png" alt="2HandHub Logo" />
       </div>
-      <a href="post.html" class="post-button">Đăng bán</a>
-    </div>
-  </div>
-
-  <div id="cartPopup"></div>
-
-  <div class="container">
-    <div class="product-images">
-      <img id="productImage" src="" alt="Ảnh sản phẩm" />
-    </div>
-    <div class="product-info">
-      <h1 class="product-title" id="productName"></h1>
-      <p class="product-price" id="productPrice"></p>
-      <p class="product-description" id="productDesc"></p>
-      <div class="button-group">
-        <button class="action-button add">🛒 Thêm vào giỏ</button>
-        <button class="action-button discount" onclick="window.location.href='sale.html'">
-          💬 Yêu cầu giảm giá
-        </button>
-        <button class="action-button primary" onclick="window.location.href='buy.html'">
-          🛍️ Mua ngay
-        </button>
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="right-icons">
+        <i class="fas fa-bell"></i>
+        <a
+          href="user.html"
+          class="username"
+          target="_blank"
+          id="username-link"
+        ></a>
+        <script>
+          // Lấy tên người dùng từ localStorage và hiển thị
+          const user = JSON.parse(localStorage.getItem("user"));
+          const userId = user && user.id ? user.id : 1;
+          const username = user.fullName || "Mizu";
+          document.getElementById("username-link").textContent = username;
+        </script>
+        <div class="cart-icon-container">
+          <i class="fa fa-shopping-bag"></i>
+          <span class="cart-badge" id="cartCount">0</span>
+        </div>
+        <a href="post.html" class="post-button">Đăng bán</a>
       </div>
     </div>
-  </div>
 
-  <script>
-    const product = JSON.parse(localStorage.getItem("selectedProduct"));
-    if (product) {
-      document.getElementById("productName").textContent = product.name;
-      document.getElementById("productPrice").textContent =
-        product.price + "đ";
-      document.getElementById("productImage").src = product.image;
-      document.getElementById("productDesc").textContent =
-        product.description;
-    } else {
-      alert("Không có dữ liệu sản phẩm.");
-    }
+    <div id="cartPopup"></div>
 
-    const cartCount = document.getElementById("cartCount");
+    <div class="container">
+      <div class="product-images">
+        <img id="productImage" src="" alt="Ảnh sản phẩm" />
+      </div>
+      <div class="product-info">
+        <h1 class="product-title" id="productName"></h1>
+        <p class="product-price" id="productPrice"></p>
+        <p class="product-description" id="productDesc"></p>
+        <div class="button-group">
+          <button class="action-button add">🛒 Thêm vào giỏ</button>
+          <button
+            class="action-button discount"
+            onclick="window.location.href='sale.html'"
+          >
+            💬 Yêu cầu giảm giá
+          </button>
+          <button
+            class="action-button primary"
+            onclick="window.location.href='buy.html'"
+          >
+            🛍️ Mua ngay
+          </button>
+        </div>
+      </div>
+    </div>
 
-    let cart = [];
+    <script>
+      const product = JSON.parse(localStorage.getItem("selectedProduct"));
+      if (product) {
+        document.getElementById("productName").textContent = product.name;
+        document.getElementById("productPrice").textContent =
+          product.price + "đ";
+        document.getElementById("productImage").src = product.image;
+        document.getElementById("productDesc").textContent =
+          product.description;
+      } else {
+        alert("Không có dữ liệu sản phẩm.");
+      }
 
-    fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
-      .then(res => res.json())
-      .then(data => {
-        cart = data.data || [];
-        updateCartUI();
-      })
-      .catch(error => {
-        console.error('Error fetching cart items:', error);
-        // Fallback to localStorage if server request fails
-        cart = JSON.parse(localStorage.getItem('cartItems')) || [];
-        updateCartUI();
-      });
+      const cartCount = document.getElementById("cartCount");
 
-    function updateCartUI() {
-      cartCount.textContent = cart.length;
-      let html = "<h4>Sản phẩm trong giỏ:</h4>";
-      let total = 0;
+      let cart = [];
 
-      cart.forEach((item, index) => {
-        total += parseInt(item.price);
-        html += `
+      fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          cart = data.data || [];
+          updateCartUI();
+        })
+        .catch((error) => {
+          console.error("Error fetching cart items:", error);
+          // Fallback to localStorage if server request fails
+          cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+          updateCartUI();
+        });
+
+      function updateCartUI() {
+        cartCount.textContent = cart.length;
+        let html = "<h4>Sản phẩm trong giỏ:</h4>";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += parseInt(item.price);
+          html += `
           <div class="cart-item">
             <img src="${item.image}" alt="${item.productName}" />
             <div class="cart-item-info">
@@ -365,134 +378,129 @@
             <button class="remove-btn" onclick="removeItem(${index})">✕</button>
           </div>
         `;
-      });
+        });
 
-      html += `
+        html += `
   <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 12px;">
     <div class="total-price" style="margin: 0;">Tổng: ${total.toLocaleString()}đ</div>
     <button class="action-button primary" onclick="proceedToPayment()" style="flex-shrink: 0;">Thanh toán</button>
   </div>
 `;
 
-      cartPopup.innerHTML = html;
-    }
-
-    async function removeItem(index) {
-      const itemToRemove = cart[index];
-      const user = JSON.parse(localStorage.getItem("user"));
-      const userId = user && user.id ? user.id : 1;
-
-      try {
-      const response = await fetch(
-        `https://localhost:7238/api/Cart/remove-item?userId=${userId}&productId=${itemToRemove.id || itemToRemove.productId}`,
-        {
-        method: "DELETE"
-        }
-      );
-
-      // Remove from local cart regardless of server response
-      cart.splice(index, 1);
-      localStorage.setItem("cartItems", JSON.stringify(cart));
-      updateCartUI();
-
-      if (!response.ok) {
-        console.error("Error removing item from server cart");
+        cartPopup.innerHTML = html;
       }
-      } catch (error) {
-      console.error("Error calling remove API:", error);
-      // Still remove locally even if server call fails
-      cart.splice(index, 1);
-      localStorage.setItem("cartItems", JSON.stringify(cart));
-      updateCartUI();
-      }
-    }
 
-    updateCartUI();
+      async function removeItem(index) {
+        const itemToRemove = cart[index];
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
 
-    document
-      .querySelector(".action-button.add")
-      .addEventListener("click", async () => {
-        if (product) {
-          // Lấy userId từ localStorage hoặc mặc định là 1
-          const user = JSON.parse(localStorage.getItem("user"));
-          const userId = user && user.id ? user.id : 1;
-
-          // Chuẩn bị dữ liệu gửi lên server
-          const data = {
-            cartId: 0,
-            userId: userId,
-            productId: product.id || 0,
-            quantity: 1,
-            price: parseInt(product.price) || 0,
-          };
-
-          try {
-            const response = await fetch(
-              "https://localhost:7238/api/Cart/add-item",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              }
-            );
-
-            // if (!response.ok) {
-            //   throw new Error("Lỗi khi thêm vào giỏ hàng trên server");
-            // }
-
-            const result = await response.json();
-            if (
-              result &&
-              result.success === false &&
-              result.message === "Item is exist in cart"
-            ) {
-              alert("Sản phẩm đã có trong giỏ hàng!");
-              return;
+        try {
+          const response = await fetch(
+            `https://localhost:7238/api/Cart/remove-item?userId=${userId}&productId=${itemToRemove.productId}`,
+            {
+              method: "DELETE",
             }
+          );
 
-            // Nếu thành công, thêm vào cart local và cập nhật UI
-            cart.push(product);
-            localStorage.setItem("cartItems", JSON.stringify(cart));
-            updateCartUI();
-            cartPopup.style.display = "block";
-          } catch (error) {
-            alert("Không thể thêm vào giỏ hàng: " + error.message);
+          // Remove from local cart regardless of server response
+          cart.splice(index, 1);
+          localStorage.setItem("cartItems", JSON.stringify(cart));
+          updateCartUI();
+
+          if (!response.ok) {
+            console.error("Error removing item from server cart");
           }
+        } catch (error) {
+          console.error("Error calling remove API:", error);
+          // Still remove locally even if server call fails
+          cart.splice(index, 1);
+          localStorage.setItem("cartItems", JSON.stringify(cart));
+          updateCartUI();
+        }
+      }
+
+      updateCartUI();
+
+      document
+        .querySelector(".action-button.add")
+        .addEventListener("click", async () => {
+          if (product) {
+            // Lấy userId từ localStorage hoặc mặc định là 1
+            const user = JSON.parse(localStorage.getItem("user"));
+            const userId = user && user.id ? user.id : 1;
+
+            // Chuẩn bị dữ liệu gửi lên server
+            const data = {
+              cartId: 0,
+              userId: userId,
+              productId: product.id || 0,
+              quantity: 1,
+              price: parseInt(product.price) || 0,
+            };
+
+            try {
+              const response = await fetch(
+                "https://localhost:7238/api/Cart/add-item",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                }
+              );
+
+              const result = await response.json();
+              if (
+                result &&
+                result.success === false &&
+                result.message === "Item is exist in cart"
+              ) {
+                alert("Sản phẩm đã có trong giỏ hàng!");
+                return;
+              }
+
+              // Nếu thành công, thêm vào cart local và cập nhật UI
+              cart.push(result.data);
+              localStorage.setItem("cartItems", JSON.stringify(cart));
+              updateCartUI();
+              cartPopup.style.display = "block";
+            } catch (error) {
+              alert("Không thể thêm vào giỏ hàng: " + error.message);
+            }
+          }
+        });
+
+      document
+        .querySelector(".cart-icon-container")
+        .addEventListener("click", (e) => {
+          cartPopup.style.display =
+            cartPopup.style.display === "block" ? "none" : "block";
+          e.stopPropagation();
+        });
+
+      document.addEventListener("click", function (event) {
+        const isClickInside =
+          cartPopup.contains(event.target) ||
+          event.target.closest(".cart-icon-container");
+        if (!isClickInside) {
+          cartPopup.style.display = "none";
         }
       });
 
-    document
-      .querySelector(".cart-icon-container")
-      .addEventListener("click", (e) => {
-        cartPopup.style.display =
-          cartPopup.style.display === "block" ? "none" : "block";
-        e.stopPropagation();
-      });
+      window.removeItem = removeItem;
 
-    document.addEventListener("click", function (event) {
-      const isClickInside =
-        cartPopup.contains(event.target) ||
-        event.target.closest(".cart-icon-container");
-      if (!isClickInside) {
-        cartPopup.style.display = "none";
+      function proceedToPayment() {
+        if (cart.length === 0) {
+          alert("Giỏ hàng đang trống!");
+          return;
+        }
+        // Lưu giỏ hàng vào localStorage với tên khác để dùng ở pay.html
+        localStorage.setItem("cartToPay", JSON.stringify(cart));
+        // Chuyển hướng sang trang thanh toán
+        window.location.href = "pay.html";
       }
-    });
-
-    window.removeItem = removeItem;
-
-    function proceedToPayment() {
-      if (cart.length === 0) {
-        alert("Giỏ hàng đang trống!");
-        return;
-      }
-      // Lưu giỏ hàng vào localStorage với tên khác để dùng ở pay.html
-      localStorage.setItem("cartToPay", JSON.stringify(cart));
-      // Chuyển hướng sang trang thanh toán
-      window.location.href = "pay.html";
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

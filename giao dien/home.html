@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
   <link rel="stylesheet" href="style.css" />
   <title>2HandHub.com</title>
   <style>
@@ -844,6 +844,68 @@
             console.error("Lỗi tìm kiếm:", err);
           });
       }, 300);
+    });
+  </script>
+  <!-- Connect to SignalR -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Tạo kết nối tới NotificationHub
+      const user = JSON.parse(localStorage.getItem("user"));
+      const connection = new signalR.HubConnectionBuilder()
+        .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+      // Định nghĩa sự kiện nhận từ server
+      connection.on("ReceiveNotification", function (notification) {
+        console.log("Thông báo mới:", notification);
+
+        // Hiển thị chấm đỏ thông báo
+        const notifDot = document.getElementById('notifDot');
+        if (notifDot) {
+          notifDot.style.display = 'block';
+        }
+
+        // Có thể hiển thị toast notification
+        if (notification.Title && notification.Message) {
+          // Tạo một thông báo tạm thời
+          const toast = document.createElement('div');
+          toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            max-width: 300px;
+            animation: slideIn 0.3s ease;
+          `;
+          toast.innerHTML = `
+            <div style="font-weight: bold; margin-bottom: 8px;">${notification.Title}</div>
+            <div style="font-size: 14px; color: #666;">${notification.Message}</div>
+          `;
+          document.body.appendChild(toast);
+
+          // Tự động ẩn sau 5 giây
+          setTimeout(() => {
+            toast.remove();
+          }, 5000);
+        }
+      });
+
+      // Bắt đầu kết nối
+      connection.start()
+        .then(function () {
+          console.log("Đã kết nối đến NotificationHub");
+          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+        })
+        .catch(function (err) {
+          console.error("Lỗi khi kết nối SignalR:", err.toString());
+        });
     });
   </script>
 

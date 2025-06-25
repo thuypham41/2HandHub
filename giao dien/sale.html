@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <title>Yêu cầu giảm giá - 2HandHub</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -85,7 +87,7 @@
       height: 90px;
       object-fit: cover;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .product-info {
@@ -131,9 +133,11 @@
     /* Popup */
     .popup-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -147,7 +151,7 @@
       border-radius: 12px;
       max-width: 400px;
       text-align: center;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     }
 
     .popup h3 {
@@ -171,6 +175,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="header">
@@ -213,6 +218,71 @@
   </div>
 
   <script>
+    let connection;
+      document.addEventListener("DOMContentLoaded", function () {
+      // Tạo kết nối tới NotificationHub
+      const user = JSON.parse(localStorage.getItem("user"));
+      connection = new signalR.HubConnectionBuilder()
+        .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+      connection.on("UserConnected", function () {
+        console.log("Kết nối thành công đến NotificationHub");
+        // Gửi thông báo kết nối thành công nếu cần
+      });
+      // Định nghĩa sự kiện nhận từ server
+      connection.on("ReceiveNotification", function (notification) {
+        console.log("Thông báo mới:", notification);
+
+
+        // Hiển thị chấm đỏ thông báo
+        const notifDot = document.getElementById('notifDot');
+        if (notifDot) {
+          notifDot.style.display = 'block';
+        }
+
+        // Có thể hiển thị toast notification
+        if (notification.Title && notification.Message) {
+          // Tạo một thông báo tạm thời
+          const toast = document.createElement('div');
+          toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            max-width: 300px;
+            animation: slideIn 0.3s ease;
+          `;
+          toast.innerHTML = `
+            <div style="font-weight: bold; margin-bottom: 8px;">${notification.Title}</div>
+            <div style="font-size: 14px; color: #666;">${notification.Message}</div>
+          `;
+          document.body.appendChild(toast);
+
+          // Tự động ẩn sau 5 giây
+          setTimeout(() => {
+            toast.remove();
+          }, 5000);
+        }
+      });
+
+      // Bắt đầu kết nối
+      connection.start()
+        .then(function () {
+          console.log("Đã kết nối đến NotificationHub");
+          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+        })
+        .catch(function (err) {
+          console.error("Lỗi khi kết nối SignalR:", err.toString());
+        });
+    });
     const product = JSON.parse(localStorage.getItem("selectedProduct"));
     const productBox = document.getElementById("productBox");
 
@@ -236,9 +306,9 @@
       window.location.href = "sp.html";
     }
 
-    document.querySelector('.submit-btn').addEventListener('click', function () {
+    document.querySelector('.submit-btn').addEventListener('click', async function () {
       const offer = document.getElementById('offer').value;
-      const maxPrice = parseInt(product.price.replace(/\D/g, ""));
+      const maxPrice = parseInt(product.price);
       const minPrice = 50000;
 
       if (!offer || offer < minPrice || offer > maxPrice) {
@@ -246,13 +316,30 @@
         return;
       }
 
-      // Hiển thị thông báo chữ
-      document.getElementById("successText").style.display = "block";
+      try {
+        // Get user data from localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
 
-      // Hiện popup sau 0.7s
-      setTimeout(() => {
-        document.getElementById("popup").style.display = "flex";
-      }, 700);
+        // Use SignalR connection to invoke server method
+        await connection.invoke("SendNotificationToUser", {
+          productId: product.id || 98,
+          offerPrice: parseInt(offer),
+          buyerId: user?.id || 18,
+          sellerResponse: ""
+        });
+
+        // Hiển thị thông báo chữ
+        document.getElementById("successText").style.display = "block";
+
+        // Hiện popup sau 0.7s
+        setTimeout(() => {
+          document.getElementById("popup").style.display = "flex";
+        }, 700);
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Không thể kết nối đến server. Vui lòng thử lại.');
+      }
     });
 
     function closePopup() {
@@ -260,6 +347,10 @@
       window.location.href = "sp.html";
     }
   </script>
+  <!-- Connect to SignalR -->
+  <script>
 
+  </script>
 </body>
+
 </html>

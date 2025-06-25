@@ -349,22 +349,28 @@
                 return;
               }
 
-              let html = '<p><strong>📢 Thông báo</strong></p>';
-              data.data.forEach((notification, index) => {
+                // Check if data or data.data is null/empty
+                if (!data || !data.data || data.data.length === 0) {
+                notificationContent.innerHTML = '<p>Không có thông báo nào.</p>';
+                return;
+                }
+
+                let html = '<p><strong>📢 Thông báo</strong></p>';
+                data.data.forEach((notification, index) => {
                 html += `
-             <div class="notification-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
-             <p style="margin: 0 0 8px 0;"><strong>${notification.title || 'Thông báo'}</strong></p>
-             <p style="margin: 0 0 12px 0; font-size: 13px; color: #666;">${notification.content || notification.messeage || 'Nội dung thông báo'}</p>
-             <div class="action-buttons">
-               <button onclick="respond('accepted', ${notification.id || index})">✅ Đồng ý</button>
-               <button onclick="respond('rejected', ${notification.id || index})">❌ Từ chối</button>
-               <button onclick="respond('chat', ${notification.id || index})">💬 Trả lời</button>
-             </div>
-             </div>
-           `;
-              });
-              notificationContent.innerHTML = html;
-            })
+               <div class="notification-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
+               <p style="margin: 0 0 8px 0;"><strong>${notification.title || 'Thông báo'}</strong></p>
+               <p style="margin: 0 0 12px 0; font-size: 13px; color: #666;">${notification.content || notification.messeage || 'Nội dung thông báo'}</p>
+               <div class="action-buttons">
+                 <button onclick="respond('accepted', ${notification.id || index})">✅ Đồng ý</button>
+                 <button onclick="respond('rejected', ${notification.id || index})">❌ Từ chối</button>
+                 <button onclick="respond('chat', ${notification.id || index})">💬 Trả lời</button>
+               </div>
+               </div>
+               `;
+                });
+                notificationContent.innerHTML = html;
+              })
             .catch(error => {
               console.error('Error loading notifications:', error);
               document.getElementById('notificationContent').innerHTML = '<p>Lỗi khi tải thông báo.</p>';
@@ -592,100 +598,100 @@
     // });
 
 
-    document.addEventListener('click', (e) => {
-      if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
-        notificationBox.classList.add('hidden');
-      }
-    });
+  //   document.addEventListener('click', (e) => {
+  //     if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
+  //       notificationBox.classList.add('hidden');
+  //     }
+  //   });
 
-    window.respond = function (action) {
-      switch (action) {
-        case 'accepted':
-          alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
-          break;
-        case 'rejected':
-          alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
-          break;
-        case 'chat':
-          window.location.href = "chat.html";
-          break;
-        default:
-          alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
-      }
-      notificationBox.classList.add('hidden');
-    };
-    function showAgreedPopup() { //thong bao dong y thuong luong
-      notificationBox.innerHTML = `
-    <div style="
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    ">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 20px;"></i>
-        <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-          Người bán đã đồng ý với yêu cầu thương lượng giá của bạn.
-        </p>
-      </div>
-      <button onclick="proceedToPayment()" style="
-        background-color: #e60023;
-        color: #fff;
-        border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: background 0.2s ease;
-      ">Mua ngay</button>
-    </div>
-  `;
-      notificationBox.classList.remove('hidden');
-    }
-    function showRejectedPopup() {
-      notificationBox.innerHTML = `
-    <div style="
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    ">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 20px;"></i>
-        <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-          Người bán đã từ chối yêu cầu thương lượng của bạn.
-        </p>
-      </div>
-    </div>
-  `;
-      notificationBox.classList.remove('hidden');
-    }
+  //   window.respond = function (action) {
+  //     switch (action) {
+  //       case 'accepted':
+  //         alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
+  //         break;
+  //       case 'rejected':
+  //         alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
+  //         break;
+  //       case 'chat':
+  //         window.location.href = "chat.html";
+  //         break;
+  //       default:
+  //         alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
+  //     }
+  //     notificationBox.classList.add('hidden');
+  //   };
+  //   function showAgreedPopup() { //thong bao dong y thuong luong
+  //     notificationBox.innerHTML = `
+  //   <div style="
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
+  //     gap: 16px;
+  //   ">
+  //     <div style="display: flex; align-items: center; gap: 10px;">
+  //       <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 20px;"></i>
+  //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+  //         Người bán đã đồng ý với yêu cầu thương lượng giá của bạn.
+  //       </p>
+  //     </div>
+  //     <button onclick="proceedToPayment()" style="
+  //       background-color: #e60023;
+  //       color: #fff;
+  //       border: none;
+  //       padding: 8px 14px;
+  //       border-radius: 6px;
+  //       font-size: 14px;
+  //       font-weight: bold;
+  //       cursor: pointer;
+  //       white-space: nowrap;
+  //       transition: background 0.2s ease;
+  //     ">Mua ngay</button>
+  //   </div>
+  // `;
+  //     notificationBox.classList.remove('hidden');
+  //   }
+  //   function showRejectedPopup() {
+  //     notificationBox.innerHTML = `
+  //   <div style="
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
+  //     gap: 16px;
+  //   ">
+  //     <div style="display: flex; align-items: center; gap: 10px;">
+  //       <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 20px;"></i>
+  //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+  //         Người bán đã từ chối yêu cầu thương lượng của bạn.
+  //       </p>
+  //     </div>
+  //   </div>
+  // `;
+  //     notificationBox.classList.remove('hidden');
+  //   }
 
-    function showChat() {
-      notificationBox.innerHTML = `
-    <div style="
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      cursor: pointer;
-    " id="chatPopupContent">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-comments" style="color: #3498db; font-size: 20px;"></i>
-        <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-          Người bán đã gửi tin nhắn cho bạn !!!
-        </p>
-      </div>
-    </div>
-  `;
-      notificationBox.classList.remove('hidden');
-      // Thêm sự kiện click để chuyển sang chat.html
-      document.getElementById('chatPopupContent').onclick = function () {
-        window.location.href = "chat.html";
-      };
-    }
+  //   function showChat() {
+  //     notificationBox.innerHTML = `
+  //   <div style="
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
+  //     gap: 16px;
+  //     cursor: pointer;
+  //   " id="chatPopupContent">
+  //     <div style="display: flex; align-items: center; gap: 10px;">
+  //       <i class="fas fa-comments" style="color: #3498db; font-size: 20px;"></i>
+  //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+  //         Người bán đã gửi tin nhắn cho bạn !!!
+  //       </p>
+  //     </div>
+  //   </div>
+  // `;
+  //     notificationBox.classList.remove('hidden');
+  //     // Thêm sự kiện click để chuyển sang chat.html
+  //     document.getElementById('chatPopupContent').onclick = function () {
+  //       window.location.href = "chat.html";
+  //     };
+  //   }
 
     // === Giỏ hàng ===
     const cartCount = document.getElementById('cartCount');
@@ -695,7 +701,7 @@
     fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
       .then(res => res.json())
       .then(data => {
-        cart = data || [];
+        cart = data.data || [];
         updateCartUI();
       })
       .catch(error => {
@@ -721,7 +727,7 @@
       let total = 0;
 
       cart.forEach((item, index) => {
-        total += parseInt(item.price.replace(/\D/g, ''));
+        total += parseInt(item.price);
         html += `
         <div class="cart-item">
           <img src="${item.image}" alt="${item.name}" />
@@ -857,9 +863,14 @@
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
+        connection.on("UserConnected", function () {
+        console.log("Kết nối thành công đến NotificationHub");
+        // Gửi thông báo kết nối thành công nếu cần
+      });
       // Định nghĩa sự kiện nhận từ server
       connection.on("ReceiveNotification", function (notification) {
         console.log("Thông báo mới:", notification);
+
 
         // Hiển thị chấm đỏ thông báo
         const notifDot = document.getElementById('notifDot');

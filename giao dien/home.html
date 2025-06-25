@@ -761,9 +761,9 @@
           total += parseInt(item.price);
           html += `
         <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}" />
+          <img src="${item.productImage}" alt="${item.productName}" />
           <div class="cart-item-info" onclick="viewProduct(${index})" style="cursor:pointer;">
-            <strong>${item.name}</strong><br>
+            <strong>${item.productName}</strong><br>
             ${formatPrice(item.price)}
           </div>
           <button class="remove-btn" onclick="removeItem(${index})">✕</button>
@@ -790,7 +790,21 @@
       };
 
       window.viewProduct = function (index) {
-        const product = cart[index];
+        const item = cart[index];
+        // Map cart item to product object format
+        const product = {
+          id: item.productId || item.id,
+          name: item.productName || item.name,
+          price: item.price,
+          imageUrl: item.productImage || item.image || item.imageUrl,
+          description: item.description || "",
+          categoryId: item.categoryId || 2,
+          sellerId: item.sellerId || 0,
+          status: item.status || 0,
+          isDeleted: item.isDeleted || false,
+          createdAt: item.createdAt || new Date().toISOString(),
+          condition: item.condition || "",
+        };
         localStorage.setItem("selectedProduct", JSON.stringify(product));
         window.location.href = "sp.html";
       };

@@ -807,7 +807,8 @@
             <strong>${item.productName}</strong><br>
             ${formatPrice(item.price)}
           </div>
-          <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+          <button class="remove-btn" onclick="event.stopPropagation(); removeItem(${index})">✕</button>
+
         </div>
       `;
         });
@@ -824,11 +825,40 @@
         cartPopup.innerHTML = html;
       }
 
-      window.removeItem = function (index) {
-        cart.splice(index, 1);
-        localStorage.setItem("cartItems", JSON.stringify(cart));
-        updateCartUI();
-      };
+     async function removeItem(index) {
+        const itemToRemove = cart[index];
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
+
+        try {
+          const response = await fetch(
+            `https://localhost:7238/api/Cart/remove-item?userId=${userId}&productId=${itemToRemove.productId}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          // Remove from local cart regardless of server response
+          cart.splice(index, 1);
+          localStorage.setItem("cartItems", JSON.stringify(cart));
+          updateCartUI();
+
+          if (!response.ok) {
+            console.error("Error removing item from server cart");
+          }
+        } catch (error) {
+          console.error("Error calling remove API:", error);
+          // Still remove locally even if server call fails
+          cart.splice(index, 1);
+          localStorage.setItem("cartItems", JSON.stringify(cart));
+          updateCartUI();
+        }
+      }
+
+      updateCartUI();
+     
+
+
 
       window.viewProduct = function (index) {
         const item = cart[index];

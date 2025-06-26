@@ -321,15 +321,26 @@
           >
             💬 Yêu cầu giảm giá
           </button>
-          <button
-            class="action-button primary"
-            onclick="window.location.href='buy.html'"
-          >
-            🛍️ Mua ngay
-          </button>
+         <button class="action-button primary" onclick="buyNow()">🛍️ Mua ngay</button>
+
+          
         </div>
       </div>
     </div>
+<script>
+  function buyNow() {
+    const selectedProduct = {
+      id: product.id || 0,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      description: product.description || "Không có mô tả.",
+      status: product.status || "Đã qua sử dụng" // nếu có trạng thái
+    };
+    localStorage.setItem('selectedProductToBuy', JSON.stringify(selectedProduct));
+    window.location.href = 'buy.html';
+  }
+</script>
 
     <script>
       const product = JSON.parse(localStorage.getItem("selectedProduct"));

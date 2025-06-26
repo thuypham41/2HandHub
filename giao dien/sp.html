@@ -503,21 +503,23 @@
       }
 
       function showProduct(index) {
-  const productItem = cart[index];
-  if (productItem) {
-    // Đảm bảo bạn lưu dữ liệu ở định dạng tương thích với trang chi tiết
-    const selectedProduct = {
-      id: productItem.productId,
-      name: productItem.productName,
-      image: productItem.image,
-      price: productItem.price,
-      description: productItem.description || "Không có mô tả.",
-    };
-    localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
-    window.location.href = "sp.html"; // Đổi nếu trang bạn có tên khác
-  }
-}
-
+        const productItem = cart[index];
+        if (productItem) {
+          // Đảm bảo bạn lưu dữ liệu ở định dạng tương thích với trang chi tiết
+          const selectedProduct = {
+            id: productItem.productId,
+            name: productItem.productName,
+            image: productItem.image,
+            price: productItem.price,
+            description: productItem.description || "Không có mô tả.",
+          };
+          localStorage.setItem(
+            "selectedProduct",
+            JSON.stringify(selectedProduct)
+          );
+          window.location.href = "sp.html"; // Đổi nếu trang bạn có tên khác
+        }
+      }
     </script>
   </body>
 </html>

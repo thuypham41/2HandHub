@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Thương lượng giá - 2HandHub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     body {
@@ -130,9 +131,50 @@
     <div class="chat-header">CHAT</div>
 
     <div class="chat-messages" id="chatMessages">
-      <div class="message buyer">Chào bạn, mình muốn mua đồng hồ với giá 85.000đ được không ạ?</div>
-      <div class="message seller">Chào bạn, giá mình đang để là 99.000đ, có thể giảm còn 90.000đ nhé!</div>
+      <!-- Messages will be loaded from server -->
     </div>
+
+    <script>
+      // Function to load messages from server
+      async function loadMessages() {
+      var notificationIdToChat = JSON.parse(localStorage.getItem("notificationIdToChat"));
+      try {
+        const response = await fetch(`https://localhost:7238/api/PriceNegotiation/get-all-messages?priceNegotiationId=${notificationIdToChat.PriceNegotiationId}`);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML = ''; // Clear existing messages
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        const currentUserId = user?.id || 18;
+
+        result.data.forEach(message => {
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+
+          // Determine if message is from current user (seller) or other user (buyer)
+          if (message.senderId === currentUserId) {
+          messageDiv.classList.add('seller');
+          } else {
+          messageDiv.classList.add('buyer');
+          }
+
+          messageDiv.textContent = message.messageContent;
+          chatMessages.appendChild(messageDiv);
+        });
+
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      } catch (error) {
+        console.error('Error loading messages:', error);
+      }
+      }
+
+      // Load messages when page loads
+      document.addEventListener('DOMContentLoaded', loadMessages);
+    </script>
 
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
@@ -141,7 +183,7 @@
   </div>
 
   <script>
-    function sendMessage() {
+    async function sendMessage() {
       const input = document.getElementById('chatInput');
       const msg = input.value.trim();
       if (msg === '') return;
@@ -154,8 +196,112 @@
 
       input.value = '';
       chatBox.scrollTop = chatBox.scrollHeight;
+      const user = JSON.parse(localStorage.getItem("user"));
+      var notificationIdToChat = JSON.parse(localStorage.getItem("notificationIdToChat"));
+      await connection.invoke("SendMessageToUser", {
+        priceNegotiationId: notificationIdToChat.PriceNegotiationId,
+        senderId: user?.id || 18,
+        receiverId: notificationIdToChat.SenderId,
+        messageContent: msg
+      });
     }
   </script>
+<!-- Connect to SignalR -->
+  <script>
+    let connection;
+      document.addEventListener("DOMContentLoaded", function () {
+      // Tạo kết nối tới NotificationHub
+      const user = JSON.parse(localStorage.getItem("user"));
+      connection = new signalR.HubConnectionBuilder()
+        .withUrl(`https://localhost:7238/chat?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
 
+      connection.on("UserConnected", function () {
+        console.log("Kết nối thành công đến ChatHub");
+        // Gửi thông báo kết nối thành công nếu cần
+      });
+      // Định nghĩa sự kiện nhận từ server
+      connection.on("ReceiveMessage", function (message) {
+        console.log("Tin nhắn mới:", message);
+
+        // Create new message element
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+
+        // Get current user to determine message alignment
+        const user = JSON.parse(localStorage.getItem("user"));
+        const currentUserId = user?.id || 18;
+
+        // Determine if message is from current user (seller) or other user (buyer)
+        if (message.senderId === currentUserId) {
+          messageDiv.classList.add('seller');
+        } else {
+          messageDiv.classList.add('buyer');
+        }
+
+        messageDiv.textContent = message.messageContent;
+        chatMessages.appendChild(messageDiv);
+
+        // Scroll to bottom to show new message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+
+      // Bắt đầu kết nối
+      connection.start()
+        .then(function () {
+          console.log("Đã kết nối đến ChatHub");
+          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+        })
+        .catch(function (err) {
+          console.error("Lỗi khi kết nối SignalR:", err.toString());
+        });
+    });
+
+
+
+    // document.querySelector('.submit-btn').addEventListener('click', async function () {
+    //   const offer = document.getElementById('offer').value;
+    //   const maxPrice = parseInt(product.price);
+    //   const minPrice = 50000;
+
+    //   if (!offer || offer < minPrice || offer > maxPrice) {
+    //     alert(`Vui lòng nhập mức giá hợp lệ (từ 50.000đ đến ${formatPrice(product.price)})`);
+    //     return;
+    //   }
+
+    //   try {
+    //     // Get user data from localStorage
+    //     const user = JSON.parse(localStorage.getItem("user"));
+
+    //     // Use SignalR connection to invoke server method
+    //     await connection.invoke("SendNotificationToUser", {
+    //       productId: product.id || 98,
+    //       offerPrice: parseInt(offer),
+    //       buyerId: user?.id || 18,
+    //       sellerResponse: ""
+    //     });
+
+    //     // Hiển thị thông báo chữ
+    //     document.getElementById("successText").style.display = "block";
+
+    //     // Hiện popup sau 0.7s
+    //     setTimeout(() => {
+    //       document.getElementById("popup").style.display = "flex";
+    //     }, 700);
+
+    //   } catch (error) {
+    //     console.error('Error:', error);
+    //     alert('Không thể kết nối đến server. Vui lòng thử lại.');
+    //   }
+    // });
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+      window.location.href = "sp.html";
+    }
+  </script>
 </body>
 </html>

@@ -419,17 +419,11 @@
                  notification.messeage ||
                  "Nội dung thông báo"
                }</p>
-               <div class="action-buttons">
-                 <button onclick="respond('accepted', ${
-                   notification.id || index
-                 })">✅ Đồng ý</button>
-                 <button onclick="respond('rejected', ${
-                   notification.id || index
-                 })">❌ Từ chối</button>
-                 <button onclick="respond('chat', ${
-                   notification.id || index
-                 })">💬 Trả lời</button>
-               </div>
+                 <div class="action-buttons">
+                 <button onclick="respond('accepted', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">✅ Đồng ý</button>
+                 <button onclick="respond('rejected', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">❌ Từ chối</button>
+                 <button onclick="respond('chat', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">💬 Trả lời</button>
+                 </div>
                </div>
                `;
                 });
@@ -443,17 +437,25 @@
           }
 
           // Update the respond function to handle notification ID
-          window.respond = function (action, notificationId) {
+          window.respond = function (action, notification) {
             switch (action) {
               case "accepted":
                 alert(
-                  `✅ Bạn đã đồng ý thông báo #${notificationId}. Giá mới được cập nhật.`
+                  `✅ Bạn đã đồng ý thông báo #${notification.id}. Giá mới được cập nhật.`
                 );
                 break;
               case "rejected":
-                alert(`❌ Bạn đã từ chối thông báo #${notificationId}.`);
+                alert(`❌ Bạn đã từ chối thông báo #${notification.id}.`);
                 break;
               case "chat":
+                // Save chat data to localStorage before redirecting
+                const notificationIdToChat = {
+                  PriceNegotiationId: notification.relatedId || 1,
+                  SenderId: notification.senderId || 1,
+                  ReceiverId: notification.receiverId || 1
+                };
+                localStorage.removeItem("notificationIdToChat");
+                localStorage.setItem("notificationIdToChat", JSON.stringify(notificationIdToChat));
                 window.location.href = "chat.html";
                 break;
               default:

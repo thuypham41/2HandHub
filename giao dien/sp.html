@@ -333,7 +333,7 @@
       id: product.id || 0,
       name: product.name,
       price: product.price,
-      image: product.image,
+      imageUrl: product.imageUrl,
       description: product.description || "Không có mô tả.",
       status: product.status || "Đã qua sử dụng" // nếu có trạng thái
     };
@@ -348,7 +348,7 @@
         document.getElementById("productName").textContent = product.name;
         document.getElementById("productPrice").textContent =
           product.price + "đ";
-        document.getElementById("productImage").src = product.image;
+        document.getElementById("productImage").src = product.imageUrl;
         document.getElementById("productDesc").textContent =
           product.description;
       } else {
@@ -381,7 +381,7 @@
           total += parseInt(item.price);
           html += `
          <div class="cart-item" onclick="showProduct(${index})" style="cursor: pointer;">
-    <img src="${item.image}" alt="${item.productName}" />
+    <img src="${item.productImage}" alt="${item.productName}" />
     <div class="cart-item-info">
       <strong>${item.productName}</strong><br>
       ${item.price}đ

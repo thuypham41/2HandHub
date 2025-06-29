@@ -409,23 +409,34 @@
 
                 let html = "<p><strong>📢 Thông báo</strong></p>";
                 data.data.forEach((notification, index) => {
-                  html += `
-               <div class="notification-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
-               <p style="margin: 0 0 8px 0;"><strong>${
-                 notification.title || "Thông báo"
-               }</strong></p>
-               <p style="margin: 0 0 12px 0; font-size: 13px; color: #666;">${
-                 notification.content ||
-                 notification.messeage ||
-                 "Nội dung thông báo"
-               }</p>
-                 <div class="action-buttons">
-                 <button onclick="respond('accepted', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">✅ Đồng ý</button>
-                 <button onclick="respond('rejected', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">❌ Từ chối</button>
-                 <button onclick="respond('chat', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">💬 Trả lời</button>
-                 </div>
-               </div>
-               `;
+                  let actionButtons = '';
+if (
+  notification.title?.toLowerCase().includes("tin nhắn") || 
+  notification.type === "message" // nếu có field type thì kiểm tra theo type
+) {
+  actionButtons = `
+    <button onclick="respond('chat', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">💬 Trả lời</button>
+  `;
+} else {
+  actionButtons = `
+    <button onclick="respond('accepted', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">✅ Đồng ý</button>
+    <button onclick="respond('rejected', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">❌ Từ chối</button>
+    <button onclick="respond('chat', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">💬 Trả lời</button>
+  `;
+}
+
+html += `
+  <div class="notification-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
+    <p style="margin: 0 0 8px 0;"><strong>${notification.title || "Thông báo"}</strong></p>
+    <p style="margin: 0 0 12px 0; font-size: 13px; color: #666;">
+      ${notification.content || notification.messeage || "Nội dung thông báo"}
+    </p>
+    <div class="action-buttons">
+      ${actionButtons}
+    </div>
+  </div>
+`;
+
                 });
                 notificationContent.innerHTML = html;
               })

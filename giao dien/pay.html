@@ -210,10 +210,44 @@
           return;
         }
 
-        alert("✅ Đặt hàng thành công! Vui lòng quét mã QR để thanh toán.");
-        localStorage.removeItem("cartToPay");
-        localStorage.removeItem("cartItems");
-        window.location.href = "home.html";
+        // Prepare order data
+        const orderData = {
+          customerId: 2, // You may want to get this from user session/login
+          items: cart.map(item => ({
+            productId: item.productId || item.id,
+            quantity: 1,
+            price: parseInt(item.price)
+          })),
+          totalMoney: cart.reduce((total, item) => total + parseInt(item.price), 0),
+          paymentMethod: document.querySelector('.readonly-box').textContent,
+          notes: "",
+          shippingAddress: address
+        };
+
+        // Send order to server
+        fetch('https://localhost:7238/api/Order/create-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(orderData)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          alert("✅ Đặt hàng thành công! Vui lòng quét mã QR để thanh toán.");
+          localStorage.removeItem("cartToPay");
+          localStorage.removeItem("cartItems");
+          window.location.href = "home.html";
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert("❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.");
+        });
       }
     </script>
   </body>

@@ -1,191 +1,187 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanh toán đơn hàng</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background: #eef2f5;
-        margin: 0;
-        padding: 0;
-      }
 
-      .container {
-        max-width: 900px;
-        margin: 50px auto;
-        background: white;
-        padding: 40px 30px;
-        border-radius: 16px;
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
-        position: relative;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanh toán đơn hàng</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f5;
+      margin: 0;
+      padding: 0;
+    }
 
-      .back-icon {
-        font-size: 36px; /* Tăng kích thước icon */
-        color: #333;
-        text-decoration: none;
-        padding: 8px 10px;
-        border-radius: 6px;
-        transition: background 0.2s ease;
-      }
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
 
-      .back-icon:hover {
-        background: #eee;
-        text-decoration: none;
-      }
+    .back-icon {
+      font-size: 36px;
+      /* Tăng kích thước icon */
+      color: #333;
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
 
-      h2 {
-        text-align: center;
-        color: #256b52;
-        margin-bottom: 30px;
-      }
+    .back-icon:hover {
+      background: #eee;
+      text-decoration: none;
+    }
 
-      .product-list {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        margin-bottom: 30px;
-      }
+    h2 {
+      text-align: center;
+      color: #256b52;
+      margin-bottom: 30px;
+    }
 
-      .product-item {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-        background: #f9f9f9;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      }
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
 
-      .product-image img {
-        width: 120px;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
+    .product-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
 
-      .product-info {
-        flex: 1;
-      }
+    .product-image img {
+      width: 120px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-      .product-info h3 {
-        margin: 0 0 8px;
-        font-size: 18px;
-        color: #222;
-      }
+    .product-info {
+      flex: 1;
+    }
 
-      .product-info p {
-        margin: 4px 0;
-        font-size: 14px;
-        color: #444;
-      }
+    .product-info h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #222;
+    }
 
-      .product-info .price {
-        font-weight: bold;
-        font-size: 16px;
-        color: #d35400;
-      }
+    .product-info p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #444;
+    }
 
-      .total-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 18px;
-        font-weight: bold;
-        margin: 20px 0;
-        padding: 10px 0;
-        border-top: 1px solid #ddd;
-      }
+    .product-info .price {
+      font-weight: bold;
+      font-size: 16px;
+      color: #d35400;
+    }
 
-      label {
-        font-weight: bold;
-        display: block;
-        margin-top: 20px;
-        margin-bottom: 8px;
-      }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0;
+      padding: 10px 0;
+      border-top: 1px solid #ddd;
+    }
 
-      .readonly-box {
-        padding: 12px 16px;
-        background: #f0f0f0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 15px;
-        margin-bottom: 20px;
-      }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
 
-      input[type="text"] {
-        width: 100%;
-        padding: 12px 16px;
-        font-size: 15px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 12px;
-        box-sizing: border-box;
-      }
+    .readonly-box {
+      padding: 12px 16px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
 
-      button {
-        background: #2a7f62;
-        color: white;
-        padding: 14px 0;
-        border: none;
-        border-radius: 10px;
-        font-size: 17px;
-        font-weight: bold;
-        width: 100%;
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
 
-      button:hover {
-        background: #1f5f4a;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <a href="home.html" class="back-icon">‹</a>
-      <h2>Thanh toán đơn hàng</h2>
+    button {
+      background: #2a7f62;
+      color: white;
+      padding: 14px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-      <div class="product-list" id="productList"></div>
+    button:hover {
+      background: #1f5f4a;
+    }
+  </style>
+</head>
 
-      <div class="total-row">
-        <span>Tổng cộng:</span>
-        <span id="totalPrice">0đ</span>
-      </div>
+<body>
+  <div class="container">
+    <a href="home.html" class="back-icon">‹</a>
+    <h2>Thanh toán đơn hàng</h2>
 
-      <label>Phương thức thanh toán:</label>
-      <div class="readonly-box">Thanh toán qua mã QR</div>
+    <div class="product-list" id="productList"></div>
 
-      <label for="shippingAddress">Nhập địa chỉ giao hàng:</label>
-      <input
-        type="text"
-        id="shippingAddress"
-        placeholder="VD: 123 Lê Lợi, Đà Nẵng"
-      />
-
-      <button onclick="placeOrder()">Đặt hàng</button>
+    <div class="total-row">
+      <span>Tổng cộng:</span>
+      <span id="totalPrice">0đ</span>
     </div>
 
-    <script>
-      const productListEl = document.getElementById("productList");
-      const totalPriceEl = document.getElementById("totalPrice");
-      const cart = JSON.parse(localStorage.getItem("cartToPay")) || [];
+    <label>Phương thức thanh toán:</label>
+    <div class="readonly-box">Thanh toán qua mã QR</div>
 
-      if (cart.length === 0) {
-        productListEl.innerHTML = "<p>Giỏ hàng đang trống.</p>";
-        document.querySelector("button").style.display = "none";
-        totalPriceEl.textContent = "0đ";
-      } else {
-        let total = 0;
-        cart.forEach((item) => {
-          total += parseInt(item.price);
+    <label for="shippingAddress">Nhập địa chỉ giao hàng:</label>
+    <input type="text" id="shippingAddress" placeholder="VD: 123 Lê Lợi, Đà Nẵng" />
 
-          const itemHTML = `
+    <button onclick="placeOrder()">Đặt hàng</button>
+  </div>
+
+  <script>
+    const productListEl = document.getElementById("productList");
+    const totalPriceEl = document.getElementById("totalPrice");
+    const cart = JSON.parse(localStorage.getItem("cartToPay")) || [];
+
+    if (cart.length === 0) {
+      productListEl.innerHTML = "<p>Giỏ hàng đang trống.</p>";
+      document.querySelector("button").style.display = "none";
+      totalPriceEl.textContent = "0đ";
+    } else {
+      let total = 0;
+      cart.forEach((item) => {
+        total += parseInt(item.price);
+
+        const itemHTML = `
         <div class="product-item">
           <div class="product-image">
             <img src="${item.productImage}" alt="${item.productName}" />
@@ -197,41 +193,41 @@
           </div>
         </div>
       `;
-          productListEl.innerHTML += itemHTML;
-        });
+        productListEl.innerHTML += itemHTML;
+      });
 
-        totalPriceEl.textContent = `${total.toLocaleString()}đ`;
+      totalPriceEl.textContent = `${total.toLocaleString()}đ`;
+    }
+
+    function placeOrder() {
+      const address = document.getElementById("shippingAddress").value.trim();
+      if (!address) {
+        alert("Vui lòng nhập địa chỉ giao hàng.");
+        return;
       }
+      const user = JSON.parse(localStorage.getItem("user"));
+      // Prepare order data
+      const orderData = {
+        customerId: user && user.id ? user.id : 1, // You may want to get this from user session/login
+        items: cart.map(item => ({
+          productId: item.productId || item.id,
+          quantity: 1,
+          price: parseInt(item.price)
+        })),
+        totalMoney: cart.reduce((total, item) => total + parseInt(item.price), 0),
+        paymentMethod: document.querySelector('.readonly-box').textContent,
+        notes: "",
+        shippingAddress: address
+      };
 
-      function placeOrder() {
-        const address = document.getElementById("shippingAddress").value.trim();
-        if (!address) {
-          alert("Vui lòng nhập địa chỉ giao hàng.");
-          return;
-        }
-
-        // Prepare order data
-        const orderData = {
-          customerId: 2, // You may want to get this from user session/login
-          items: cart.map(item => ({
-            productId: item.productId || item.id,
-            quantity: 1,
-            price: parseInt(item.price)
-          })),
-          totalMoney: cart.reduce((total, item) => total + parseInt(item.price), 0),
-          paymentMethod: document.querySelector('.readonly-box').textContent,
-          notes: "",
-          shippingAddress: address
-        };
-
-        // Send order to server
-        fetch('https://localhost:7238/api/Order/create-order', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(orderData)
-        })
+      // Send order to server
+      fetch('https://localhost:7238/api/Order/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+      })
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -248,7 +244,8 @@
           console.error('Error:', error);
           alert("❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.");
         });
-      }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

@@ -592,7 +592,7 @@
         const card = document.createElement("div");
         card.className = "product-card";
         card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
@@ -803,7 +803,7 @@
     </script>
 
     <footer>
-      <p>&copy; 2023 2HandHub.com - All rights reserved.</p>
+      <p>&copy; 2025 2HandHub.com - All rights reserved.</p>
     </footer>
 
     <script>
@@ -827,7 +827,7 @@
         const card = document.createElement("div");
         card.className = "product-card";
         card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
+      <img src="${product.imageUrl}" alt="${product.name}">
       <h3>${product.name}</h3>
       <p>${formatPrice(product.price)}</p>
     `;

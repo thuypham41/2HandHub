@@ -130,6 +130,21 @@
     .popup .actions a:hover {
       background-color: #256f57;
     }
+    .product-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.product-text {
+  flex: 1;
+}
+
+.product-info img {
+  width: 200px;
+  border-radius: 8px;
+}
+
   </style>
 </head>
 <body>
@@ -143,16 +158,19 @@
   <div class="container">
     <h2>Mua sản phẩm</h2>
 
-    <div class="product-info">
-  <h3 id="productName"></h3>
-  <p id="productDesc"></p>
-  <p id="productStatus"></p>
-  <p>Giá: <strong id="productPrice"></strong></p>
+  <div class="product-info">
+  <div class="product-text">
+    <h3 id="productName"></h3>
+    <p id="productDesc"></p>
+    <p id="productStatus"></p>
+    <p>Giá: <strong id="productPrice"></strong></p>
+  </div>
   <img id="productImage" src="" alt="Ảnh sản phẩm">
 </div>
 
 
-    <label for="payment">Chọn phương thức thanh toán:</label>
+
+    <label for="payment">Phương thức thanh toán:</label>
     <select id="payment">
       <option value="qr">Thanh toán qua mã QR</option>
     </select>
@@ -205,7 +223,7 @@
     document.getElementById("productDesc").textContent = "Mô tả: " + product.description;
     document.getElementById("productStatus").textContent = "Tình trạng: " + (product.status || "Đã qua sử dụng");
     document.getElementById("productPrice").textContent = product.price + "đ";
-    document.getElementById("productImage").src = product.image;
+    document.getElementById("productImage").src = product.imageUrl;
     document.getElementById("productImage").alt = product.name;
   } else {
     document.querySelector(".container").innerHTML = "<p style='color:red'>Không tìm thấy sản phẩm để mua!</p>";

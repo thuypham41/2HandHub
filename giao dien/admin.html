@@ -178,56 +178,78 @@
 
     <div class="main-body">
       <!-- Mẫu post -->
-      <div class="post-card">
-        <img src="image/add1.jpg" alt="add1">
-        <div class="post-content">
-          <h4>Sản phẩm: Áo khoác da vintage</h4>
-          <p>Mô tả: Áo khoác da secondhand, còn mới 90%</p>
-          <p>Giá bán: 85.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
-      </div>
+      <div id="posts-container"></div>
+      <script>
+        async function fetchPendingPosts() {
+          try {
+            const response = await fetch('https://localhost:7238/api/Product/get-products-by-status?PageNumber=1&PageSize=20&CategoryId=0&Status=0');
+            const result = await response.json();
+            if (result.success && Array.isArray(result.data)) {
+              renderPosts(result.data);
+            } else {
+              document.getElementById('posts-container').innerHTML = '<p>Không có bài đăng chờ duyệt.</p>';
+            }
+          } catch (e) {
+            document.getElementById('posts-container').innerHTML = '<p>Lỗi khi tải dữ liệu.</p>';
+          }
+        }
 
-      <div class="post-card">
-        <img src="image/add2.jpg" alt="add2">
-        <div class="post-content">
-          <h4>Sản phẩm: Chân váy ngắn xếp ly basic</h4>
-          <p>Mô tả: Chân váy được làm bằng vải cotton, mới 99%</p>
-          <p>Giá bán: 55.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
-      </div>
+        function formatCurrency(amount) {
+          return amount.toLocaleString('vi-VN') + 'đ';
+        }
 
-      <div class="post-card">
-        <img src="image/post4.jpg" alt="post4">
-        <div class="post-content">
-          <h4>Sản phẩm: Tai nghe Sony kết nối Bluetooth</h4>
-          <p>Mô tả: Tai nghe không dây của Sony có kết nối Bluetooth, mới 85%</p>
-          <p>Giá bán: 155.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
-      </div>
+        function renderPosts(posts) {
+          const html = posts.map(post => `
+            <div class="post-card">
+              <img src="${post.imageUrl}" alt="${post.name}">
+              <div class="post-content">
+                <h4>Sản phẩm: ${post.name}</h4>
+                <p>Mô tả: ${post.description || ''}</p>
+                <p>Giá bán: ${formatCurrency(post.price)}</p>
+                <div class="post-actions">
+                  <button class="approve-btn" onclick="approvePost('${post.name}', ${post.id})">Duyệt</button>
+                  <button class="reject-btn" onclick="rejectPost('${post.name}')">Từ chối</button>
+                </div>
+                </div>
+                </div>
+                `).join('');
+                document.getElementById('posts-container').innerHTML = html;
+              }
 
-      <div class="post-card">
-        <img src="image/add4.jpg" alt="add4">
-        <div class="post-content">
-          <h4>Sản phẩm: Truyện tranh Doraemon</h4>
-          <p>Mô tả: Truyện tranh Doraemon truyện dài, còn mới 90%</p>
-          <p>Giá bán: 15.000đ</p>
-          <div class="post-actions">
-            <button class="approve-btn">Duyệt</button>
-            <button class="reject-btn">Từ chối</button>
-          </div>
-        </div>
+              // Placeholder functions for approve/reject
+              function approvePost(name, id) {
+                const user = JSON.parse(localStorage.getItem("user"));
+                alert('Duyệt sản phẩm có tên: ' + name);
+                // TODO: Call approve API
+                fetch('https://localhost:7238/api/Product/update-product-status', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  adminId: user?.id || 1, // Giả sử adminId là 1 nếu không có thông tin người dùng
+                  productId: id,
+                  status: 1
+                })
+                })
+                .then(res => res.json())
+                .then(data => {
+                if (data.success) {
+                  alert('Duyệt thành công!');
+                  fetchPendingPosts();
+                } else {
+                  alert('Duyệt thất bại!');
+                }
+                })
+                .catch(() => alert('Lỗi khi duyệt sản phẩm.'));
+              }
+            function rejectPost(name) {
+              alert('Từ chối bài có tên: ' + name);
+              // TODO: Call reject API
+            }
+
+        fetchPendingPosts();
+      </script>
       </div>
       <script>
   // Lưu trạng thái đăng nhập vào sessionStorage khi đăng nhập thành công

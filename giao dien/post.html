@@ -250,7 +250,26 @@
 
       // Upload image first (assuming you have an image upload endpoint)
       // For now, using placeholder image URL
-      const imageUrl = "placeholder-image-url";
+      // Upload image to Cloudinary
+      //cloud name: de0werx80
+      //api key: szRw2jLYY8W09IgHeNf7l3-KOwM
+      //name assige: hand_hub_unsigned_preset
+      const cloudinaryFormData = new FormData();
+      cloudinaryFormData.append('file', image);
+      cloudinaryFormData.append('upload_preset', 'hand_hub_unsigned_preset'); // Replace with your Cloudinary upload preset
+
+      const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/de0werx80/image/upload', {
+        method: 'POST',
+        body: cloudinaryFormData
+      });
+
+      let imageUrl = "placeholder-image-url";
+      if (cloudinaryResponse.ok) {
+        const cloudinaryData = await cloudinaryResponse.json();
+        imageUrl = cloudinaryData.secure_url;
+      } else {
+        throw new Error('Failed to upload image to Cloudinary');
+      }
 
       const productData = {
         categoryId: parseInt(mainCategory),

@@ -230,24 +230,24 @@
             }
           }
 
-          async function deleteProduct(id) {
+            async function deleteProduct(id) {
             if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
             try {
               const response = await fetch(
-                `https://localhost:7238/api/Product/${id}`,
-                {
-                  method: "DELETE",
-                }
+              `https://localhost:7238/api/Product/delete-product?Id=${id}`,
+              {
+                method: "DELETE",
+              }
               );
               if (response.ok) {
-                fetchProducts();
+              fetchProducts();
               } else {
-                alert("Xóa sản phẩm thất bại.");
+              alert("Xóa sản phẩm thất bại.");
               }
             } catch {
               alert("Lỗi khi xóa sản phẩm.");
             }
-          }
+            }
 
           fetchProducts();
         </script>

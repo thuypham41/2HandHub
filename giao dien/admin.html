@@ -208,7 +208,7 @@
                 <p>Giá bán: ${formatCurrency(post.price)}</p>
                 <div class="post-actions">
                   <button class="approve-btn" onclick="approvePost('${post.name}', ${post.id})">Duyệt</button>
-                  <button class="reject-btn" onclick="rejectPost('${post.name}')">Từ chối</button>
+                  <button class="reject-btn" onclick="rejectPost('${post.name}', ${post.id})">Từ chối</button>
                 </div>
                 </div>
                 </div>
@@ -243,9 +243,31 @@
                 })
                 .catch(() => alert('Lỗi khi duyệt sản phẩm.'));
               }
-            function rejectPost(name) {
+            function rejectPost(name, id) {
+              const user = JSON.parse(localStorage.getItem("user"));
               alert('Từ chối bài có tên: ' + name);
               // TODO: Call reject API
+              fetch('https://localhost:7238/api/Product/update-product-status', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  adminId: user?.id || 1, // Giả sử adminId là 1 nếu không có thông tin người dùng
+                  productId: id,
+                  status: -1
+                })
+              })
+              .then(res => res.json())
+              .then(data => {
+                if (data.success) {
+                  alert('Từ chối thành công!');
+                  fetchPendingPosts();
+                } else {
+                  alert('Từ chối thất bại!');
+                }
+              })
+              .catch(() => alert('Lỗi khi từ chối sản phẩm.'));
             }
 
         fetchPendingPosts();

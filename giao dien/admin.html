@@ -216,18 +216,18 @@
                 document.getElementById('posts-container').innerHTML = html;
               }
 
-              // Placeholder functions for approve/reject
+             
               function approvePost(name, id) {
                 const user = JSON.parse(localStorage.getItem("user"));
                 alert('Duyệt sản phẩm có tên: ' + name);
-                // TODO: Call approve API
+          
                 fetch('https://localhost:7238/api/Product/update-product-status', {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                  adminId: user?.id || 1, // Giả sử adminId là 1 nếu không có thông tin người dùng
+                  adminId: user?.id || 1, 
                   productId: id,
                   status: 1
                 })
@@ -245,24 +245,24 @@
               }
             function rejectPost(name) {
               alert('Từ chối bài có tên: ' + name);
-              // TODO: Call reject API
+            
             }
 
         fetchPendingPosts();
       </script>
       </div>
       <script>
-  // Lưu trạng thái đăng nhập vào sessionStorage khi đăng nhập thành công
+ 
   function logout() {
-    // Xóa trạng thái đăng nhập khỏi sessionStorage
+  
     localStorage.removeItem("isAdminLoggedIn");
     localStorage.removeItem("user");
     window.location.href = "index.html";
   }
 
-  // Kiểm tra trạng thái đăng nhập khi vào trang admin
+ 
   window.onload = function() {
-    // Nếu chưa đăng nhập admin thì chuyển về trang đăng nhập
+  
     if (localStorage.getItem("isAdminLoggedIn") !== "true") {
       window.location.href = "login.html";
     }

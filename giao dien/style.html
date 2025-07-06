@@ -444,7 +444,6 @@
                   return;
                 }
 
-                // Check if data or data.data is null/empty
                 if (!data || !data.data || data.data.length === 0) {
                   notificationContent.innerHTML =
                     "<p>Không có thông báo nào.</p>";
@@ -486,7 +485,7 @@
               });
           }
 
-          // Update the respond function to handle notification ID
+         
           window.respond = function (action, notificationId) {
             switch (action) {
               case "accepted":
@@ -506,7 +505,7 @@
             document.getElementById("notificationBox").classList.add("hidden");
           };
 
-          // Load notifications when bell icon is clicked
+          
           document
             .getElementById("notifIcon")
             .addEventListener("click", function (e) {
@@ -521,7 +520,7 @@
             });
         </script>
         <script>
-          // Lấy tên người dùng từ localStorage và hiển thị
+         
           const user = JSON.parse(localStorage.getItem("user"));
           const userId = user && user.id ? user.id : 1;
           const username = user.fullName || "Mizu";
@@ -531,7 +530,6 @@
           <i class="fa fa-shopping-bag" id="cartIcon"></i>
           <span class="cart-badge" id="cartCount">0</span>
 
-          <!-- ✅ Move this popup INSIDE the cart container -->
           <div id="cartPopup" class="cart-popup hidden"></div>
         </div>
         <a href="post.html" class="post-button">Đăng bán</a>
@@ -653,7 +651,7 @@
         })
         .catch((error) => {
           console.error("Error fetching cart items:", error);
-          // Fallback to localStorage if server request fails
+         
           cart = JSON.parse(localStorage.getItem("cartItems")) || [];
           updateCartUI();
         });
@@ -713,7 +711,7 @@
             }
           );
 
-          // Remove from local cart regardless of server response
+          
           cart.splice(index, 1);
           localStorage.setItem("cartItems", JSON.stringify(cart));
           updateCartUI();
@@ -723,7 +721,7 @@
           }
         } catch (error) {
           console.error("Error calling remove API:", error);
-          // Still remove locally even if server call fails
+          
           cart.splice(index, 1);
           localStorage.setItem("cartItems", JSON.stringify(cart));
           updateCartUI();

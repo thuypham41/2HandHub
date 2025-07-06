@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = document.createElement("div");
         card.className = "product-card";
         card.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
+          <img src="${product.imageUrl}" alt="${product.name}">
           <h3>${product.name}</h3>
           <p>${product.price ? formatPrice(product.price) : ''}</p>
         `;
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       card.style.cursor = "pointer";
 
-      // Gán đường dẫn tương ứng dựa theo index
+     
       card.onclick = function () {
         switch (index) {
           case 0:

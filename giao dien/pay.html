@@ -26,7 +26,7 @@
 
     .back-icon {
       font-size: 36px;
-      /* Tăng kích thước icon */
+  
       color: #333;
       text-decoration: none;
       padding: 8px 10px;
@@ -206,9 +206,9 @@
         return;
       }
       const user = JSON.parse(localStorage.getItem("user"));
-      // Prepare order data
+   
       const orderData = {
-        customerId: user && user.id ? user.id : 1, // You may want to get this from user session/login
+        customerId: user && user.id ? user.id : 1,
         items: cart.map(item => ({
           productId: item.productId || item.id,
           quantity: 1,
@@ -220,7 +220,7 @@
         shippingAddress: address
       };
 
-      // Send order to server
+   
       fetch('https://localhost:7238/api/Order/create-order', {
         method: 'POST',
         headers: {

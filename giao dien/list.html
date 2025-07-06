@@ -131,7 +131,7 @@
 
 
     <div class="main-body">
-      <!-- Bộ lọc thời gian -->
+     
       <div style="margin-bottom: 20px;">
         <label for="time-filter"><strong>Chọn mốc thời gian:</strong></label>
         <select id="time-filter">
@@ -142,12 +142,12 @@
         </select>
       </div>
 
-      <!-- Tổng doanh thu -->
+ 
       <div style="background: #fff; padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
         <h3>Tổng doanh thu toàn hệ thống: <span style="color: #4a4e91;">5.000.000đ / tháng</span></h3>
       </div>
 
-      <!-- Bảng chi tiết -->
+
       <table>
         <thead>
           <tr>
@@ -191,12 +191,10 @@
         </tbody>
       </table>
 
-      <!-- Biểu đồ đường -->
       <div style="margin-top: 40px;">
         <canvas id="lineChart"></canvas>
       </div>
 
-      <!-- Biểu đồ tròn -->
       <div style="margin-top: 40px;">
         <canvas id="pieChart"></canvas>
       </div>
@@ -209,7 +207,7 @@
             datasets: [{
               label: "Doanh thu (VND)",
               data: [1000000, 1200000, 1400000, 1300000],
-              borderColor: "#4a4e91",  //doi mau duong bieu do
+              borderColor: "#4a4e91",  
               backgroundColor: "rgba(74, 78, 145, 0.2)",
               fill: true
             }]

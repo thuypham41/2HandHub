@@ -165,7 +165,7 @@
     </form>
   </div>
 
-  <!-- Nhập mã xác thực OTP -->
+
   <div class="login-page hidden" id="otp-page">
     <form class="login-form" onsubmit="verifyOtp(event)">
       <h2>Nhập mã xác thực</h2>
@@ -176,9 +176,9 @@
     </form>
   </div>
 
-  <!-- JavaScript -->
+ 
   <script>
-    let currentMode = ""; // login hoặc register
+    let currentMode = ""; 
 
     function showRegisterForm() {
       document.getElementById("login-page").classList.add("hidden");
@@ -196,7 +196,7 @@
       if (email) {
         currentMode = "login";
         try {
-          // Gọi API gửi mail xác thực
+         
           const response = await fetch(`https://localhost:7238/api/User/login`, {
             method: 'POST',
             headers: {
@@ -228,7 +228,7 @@
       if (email && fullname && dob && address && phone) {
         currentMode = "register";
         try {
-          // Gọi API gửi mail xác thực cho đăng ký
+          
           const response = await fetch(`https://localhost:7238/api/User/signup`, {
             method: 'POST',
             headers: {
@@ -249,7 +249,7 @@
       }
     }
 
-    // Kiểm tra nếu user đã đăng nhập thì chuyển hướng về home
+  
     window.addEventListener("DOMContentLoaded", function () {
       const user = localStorage.getItem("user");
       if (user) {
@@ -263,7 +263,7 @@
       const email = currentMode === "login" ? document.getElementById("email").value : document.getElementById("register-email").value;
 
       try {
-        // Gọi API xác thực OTP
+    
         const response = await fetch(`https://localhost:7238/api/User/verify-otp`, {
           method: 'POST',
           headers: {
@@ -274,9 +274,9 @@
 
         if (response.ok) {
           localStorage.removeItem("user");
-          // Lấy thông tin user từ response nếu có
+        
           const userData = (await response.json()).data;
-          // Lưu thông tin user vào localStorage dưới dạng object (stringify)
+        
           const user = {
             id: userData.id || "",
             fullName: userData.fullName || "",

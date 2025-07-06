@@ -154,18 +154,18 @@
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    container.innerHTML = ""; 
     data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
-      // Format price to "117.000 đ"
+    
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
         return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
       }
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
@@ -186,18 +186,18 @@
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList1');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    container.innerHTML = ""; 
     data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
-      // Format price to "117.000 đ"
+
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
         return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
       }
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
@@ -218,18 +218,17 @@
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList2');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    container.innerHTML = ""; 
     data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
-      // Format price to "117.000 đ"
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
         return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
       }
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
@@ -252,18 +251,17 @@
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('productList3');
-    container.innerHTML = ""; // Xóa nội dung cũ nếu có
+    container.innerHTML = ""; 
     data.data.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
-      // Format price to "117.000 đ"
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
         return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
       }
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
@@ -314,9 +312,8 @@
       }, 300);
     });
 
-    // Định nghĩa hàm renderProduct để hiển thị sản phẩm trong kết quả tìm kiếm
+
     function renderProduct(container, product) {
-      // Format price to "117.000 đ"
       function formatPrice(price) {
         if (typeof price === "number") price = price.toString();
         price = price.replace(/\D/g, "");
@@ -325,7 +322,7 @@
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;

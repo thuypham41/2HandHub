@@ -29,7 +29,7 @@
         display: flex;
         align-items: center;
         width: 150px;
-        /* Đổi từ 30px sang 320px hoặc giá trị bạn muốn */
+    
         background: #f5f5f5;
         border-radius: 6px;
         padding: 6px 12px;
@@ -136,10 +136,9 @@
       .action-buttons {
         display: flex;
         gap: 8px;
-        /* Khoảng cách giữa các nút */
+      
         margin-top: 12px;
         flex-wrap: nowrap;
-        /* Ngăn các nút xuống dòng */
         align-items: center;
       }
 
@@ -444,7 +443,7 @@
                   return;
                 }
 
-                // Check if data or data.data is null/empty
+               
                 if (!data || !data.data || data.data.length === 0) {
                   notificationContent.innerHTML =
                     "<p>Không có thông báo nào.</p>";
@@ -486,7 +485,6 @@
               });
           }
 
-          // Update the respond function to handle notification ID
           window.respond = function (action, notificationId) {
             switch (action) {
               case "accepted":
@@ -506,7 +504,7 @@
             document.getElementById("notificationBox").classList.add("hidden");
           };
 
-          // Load notifications when bell icon is clicked
+       
           document
             .getElementById("notifIcon")
             .addEventListener("click", function (e) {
@@ -521,7 +519,7 @@
             });
         </script>
         <script>
-          // Lấy tên người dùng từ localStorage và hiển thị
+         
           const user = JSON.parse(localStorage.getItem("user"));
           const userId = user && user.id ? user.id : 1;
           const username = user.fullName || "Mizu";
@@ -531,7 +529,7 @@
           <i class="fa fa-shopping-bag" id="cartIcon"></i>
           <span class="cart-badge" id="cartCount">0</span>
 
-          <!-- ✅ Move this popup INSIDE the cart container -->
+ 
           <div id="cartPopup" class="cart-popup hidden"></div>
         </div>
         <a href="post.html" class="post-button">Đăng bán</a>
@@ -641,7 +639,7 @@
     });
   </script>
    <script>
-     // === Giỏ hàng ===
+   
       const cartCount = document.getElementById("cartCount");
       const cartPopup = document.getElementById("cartPopup");
       let cart = [];
@@ -654,7 +652,7 @@
         })
         .catch((error) => {
           console.error("Error fetching cart items:", error);
-          // Fallback to localStorage if server request fails
+         
           cart = JSON.parse(localStorage.getItem("cartItems")) || [];
           updateCartUI();
         });
@@ -714,7 +712,7 @@
             }
           );
 
-          // Remove from local cart regardless of server response
+    
           cart.splice(index, 1);
           localStorage.setItem("cartItems", JSON.stringify(cart));
           updateCartUI();
@@ -724,7 +722,7 @@
           }
         } catch (error) {
           console.error("Error calling remove API:", error);
-          // Still remove locally even if server call fails
+        
           cart.splice(index, 1);
           localStorage.setItem("cartItems", JSON.stringify(cart));
           updateCartUI();
@@ -738,7 +736,7 @@
 
       window.viewProduct = function (index) {
         const item = cart[index];
-        // Map cart item to product object format
+      
         const product = {
           id: item.productId || item.id,
           name: item.productName || item.name,
@@ -790,7 +788,7 @@
     </footer>
 
     <script>
-      // Cập nhật số lượng giỏ hàng
+   
       const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
       document.getElementById("cartCount").textContent = cartItems.length;
     </script>
@@ -858,34 +856,33 @@
         }, 300);
       });
     </script>
-    <!-- Connect to SignalR -->
+ 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Tạo kết nối tới NotificationHub
+       
         const user = JSON.parse(localStorage.getItem("user"));
         const connection = new signalR.HubConnectionBuilder()
-          .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+          .withUrl(`https://localhost:7238/notification?userId=${user.id}`) 
           .withAutomaticReconnect()
           .configureLogging(signalR.LogLevel.Information)
           .build();
 
         connection.on("UserConnected", function () {
           console.log("Kết nối thành công đến NotificationHub");
-          // Gửi thông báo kết nối thành công nếu cần
+        
         });
-        // Định nghĩa sự kiện nhận từ server
+        
         connection.on("ReceiveNotification", function (notification) {
           console.log("Thông báo mới:", notification);
 
-          // Hiển thị chấm đỏ thông báo
+        
           const notifDot = document.getElementById("notifDot");
           if (notifDot) {
             notifDot.style.display = "block";
           }
 
-          // Có thể hiển thị toast notification
+       
           if (notification.Title && notification.Message) {
-            // Tạo một thông báo tạm thời
             const toast = document.createElement("div");
             toast.style.cssText = `
             position: fixed;
@@ -906,19 +903,19 @@
           `;
             document.body.appendChild(toast);
 
-            // Tự động ẩn sau 5 giây
+        
             setTimeout(() => {
               toast.remove();
             }, 5000);
           }
         });
 
-        // Bắt đầu kết nối
+       
         connection
           .start()
           .then(function () {
             console.log("Đã kết nối đến NotificationHub");
-            // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+           
           })
           .catch(function (err) {
             console.error("Lỗi khi kết nối SignalR:", err.toString());

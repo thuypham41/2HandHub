@@ -27,18 +27,14 @@ header{
     border-bottom: 1px solid #ccc;
 }
 
-/* Logo 
-.logo img {
-    width: 85px;
-    height: auto;
-}*/
+
 .logo img {
   width: 85px;
   height: 85px;
 }
 
 
-/* Menu trung tâm */
+
 .menu {
     display: flex;
     justify-content: center;
@@ -53,13 +49,13 @@ header{
     white-space: nowrap;
 }
 .menu > li > a {
-    color: #000;         /* ✅ Màu chữ menu đen */
+    color: #000;         
     font-weight: bold;
     font-size: 16px;
 }
 
 
-/* Others phải */
+
 .others {
     display: flex;
     align-items: center;
@@ -68,7 +64,7 @@ header{
     justify-content: flex-end;
 }
 
-/* Ô tìm kiếm */
+
 .search-box {
     display: flex;
     align-items: center;
@@ -90,7 +86,7 @@ header{
     color: #333;
 }
 
-/* Icon */
+
 .others a {
     font-size: 18px;
     color:  #000000;
@@ -103,15 +99,15 @@ header{
 
 .slider-wrapper {
   display: flex;
-  width: 500vw; /* số ảnh x 100vw */
-  height: 60vh;  /* ❗ SỬA TẠI ĐÂY: chỉ chiếm nửa màn hình */
+  width: 500vw; 
+  height: 60vh;  
   transition: transform 0.6s ease-in-out;
 }
 
 .slider-wrapper img {
   width: 100vw;
   height: 100%;
-  object-fit: cover;  /* hoặc 'contain' nếu không muốn bị cắt ảnh */
+  object-fit: cover;  
   flex-shrink: 0;
 }
 .suggest-section {
@@ -282,7 +278,7 @@ header{
   justify-content: flex-end;
 }
 
-/* Ngôn ngữ */
+
 .language-select {
   display: flex;
   align-items: center;
@@ -299,7 +295,7 @@ header{
   appearance: none;
 }
 
-/* Người dùng */
+
 .user-info {
   display: flex;
   align-items: center;
@@ -347,18 +343,18 @@ header{
   color: #000;
 }
 
-/* Icon chung */
+
 .others i, .others a.fa {
   font-size: 18px;
   color: #000;
 }
-/* Icon thông báo */
+
 .others .fa-bell {
     font-size: 18px;
     color: #000;
 }
 
-/* Button đăng bán */
+
 .post-button {
     padding: 8px 16px;
     background-color: #6a0dad;
@@ -383,9 +379,7 @@ header{
   background-color: white;
 }
 
-/*.logo img {
-  height: 40px;
-}*/
+
 
 .search-bar {
   display: flex;
@@ -431,7 +425,7 @@ header{
   white-space: nowrap;
 }
 
-/* Menu phụ */
+
 .sub-menu {
   display: flex;
   gap: 20px;

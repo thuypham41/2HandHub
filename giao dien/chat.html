@@ -131,11 +131,11 @@
     <div class="chat-header">CHAT</div>
 
     <div class="chat-messages" id="chatMessages">
-      <!-- Messages will be loaded from server -->
+     
     </div>
 
     <script>
-      // Function to load messages from server
+     
       async function loadMessages() {
       var notificationIdToChat = JSON.parse(localStorage.getItem("notificationIdToChat"));
       try {
@@ -144,7 +144,7 @@
 
         if (result.success && result.data) {
         const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML = ''; // Clear existing messages
+        chatMessages.innerHTML = ''; 
 
         const user = JSON.parse(localStorage.getItem("user"));
         const currentUserId = user?.id || 18;
@@ -153,7 +153,7 @@
           const messageDiv = document.createElement('div');
           messageDiv.classList.add('message');
 
-          // Determine if message is from current user (seller) or other user (buyer)
+         
           if (message.senderId === currentUserId) {
           messageDiv.classList.add('seller');
           } else {
@@ -164,7 +164,7 @@
           chatMessages.appendChild(messageDiv);
         });
 
-        // Scroll to bottom
+  
         chatMessages.scrollTop = chatMessages.scrollHeight;
         }
       } catch (error) {
@@ -172,7 +172,7 @@
       }
       }
 
-      // Load messages when page loads
+  
       document.addEventListener('DOMContentLoaded', loadMessages);
     </script>
 
@@ -206,36 +206,36 @@
       });
     }
   </script>
-<!-- Connect to SignalR -->
+
   <script>
     let connection;
       document.addEventListener("DOMContentLoaded", function () {
-      // Tạo kết nối tới NotificationHub
+  
       const user = JSON.parse(localStorage.getItem("user"));
       connection = new signalR.HubConnectionBuilder()
-        .withUrl(`https://localhost:7238/chat?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withUrl(`https://localhost:7238/chat?userId=${user.id}`) 
         .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
       connection.on("UserConnected", function () {
         console.log("Kết nối thành công đến ChatHub");
-        // Gửi thông báo kết nối thành công nếu cần
+        
       });
-      // Định nghĩa sự kiện nhận từ server
+    
       connection.on("ReceiveMessage", function (message) {
         console.log("Tin nhắn mới:", message);
 
-        // Create new message element
+ 
         const chatMessages = document.getElementById('chatMessages');
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
 
-        // Get current user to determine message alignment
+        
         const user = JSON.parse(localStorage.getItem("user"));
         const currentUserId = user?.id || 18;
 
-        // Determine if message is from current user (seller) or other user (buyer)
+        
         if (message.senderId === currentUserId) {
           messageDiv.classList.add('seller');
         } else {
@@ -245,15 +245,15 @@
         messageDiv.textContent = message.messageContent;
         chatMessages.appendChild(messageDiv);
 
-        // Scroll to bottom to show new message
+       
         chatMessages.scrollTop = chatMessages.scrollHeight;
       });
 
-      // Bắt đầu kết nối
+    
       connection.start()
         .then(function () {
           console.log("Đã kết nối đến ChatHub");
-          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+          
         })
         .catch(function (err) {
           console.error("Lỗi khi kết nối SignalR:", err.toString());

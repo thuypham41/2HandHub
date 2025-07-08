@@ -373,7 +373,7 @@
       <a href="user.html" class="username" target="_blank" id="username-link"></a>
 
       <script>
-        // Load notifications from server
+        
         function loadNotifications() {
           const user = JSON.parse(localStorage.getItem("user"));
           fetch(
@@ -390,7 +390,6 @@
                 return;
               }
 
-              // Check if data or data.data is null/empty
               if (!data || !data.data || data.data.length === 0) {
                 notificationContent.innerHTML =
                   "<p>Không có thông báo nào.</p>";
@@ -402,7 +401,7 @@
                 let actionButtons = '';
                 if (
                   notification.title?.toLowerCase().includes("tin nhắn") ||
-                  notification.type === "message" // nếu có field type thì kiểm tra theo type
+                  notification.type === "message" 
                 ) {
                   actionButtons = `
     <button onclick="respond('chat', ${JSON.stringify(notification).replace(/"/g, '&quot;')})">💬 Trả lời</button>
@@ -437,21 +436,20 @@
             });
         }
 
-        // Update the respond function to handle notification ID
+     
         window.respond = async function (action, notification) {
           switch (action) {
             case "accepted":
-              // First, get the negotiated price from the notification
-              // Extract price from notification message
+            
               let negotiatedPrice = null;
               const productId = notification.productId;
 
-              // Extract price from message format: "User X đề xuất giá ₫XX.XXX cho sản phẩm Y"
+              
               if (notification.message || notification.messeage) {
                 const message = notification.message || notification.messeage;
                 const priceMatch = message.match(/₫([\d,.]+)/);
                 if (priceMatch) {
-                  // Remove dots and convert to number
+           
                   negotiatedPrice = parseInt(priceMatch[1].replace(/[,.]/g, ''));
                 }
               }
@@ -461,7 +459,6 @@
                 return;
               }
 
-              // Prepare payload for updating product price
               const payload = {
                 id: productId,
                 price: Number(negotiatedPrice),
@@ -482,14 +479,14 @@
                 if (data.success || data.status === 200) {
                   alert(`✅ Bạn đã đồng ý thông báo #${notification.id}. Giá mới được cập nhật thành ${negotiatedPrice.toLocaleString()} đ.`);
 
-                  // Remove notification after successful price update
+                
                   try {
                     const removeRes = await fetch(`https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`, {
                       method: "DELETE"
                     });
                     if (removeRes.ok) {
                       console.log("Notification removed successfully");
-                      // Reload notifications to update the UI
+                   
                       loadNotifications();
                     }
                   } catch (removeErr) {
@@ -506,14 +503,14 @@
             case "rejected":
               alert(`❌ Bạn đã từ chối thông báo #${notification.id}.`);
 
-              // Remove notification after rejection
+             
               try {
                 const removeRes = await fetch(`https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`, {
                   method: "DELETE"
                 });
                 if (removeRes.ok) {
                   console.log("Notification removed successfully");
-                  // Reload notifications to update the UI
+                
                   loadNotifications();
                 }
               } catch (removeErr) {
@@ -521,7 +518,7 @@
               }
               break;
             case "chat":
-              // Save chat data to localStorage before redirecting
+             
               const notificationIdToChat = {
                 PriceNegotiationId: notification.relatedId || 1,
                 SenderId: notification.senderId || 1,
@@ -537,7 +534,6 @@
           document.getElementById("notificationBox").classList.add("hidden");
         };
 
-        // Load notifications when bell icon is clicked
         document
           .getElementById("notifIcon")
           .addEventListener("click", function (e) {
@@ -552,7 +548,7 @@
           });
       </script>
       <script>
-        // Lấy tên người dùng từ localStorage và hiển thị
+      
         const user = JSON.parse(localStorage.getItem("user"));
         const userId = user && user.id ? user.id : 1;
         const username = user.fullName || "Mizu";
@@ -562,7 +558,7 @@
         <i class="fa fa-shopping-bag" id="cartIcon"></i>
         <span class="cart-badge" id="cartCount">0</span>
 
-        <!-- ✅ Move this popup INSIDE the cart container -->
+       
         <div id="cartPopup" class="cart-popup hidden"></div>
       </div>
       <a href="post.html" class="post-button">Đăng bán</a>
@@ -578,7 +574,7 @@
     <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
   </div>
 
-  <!-- Slider, Gợi ý, Khám phá, Bài đăng mới (giữ nguyên nội dung ở phần sau của bạn nếu cần) -->
+  
   <section id="Slider">
     <div class="slider-wrapper">
       <img src="image/menu67.png" alt="" />
@@ -607,18 +603,18 @@
   </section>
 
   <script>
-    // ...existing code...
+    
     fetch(
       `https://localhost:7238/api/Product/get-suggested-products?PageNumber=1&PageSize=12&UserId=${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
         const container = document.getElementById("productList1");
-        container.innerHTML = ""; // Xóa nội dung cũ nếu có
+        container.innerHTML = ""; 
         data.data.forEach((product) => {
           const card = document.createElement("div");
           card.className = "product-card";
-          // Format price to "117.000 đ"
+         
           function formatPrice(price) {
             if (typeof price === "number") price = price.toString();
             price = price.replace(/\D/g, "");
@@ -655,7 +651,7 @@
       `;
           card.style.cursor = "pointer";
 
-          // Gán đường dẫn tương ứng dựa theo index
+         
           card.onclick = function () {
             switch (index) {
               case 0:
@@ -838,7 +834,7 @@
     //     };
     //   }
 
-    // === Giỏ hàng ===
+  
     const cartCount = document.getElementById("cartCount");
     const cartPopup = document.getElementById("cartPopup");
     let cart = [];
@@ -911,7 +907,7 @@
           }
         );
 
-        // Remove from local cart regardless of server response
+       
         cart.splice(index, 1);
         localStorage.setItem("cartItems", JSON.stringify(cart));
         updateCartUI();
@@ -921,7 +917,7 @@
         }
       } catch (error) {
         console.error("Error calling remove API:", error);
-        // Still remove locally even if server call fails
+     
         cart.splice(index, 1);
         localStorage.setItem("cartItems", JSON.stringify(cart));
         updateCartUI();
@@ -935,7 +931,7 @@
 
     window.viewProduct = function (index) {
       const item = cart[index];
-      // Map cart item to product object format
+   
       const product = {
         id: item.productId || item.id,
         name: item.productName || item.name,
@@ -986,7 +982,7 @@
   </footer>
 
   <script>
-    // Cập nhật số lượng giỏ hàng
+   
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     document.getElementById("cartCount").textContent = cartItems.length;
   </script>
@@ -1054,10 +1050,10 @@
       }, 300);
     });
   </script>
-  <!-- Connect to SignalR -->
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Tạo kết nối tới NotificationHub
+    
       const user = JSON.parse(localStorage.getItem("user"));
       const connection = new signalR.HubConnectionBuilder()
         .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
@@ -1067,21 +1063,20 @@
 
       connection.on("UserConnected", function () {
         console.log("Kết nối thành công đến NotificationHub");
-        // Gửi thông báo kết nối thành công nếu cần
+       
       });
-      // Định nghĩa sự kiện nhận từ server
+     
       connection.on("ReceiveNotification", function (notification) {
         console.log("Thông báo mới:", notification);
 
-        // Hiển thị chấm đỏ thông báo
+    
         const notifDot = document.getElementById("notifDot");
         if (notifDot) {
           notifDot.style.display = "block";
         }
 
-        // Có thể hiển thị toast notification
         if (notification.Title && notification.Message) {
-          // Tạo một thông báo tạm thời
+       
           const toast = document.createElement("div");
           toast.style.cssText = `
             position: fixed;
@@ -1102,19 +1097,19 @@
           `;
           document.body.appendChild(toast);
 
-          // Tự động ẩn sau 5 giây
+        
           setTimeout(() => {
             toast.remove();
           }, 5000);
         }
       });
 
-      // Bắt đầu kết nối
+   
       connection
         .start()
         .then(function () {
           console.log("Đã kết nối đến NotificationHub");
-          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+          
         })
         .catch(function (err) {
           console.error("Lỗi khi kết nối SignalR:", err.toString());

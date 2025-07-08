@@ -195,7 +195,7 @@
     </div>
 
     <div class="product" id="productBox">
-      <!-- Nội dung sản phẩm sẽ render bằng JS -->
+    
     </div>
 
     <div class="price-box">
@@ -208,7 +208,6 @@
     <p id="successText">✅ Gửi yêu cầu thành công!</p>
   </div>
 
-  <!-- Popup -->
   <div class="popup-overlay" id="popup">
     <div class="popup">
       <h3>🎉 Yêu cầu đã được gửi!</h3>
@@ -217,36 +216,36 @@
     </div>
   </div>
 
-  <!-- Connect to SignalR -->
+
   <script>
     let connection;
       document.addEventListener("DOMContentLoaded", function () {
-      // Tạo kết nối tới NotificationHub
+     
       const user = JSON.parse(localStorage.getItem("user"));
       connection = new signalR.HubConnectionBuilder()
-        .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withUrl(`https://localhost:7238/notification?userId=${user.id}`) 
         .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
       connection.on("UserConnected", function () {
         console.log("Kết nối thành công đến NotificationHub");
-        // Gửi thông báo kết nối thành công nếu cần
+       
       });
-      // Định nghĩa sự kiện nhận từ server
+   
       connection.on("ReceiveNotification", function (notification) {
         console.log("Thông báo mới:", notification);
 
 
-        // Hiển thị chấm đỏ thông báo
+       
         const notifDot = document.getElementById('notifDot');
         if (notifDot) {
           notifDot.style.display = 'block';
         }
 
-        // Có thể hiển thị toast notification
+      
         if (notification.Title && notification.Message) {
-          // Tạo một thông báo tạm thời
+       
           const toast = document.createElement('div');
           toast.style.cssText = `
             position: fixed;
@@ -267,18 +266,18 @@
           `;
           document.body.appendChild(toast);
 
-          // Tự động ẩn sau 5 giây
+       
           setTimeout(() => {
             toast.remove();
           }, 5000);
         }
       });
 
-      // Bắt đầu kết nối
+    
       connection.start()
         .then(function () {
           console.log("Đã kết nối đến NotificationHub");
-          // Gửi message lên nếu cần: connection.invoke("SomeMethod", ...)
+         
         })
         .catch(function (err) {
           console.error("Lỗi khi kết nối SignalR:", err.toString());
@@ -318,10 +317,10 @@
       }
 
       try {
-        // Get user data from localStorage
+     
         const user = JSON.parse(localStorage.getItem("user"));
 
-        // Use SignalR connection to invoke server method
+     
         await connection.invoke("SendNotificationToUser", {
           productId: product.id || 98,
           offerPrice: parseInt(offer),
@@ -329,10 +328,10 @@
           sellerResponse: ""
         });
 
-        // Hiển thị thông báo chữ
+      
         document.getElementById("successText").style.display = "block";
 
-        // Hiện popup sau 0.7s
+      
         setTimeout(() => {
           document.getElementById("popup").style.display = "flex";
         }, 700);

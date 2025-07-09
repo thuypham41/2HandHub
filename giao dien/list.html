@@ -340,17 +340,94 @@
       </div>
 
       <script>
-        new Chart(document.getElementById("lineChart"), {
-          type: 'line',
-          data: {
-            labels: ["Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"],
-            datasets: [{
-              label: "Doanh thu (VND)",
-              data: [1000000, 1200000, 1400000, 1300000],
-              borderColor: "#4a4e91",
-              backgroundColor: "rgba(74, 78, 145, 0.2)",
-              fill: true
-            }]
+        document.addEventListener('DOMContentLoaded', function() {
+          const timeFilter = document.getElementById('time-filter');
+          let lineChart = null;
+
+          // Load initial data
+          loadLineChartData();
+
+          // Listen for filter changes
+          timeFilter.addEventListener('change', loadLineChartData);
+
+          function loadLineChartData() {
+            const selectedFilter = timeFilter.value;
+
+            if (selectedFilter === 'month') {
+              const currentDate = new Date();
+              const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11
+              const currentYear = currentDate.getFullYear();
+
+              const apiUrl = `https://localhost:7238/api/Order/get-monthly-revenue?month=${currentMonth}&year=${currentYear}`;
+
+              fetch(apiUrl)
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  updateLineChart(data.data);
+                })
+                .catch(error => {
+                  console.error('Error fetching monthly revenue:', error);
+                  // Fallback to default data if API fails
+                  updateLineChart([
+                    { week: 1, totalRevenue: 0 },
+                    { week: 2, totalRevenue: 0 },
+                    { week: 3, totalRevenue: 0 },
+                    { week: 4, totalRevenue: 0 }
+                  ]);
+                });
+            } else {
+              // For other filter types, use default data
+              updateLineChart([
+                { week: 1, totalRevenue: 1000000 },
+                { week: 2, totalRevenue: 1200000 },
+                { week: 3, totalRevenue: 1400000 },
+                { week: 4, totalRevenue: 1300000 }
+              ]);
+            }
+          }
+
+          function updateLineChart(data) {
+            if (lineChart) {
+              lineChart.destroy();
+            }
+
+            const labels = data.map(item => `Tuần ${item.week}`);
+            const revenues = data.map(item => item.totalRevenue);
+
+            lineChart = new Chart(document.getElementById("lineChart"), {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: "Doanh thu (VND)",
+                  data: revenues,
+                  borderColor: "#4a4e91",
+                  backgroundColor: "rgba(74, 78, 145, 0.2)",
+                  fill: true
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      callback: function(value) {
+                        return new Intl.NumberFormat('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND'
+                        }).format(value);
+                      }
+                    }
+                  }
+                }
+              }
+            });
           }
         });
 

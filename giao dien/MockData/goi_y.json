@@ -3,36 +3,36 @@
     "id": 1,
     "name": "Áo Hoodie 2Hand",
     "price": "89.000đ",
-    "image": "image/item1.jpg"
+    "imageUrl": "image/item1.jpg"
   },
   {
     "id": 2,
     "name": "Sách - Atomic Habits",
     "price": "49.000đ",
-    "image": "image/item2.jpg"
+    "imageUrl": "image/item2.jpg"
   },
   {
     "id": 3,
     "name": "Loa Bluetooth Cũ",
     "price": "199.000đ",
-    "image": "image/item3.jpg"
+    "imageUrl": "image/item3.jpg"
   },
   {
     "id": 4,
     "name": "Đèn ngủ cổ điển",
     "price": "75.000đ",
-    "image": "image/item4.jpg"
+    "imageUrl": "image/item4.jpg"
   },
   {
     "id": 5,
     "name": "Balo vintage",
     "price": "130.000đ",
-    "image": "image/item5.jpg"
+    "imageUrl": "image/item5.jpg"
   },
   {
     "id": 6,
     "name": "Đồng hồ treo tường",
     "price": "99.000đ",
-    "image": "image/item6.jpg"
+    "imageUrl": "image/item6.jpg"
   }
 ]

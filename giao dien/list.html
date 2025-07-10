@@ -101,10 +101,10 @@
     }
     canvas#lineChart {
       max-width: 100%;
-      
+
     }
     canvas#pieChart {
-      max-width: 300px;
+      max-width: 600px;
       height: auto;
       display: block;
       margin: auto;
@@ -131,7 +131,7 @@
 
 
     <div class="main-body">
-     
+
       <div style="margin-bottom: 20px;">
         <label for="time-filter"><strong>Chọn mốc thời gian:</strong></label>
         <select id="time-filter">
@@ -142,9 +142,88 @@
         </select>
       </div>
 
- 
+
       <div style="background: #fff; padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-        <h3>Tổng doanh thu toàn hệ thống: <span style="color: #4a4e91;">5.000.000đ / tháng</span></h3>
+        <h3>Tổng doanh thu toàn hệ thống: <span id="total-revenue" style="color: #4a4e91;">Đang tải...</span></h3>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const timeFilter = document.getElementById('time-filter');
+
+          // Load initial data
+          loadRevenue();
+
+          // Listen for filter changes
+          timeFilter.addEventListener('change', loadRevenue);
+
+          function loadRevenue() {
+            const selectedFilter = timeFilter.value;
+            const toDate = new Date().toISOString().split('T')[0]; // Current date
+            let fromDate;
+
+            // Calculate fromDate based on selected filter
+            const today = new Date();
+            switch(selectedFilter) {
+              case 'day':
+                fromDate = toDate; // Same day
+                break;
+              case 'week':
+                const weekAgo = new Date(today);
+                weekAgo.setDate(today.getDate() - 7);
+                fromDate = weekAgo.toISOString().split('T')[0];
+                break;
+              case 'month':
+                const monthAgo = new Date(today);
+                monthAgo.setMonth(today.getMonth() - 1);
+                fromDate = monthAgo.toISOString().split('T')[0];
+                break;
+              case 'year':
+                const yearAgo = new Date(today);
+                yearAgo.setFullYear(today.getFullYear() - 1);
+                fromDate = yearAgo.toISOString().split('T')[0];
+                break;
+            }
+
+            // Call API
+            const apiUrl = `https://localhost:7238/api/Order/get-all-revenue?fromDate=${fromDate}&toDate=${toDate}`;
+
+            fetch(apiUrl)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                // Update the revenue display
+                const revenueElement = document.getElementById('total-revenue');
+                const timeLabel = getTimeLabel(selectedFilter);
+                revenueElement.textContent = `${formatCurrency(data.data)} / ${timeLabel}`;
+              })
+              .catch(error => {
+                console.error('Error fetching revenue:', error);
+                document.getElementById('total-revenue').textContent = 'Lỗi tải dữ liệu';
+              });
+          }
+
+          function getTimeLabel(filter) {
+            switch(filter) {
+              case 'day': return 'ngày';
+              case 'week': return 'tuần';
+              case 'month': return 'tháng';
+              case 'year': return 'năm';
+              default: return 'tháng';
+            }
+          }
+
+          function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            }).format(amount);
+          }
+        });
+        </script>
       </div>
 
 
@@ -158,70 +237,284 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Nguyễn Văn A</td>
-            <td>12</td>
-            <td>2.400.000đ</td>
-            <td>240.000đ</td>
-          </tr>
-          <tr>
-            <td>Trần Thị B</td>
-            <td>8</td>
-            <td>1.600.000đ</td>
-            <td>160.000đ</td>
-          </tr>
-          <tr>
-            <td>Lê Văn C</td>
-            <td>15</td>
-            <td>3.000.000đ</td>
-            <td>300.000đ</td>
-          </tr>
-          <tr>
-            <td>Phạm Thị D</td>
-            <td>6</td>
-            <td>1.200.000đ</td>
-            <td>120.000đ</td>
-          </tr>
-          <tr>
-            <td>Đỗ Văn E</td>
-            <td>10</td>
-            <td>2.000.000đ</td>
-            <td>200.000đ</td>
-          </tr>
+            <!-- Table rows will be populated by JavaScript -->
+          </tbody>
+          </table>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const timeFilter = document.getElementById('time-filter');
+
+            // Load initial data
+            loadUserOrders();
+
+            // Listen for filter changes
+            timeFilter.addEventListener('change', loadUserOrders);
+
+            function loadUserOrders() {
+            const selectedFilter = timeFilter.value;
+            const toDate = new Date().toISOString().split('T')[0]; // Current date
+            let fromDate;
+
+            // Calculate fromDate based on selected filter
+            const today = new Date();
+            switch(selectedFilter) {
+              case 'day':
+              fromDate = toDate; // Same day
+              break;
+              case 'week':
+              const weekAgo = new Date(today);
+              weekAgo.setDate(today.getDate() - 7);
+              fromDate = weekAgo.toISOString().split('T')[0];
+              break;
+              case 'month':
+              const monthAgo = new Date(today);
+              monthAgo.setMonth(today.getMonth() - 1);
+              fromDate = monthAgo.toISOString().split('T')[0];
+              break;
+              case 'year':
+              const yearAgo = new Date(today);
+              yearAgo.setFullYear(today.getFullYear() - 1);
+              fromDate = yearAgo.toISOString().split('T')[0];
+              break;
+            }
+
+            // Call API
+            const apiUrl = `https://localhost:7238/api/Order/get-orders-by-user-and-date?fromDate=${fromDate}&toDate=${toDate}`;
+
+            fetch(apiUrl)
+              .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+              })
+              .then(data => {
+              // Update the table with fetched data
+              updateTable(data.data);
+              })
+              .catch(error => {
+              console.error('Error fetching user orders:', error);
+              const tbody = document.querySelector('table tbody');
+              tbody.innerHTML = '<tr><td colspan="4">Lỗi tải dữ liệu</td></tr>';
+              });
+            }
+
+            function updateTable(orders) {
+            const tbody = document.querySelector('table tbody');
+            tbody.innerHTML = '';
+
+            if (orders && orders.length > 0) {
+              orders.forEach(order => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${order.userName}</td>
+                <td>${order.totalOrders}</td>
+                <td>${formatCurrency(order.totalRevenue)}</td>
+                <td>${formatCurrency(order.totalSystemFee)}</td>
+              `;
+              tbody.appendChild(row);
+              });
+            } else {
+              tbody.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+            }
+            }
+
+            function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            }).format(amount);
+            }
+          });
+          </script>
         </tbody>
       </table>
 
       <div style="margin-top: 40px;">
-        <canvas id="lineChart"></canvas>
+        <canvas id="lineChart" width="auto"></canvas>
       </div>
 
       <div style="margin-top: 40px;">
-        <canvas id="pieChart"></canvas>
+        <canvas id="pieChart" width="600" height="600"></canvas>
       </div>
 
       <script>
-        new Chart(document.getElementById("lineChart"), {
-          type: 'line',
-          data: {
-            labels: ["Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"],
-            datasets: [{
-              label: "Doanh thu (VND)",
-              data: [1000000, 1200000, 1400000, 1300000],
-              borderColor: "#4a4e91",  
-              backgroundColor: "rgba(74, 78, 145, 0.2)",
-              fill: true
-            }]
+        document.addEventListener('DOMContentLoaded', function() {
+          const timeFilter = document.getElementById('time-filter');
+          let lineChart = null;
+
+          // Load initial data
+          loadLineChartData();
+
+          // Listen for filter changes
+          timeFilter.addEventListener('change', loadLineChartData);
+
+          function loadLineChartData() {
+            const selectedFilter = timeFilter.value;
+
+            if (selectedFilter === 'month') {
+              const currentDate = new Date();
+              const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11
+              const currentYear = currentDate.getFullYear();
+
+              const apiUrl = `https://localhost:7238/api/Order/get-monthly-revenue?month=${currentMonth}&year=${currentYear}`;
+
+              fetch(apiUrl)
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  updateLineChart(data.data);
+                })
+                .catch(error => {
+                  console.error('Error fetching monthly revenue:', error);
+                  // Fallback to default data if API fails
+                  updateLineChart([
+                    { week: 1, totalRevenue: 0 },
+                    { week: 2, totalRevenue: 0 },
+                    { week: 3, totalRevenue: 0 },
+                    { week: 4, totalRevenue: 0 }
+                  ]);
+                });
+            } else {
+              // For other filter types, use default data
+              updateLineChart([
+                { week: 1, totalRevenue: 1000000 },
+                { week: 2, totalRevenue: 1200000 },
+                { week: 3, totalRevenue: 1400000 },
+                { week: 4, totalRevenue: 1300000 }
+              ]);
+            }
+          }
+
+          function updateLineChart(data) {
+            if (lineChart) {
+              lineChart.destroy();
+            }
+
+            const labels = data.map(item => `Tuần ${item.week}`);
+            const revenues = data.map(item => item.totalRevenue);
+
+            lineChart = new Chart(document.getElementById("lineChart"), {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: "Doanh thu (VND)",
+                  data: revenues,
+                  borderColor: "#4a4e91",
+                  backgroundColor: "rgba(74, 78, 145, 0.2)",
+                  fill: true
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      callback: function(value) {
+                        return new Intl.NumberFormat('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND'
+                        }).format(value);
+                      }
+                    }
+                  }
+                }
+              }
+            });
           }
         });
 
-        new Chart(document.getElementById("pieChart"), {
+        document.addEventListener('DOMContentLoaded', function() {
+          const timeFilter = document.getElementById('time-filter');
+          let pieChart = null;
+
+          // Load initial data
+          loadPieChartData();
+
+          // Listen for filter changes
+          timeFilter.addEventListener('change', loadPieChartData);
+
+          function loadPieChartData() {
+            const selectedFilter = timeFilter.value;
+            const toDate = new Date().toISOString().split('T')[0];
+            let fromDate;
+
+            const today = new Date();
+            switch(selectedFilter) {
+              case 'day':
+          fromDate = toDate;
+          break;
+              case 'week':
+          const weekAgo = new Date(today);
+          weekAgo.setDate(today.getDate() - 7);
+          fromDate = weekAgo.toISOString().split('T')[0];
+          break;
+              case 'month':
+          const monthAgo = new Date(today);
+          monthAgo.setMonth(today.getMonth() - 1);
+          fromDate = monthAgo.toISOString().split('T')[0];
+          break;
+              case 'year':
+          const yearAgo = new Date(today);
+          yearAgo.setFullYear(today.getFullYear() - 1);
+          fromDate = yearAgo.toISOString().split('T')[0];
+          break;
+            }
+
+            const apiUrl = `https://localhost:7238/api/Order/get-orders-by-user-and-date?fromDate=${fromDate}&toDate=${toDate}`;
+
+            fetch(apiUrl)
+              .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+              })
+              .then(data => {
+          updatePieChart(data.data);
+              })
+              .catch(error => {
+          console.error('Error fetching pie chart data:', error);
+              });
+          }
+
+          function updatePieChart(orders) {
+            if (pieChart) {
+              pieChart.destroy();
+            }
+
+            if (orders && orders.length > 0) {
+              const labels = orders.map(order => order.userName);
+              const data = orders.map(order => order.totalRevenue);
+              const backgroundColor = generateRandomColors(orders.length);
+
+              pieChart = new Chart(document.getElementById("pieChart"), {
           type: 'pie',
           data: {
-            labels: ["Nguyễn Văn A", "Trần Thị B", "Lê Văn C", "Phạm Thị D", "Đỗ Văn E"],
+            labels: labels,
             datasets: [{
-              data: [240000, 160000, 300000, 120000, 200000],
-              backgroundColor: ["#4a4e91", "#f39c12", "#2ecc71", "#e74c3c", "#9b59b6"]
+              data: data,
+              backgroundColor: backgroundColor
             }]
+          }
+              });
+            }
+          }
+
+          function generateRandomColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+              const color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+              colors.push(color);
+            }
+            return colors;
           }
         });
       </script>

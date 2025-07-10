@@ -311,7 +311,7 @@
       const maxPrice = parseInt(product.price);
       const minPrice = 50000;
 
-      if (!offer || offer < minPrice || offer > maxPrice) {
+      if (product.price > minPrice && (!offer || offer < minPrice || offer > maxPrice)) {
         alert(`Vui lòng nhập mức giá hợp lệ (từ 50.000đ đến ${formatPrice(product.price)})`);
         return;
       }
@@ -320,7 +320,6 @@
      
         const user = JSON.parse(localStorage.getItem("user"));
 
-     
         await connection.invoke("SendNotificationToUser", {
           productId: product.id || 98,
           offerPrice: parseInt(offer),

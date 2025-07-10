@@ -348,6 +348,42 @@
     .action-button.primary:hover {
       background: #c4001c;
     }
+ .notification-item {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.notification-header strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.notification-content {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 8px;
+}
+
+.remove-btn {
+  font-size: 16px;
+  color: crimson;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+
+
   </style>
 </head>
 
@@ -414,10 +450,13 @@
   `;
                 }
 
-                html += `
-  <div class="notification-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
-    <p style="margin: 0 0 8px 0;"><strong>${notification.title || "Thông báo"}</strong></p>
-    <p style="margin: 0 0 12px 0; font-size: 13px; color: #666;">
+html += `
+  <div class="notification-item">
+    <div class="notification-header">
+      <strong>${notification.title || "Thông báo"}</strong>
+      <button class="remove-btn" onclick="event.stopPropagation(); removeNotification(${notification.id})">✕</button>
+    </div>
+    <p class="notification-content">
       ${notification.content || notification.messeage || "Nội dung thông báo"}
     </p>
     <div class="action-buttons">
@@ -425,6 +464,7 @@
     </div>
   </div>
 `;
+;
 
               });
               notificationContent.innerHTML = html;
@@ -435,6 +475,23 @@
                 "<p>Lỗi khi tải thông báo.</p>";
             });
         }
+
+        function removeNotification(notificationId) {
+  fetch(`https://localhost:7238/api/Notification/remove-notification?notificationId=${notificationId}`, {
+    method: "DELETE",
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Xóa thất bại");
+      return res.json();
+    })
+    .then(() => {
+      loadNotifications(); // Làm mới danh sách thông báo
+    })
+    .catch((err) => {
+      console.error("Lỗi khi xóa thông báo:", err);
+    });
+}
+
 
      
         window.respond = async function (action, notification) {

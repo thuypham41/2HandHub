@@ -128,14 +128,44 @@
   </div>
 
   <div class="chat-container">
-    <div class="chat-header">CHAT</div>
-
-    <div class="chat-messages" id="chatMessages">
-     
+    <div class="chat-header" style="display: flex; justify-content: space-between; align-items: center;">
+      <span>CHAT</span>
+      <span id="productName" onclick="goToProductDetail()" style="cursor: pointer; text-decoration: underline;">Đang tải...</span>
     </div>
 
     <script>
-     
+      function goToProductDetail() {
+        window.open("sp.html", "_blank");
+      }
+    </script>
+
+    <script>
+      async function loadProductName() {
+      var notificationIdToChat = JSON.parse(localStorage.getItem("notificationIdToChat"));
+      try {
+        const response = await fetch(`https://localhost:7238/api/PriceNegotiation/get-product?priceNegotiationId=${notificationIdToChat.PriceNegotiationId}`);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          document.getElementById('productName').textContent = result.data.name;
+          localStorage.setItem("selectedProduct", JSON.stringify(result.data));
+        }
+      } catch (error) {
+        console.error('Error loading product name:', error);
+        document.getElementById('productName').textContent = 'Không thể tải tên sản phẩm';
+      }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadProductName);
+    </script>  
+      <div class="chat-messages" id="chatMessages"> </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+        <button onclick="sendMessage()">Gửi</button>
+      </div>
+    </div>
+</div>
+    <script>
       async function loadMessages() {
       var notificationIdToChat = JSON.parse(localStorage.getItem("notificationIdToChat"));
       try {
@@ -176,11 +206,7 @@
       document.addEventListener('DOMContentLoaded', loadMessages);
     </script>
 
-    <div class="chat-input">
-      <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
-      <button onclick="sendMessage()">Gửi</button>
-    </div>
-  </div>
+
 
   <script>
     async function sendMessage() {

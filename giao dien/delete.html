@@ -22,7 +22,6 @@
         height: 100vh;
       }
 
-      
       .sidebar {
         width: 250px;
         background-color: #202235;
@@ -54,7 +53,6 @@
         font-weight: bold;
       }
 
-      
       .main-layout {
         flex: 1;
         display: flex;
@@ -184,15 +182,70 @@
 
       <div class="main-body">
         <div id="posts-container"></div>
+        <div
+          class="pagination-container"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+          "
+        >
+          <button
+            id="prev-btn"
+            class="pagination-btn"
+            onclick="changePage(-1)"
+            style="
+              padding: 8px 16px;
+              border: 1px solid #ddd;
+              background-color: #fff;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            <i class="fas fa-chevron-left"></i> Trước
+          </button>
+
+          <div
+            id="page-info"
+            style="padding: 8px 16px; font-weight: bold; color: #333"
+          >
+            Trang 1 / 1
+          </div>
+
+          <button
+            id="next-btn"
+            class="pagination-btn"
+            onclick="changePage(1)"
+            style="
+              padding: 8px 16px;
+              border: 1px solid #ddd;
+              background-color: #fff;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            Tiếp <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
         <script>
-          async function fetchProducts() {
+          let currentPage = 1;
+          let totalPages = 1;
+          const pageSize = 20;
+
+          async function fetchProducts(page = 1) {
             try {
               const response = await fetch(
-                "https://localhost:7238/api/Product/get-products-by-status?PageNumber=1&PageSize=20&CategoryId=0&Status=1"
+                `https://localhost:7238/api/Product/get-products-by-status?PageNumber=${page}&PageSize=${pageSize}&CategoryId=0&Status=1`
               );
               if (!response.ok) throw new Error("Network response was not ok");
               const temp = await response.json();
               const products = temp.data || [];
+              totalPages = temp.pagination.totalPages || 1;
+              currentPage = page;
+
               const container = document.getElementById("posts-container");
               container.innerHTML = "";
 
@@ -201,56 +254,83 @@
                   const card = document.createElement("div");
                   card.className = "post-card";
                   card.innerHTML = `
-                  <img src="${
-                    product.imageUrl || "image/default.jpg"
-                  }" alt="product">
-                  <div class="post-content">
-                    <h4>Sản phẩm: ${product.name || ""}</h4>
-                    <p>Mô tả: ${product.description || ""}</p>
-                    <p>Giá bán: ${
-                      product.price
-                        ? product.price.toLocaleString("vi-VN") + "đ"
-                        : ""
-                    }</p>
-                    <div class="post-actions">
-                      <button class="delete-btn" onclick="deleteProduct(${
-                        product.id
-                      })">Xóa</button>
+                    <img src="${
+                      product.imageUrl || "image/default.jpg"
+                    }" alt="product">
+                    <div class="post-content">
+                      <h4>Sản phẩm: ${product.name || ""}</h4>
+                      <p>Mô tả: ${product.description || ""}</p>
+                      <p>Giá bán: ${
+                        product.price
+                          ? product.price.toLocaleString("vi-VN") + "đ"
+                          : ""
+                      }</p>
+                      <div class="post-actions">
+                        <button class="delete-btn" onclick="deleteProduct(${
+                          product.id
+                        })">Xóa</button>
+                      </div>
                     </div>
-                  </div>
-                `;
+                  `;
                   container.appendChild(card);
                 });
               } else {
                 container.innerHTML = "<p>Không có sản phẩm nào.</p>";
               }
+
+              updatePaginationUI();
             } catch (error) {
               document.getElementById("posts-container").innerHTML =
                 "<p>Lỗi khi tải dữ liệu.</p>";
             }
           }
 
-            async function deleteProduct(id) {
+          function updatePaginationUI() {
+            document.getElementById(
+              "page-info"
+            ).textContent = `Trang ${currentPage} / ${totalPages}`;
+            document.getElementById("prev-btn").disabled = currentPage <= 1;
+            document.getElementById("next-btn").disabled =
+              currentPage >= totalPages;
+
+            const buttons = document.querySelectorAll(".pagination-btn");
+            buttons.forEach((btn) => {
+              if (btn.disabled) {
+                btn.style.opacity = "0.5";
+                btn.style.cursor = "not-allowed";
+              } else {
+                btn.style.opacity = "1";
+                btn.style.cursor = "pointer";
+              }
+            });
+          }
+
+          function changePage(direction) {
+            const newPage = currentPage + direction;
+            if (newPage >= 1 && newPage <= totalPages) {
+              fetchProducts(newPage);
+            }
+          }
+          async function deleteProduct(id) {
             if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
             try {
               const response = await fetch(
-              `https://localhost:7238/api/Product/delete-product?Id=${id}`,
-              {
-                method: "DELETE",
-              }
+                `https://localhost:7238/api/Product/delete-product?Id=${id}`,
+                { method: "DELETE" }
               );
               if (response.ok) {
-              fetchProducts();
+                fetchProducts(currentPage);
               } else {
-              alert("Xóa sản phẩm thất bại.");
+                alert("Xóa sản phẩm thất bại.");
               }
             } catch {
               alert("Lỗi khi xóa sản phẩm.");
             }
-            }
+          }
 
           fetchProducts();
         </script>
+        <script></script>
         <script>
           function logout() {
             window.location.href = "index.html";

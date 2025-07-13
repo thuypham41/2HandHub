@@ -548,17 +548,7 @@
                 }</td>
               <td>
                 ${order.status === 2
-                  ? `<button
-                        onclick="buyAgain('${order.id}')"
-                        style="
-                          background-color: #4CAF50;
-                          color: white;
-                          padding: 6px 12px;
-                          border: none;
-                          border-radius: 4px;
-                          cursor: pointer;">
-                        Mua lại
-                      </button>`
+                  ? ""
                   : `<button
                         onclick="showCancelPopup('${order.orderId}')"
                         ${order.status === 0 ? "" : "disabled"}
@@ -694,16 +684,16 @@
                       }
         </td>
         <td>${formatPrice(order.price)}</td>
-        <td>${order.status === 0
-                        ? "Đang xử lý"
-                        : order.status === 1
-                          ? "Đang giao hàng"
-                          : order.status === 2
-                            ? "Đã giao hàng"
-                            : order.status === 3
-                              ? "Đã hủy"
-                              : order.status
-                      }</td>
+        <td>
+            <select onchange="updateOrderStatus(${order.orderDetailId || order.id || ""}, this.value)" 
+            style="padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; background: white;"
+            ${order.status === -1 ? "disabled" : ""}>
+            <option value="0" ${order.status === 0 ? "selected" : ""}>Đang xử lý</option>
+            <option value="1" ${order.status === 1 ? "selected" : ""}>Đang giao hàng</option>
+            <option value="2" ${order.status === 2 ? "selected" : ""}>Đã giao hàng</option>
+            <option value="-1" ${order.status === -1 ? "selected" : ""}>Đã hủy</option>
+            </select>
+        </td>
           </tr>
           `
                   )
@@ -719,6 +709,37 @@
           loadSoldOrders();
 
           document.getElementById("sold-filter-btn").onclick = loadSoldOrders;
+          function updateOrderStatus(orderId, status) {
+            if(status === "-1") {
+              alert("Bạn không thể cập nhật trạng thái đơn hàng đã hủy.");
+              return;
+            }
+            fetch("https://localhost:7238/api/Order/update-order-status", {
+              method: "PUT",
+              headers: {
+          "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+          orderId: parseInt(orderId),
+          status: parseInt(status)
+              })
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+          alert("Cập nhật trạng thái đơn hàng thành công!");
+          loadSoldOrders(); // Reload the orders table
+              } else {
+          alert("Cập nhật trạng thái thất bại: " + (data.message || "Lỗi không xác định"));
+          loadSoldOrders(); // Reload to revert the select value
+              }
+            })
+            .catch(error => {
+              console.error("Error updating order status:", error);
+              alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng");
+              loadSoldOrders(); // Reload to revert the select value
+            });
+          }
         </script>
       </table>
     </div>

@@ -721,7 +721,7 @@
     }
 
     subcategories.forEach((subCatId, index) => {
-      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCatId}&PageNumber=1&PageSize=20`)
+      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCatId}&PageNumber=1&PageSize=20&CurrentUserId=${userId}`)
         .then(res => res.json())
         .then(data => {
           const container = document.getElementById(containerIds[index]);
@@ -872,6 +872,7 @@
           description: item.description || "",
           categoryId: item.categoryId || 2,
           sellerId: item.sellerId || 0,
+          sellerAddress: item.sellerAddress || "",
           status: item.status || 0,
           isDeleted: item.isDeleted || false,
           createdAt: item.createdAt || new Date().toISOString(),

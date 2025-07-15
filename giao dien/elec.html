@@ -730,7 +730,7 @@
     }
 
     productEndpoints.forEach(({ id, subCategoryId }) => {
-      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCategoryId}&PageNumber=1&PageSize=20`)
+      fetch(`https://localhost:7238/api/Product/get-subcategory-products?SubCategoryId=${subCategoryId}&PageNumber=1&PageSize=20&CurrentUserId=${userId}`)
         .then(res => res.json())
         .then(data => renderProducts(id, data.data || []))
         .catch(err => console.error("Lỗi tải sản phẩm:", err));
@@ -878,6 +878,7 @@
           imageUrl: item.productImage || item.image || item.imageUrl,
           description: item.description || "",
           categoryId: item.categoryId || 2,
+          sellerAddress: item.sellerAddress || "",
           sellerId: item.sellerId || 0,
           status: item.status || 0,
           isDeleted: item.isDeleted || false,

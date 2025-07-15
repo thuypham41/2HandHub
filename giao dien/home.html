@@ -1,477 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/1147679ae7.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
-    <title>2HandHub.com</title>
-    <style>
-      .navbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 24px;
-        border-bottom: 1px solid #eee;
-        background-color: white;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1147679ae7.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <title>2HandHub.com</title>
+  <style>
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid #eee;
+      background-color: white;
+    }
+
+    .logo img {
+      height: 75px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 150px;
+      /* Đổi từ 30px sang 320px hoặc giá trị bạn muốn */
+      background: #f5f5f5;
+      border-radius: 6px;
+      padding: 6px 12px;
+    }
+
+    @media (max-width: 768px) {
+      .search-box {
+        max-width: 100%;
+      }
+    }
+
+    .notification-wrapper {
+      position: relative;
+    }
+
+    .notification-indicator {
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      z-index: 2;
+    }
+
+    .notification-popup {
+      position: absolute;
+      top: 36px;
+      right: 0;
+      width: 360px;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .notification-popup.hidden {
+      display: none;
+    }
+
+    .notification-popup p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .latest-products h2 {
+      font-size: 26px;
+      text-align: center;
+      color: #222;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      /* Khoảng cách giữa các nút */
+      margin-top: 12px;
+      flex-wrap: nowrap;
+      /* Ngăn các nút xuống dòng */
+      align-items: center;
+    }
+
+    .action-buttons button {
+      background: #eee;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-buttons button:hover {
+      background-color: #ccc;
+    }
+
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .right-icons i,
+    .right-icons .username {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .post-button {
+      background-color: #ff3b30;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .sub-menu {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+    }
+
+    .menu-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      padding: 6px 10px;
+      position: relative;
+    }
+
+    .menu-link.active {
+      color: #e60023;
+    }
+
+    .menu-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e60023;
+      margin-top: 4px;
+    }
+
+    .menu-link:hover {
+      color: #e60023;
+    }
+
+    .cart-wrapper {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-popup {
+      display: block;
+      position: absolute;
+      top: 36px;
+      right: 0;
+      width: 340px;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .cart-popup.hidden {
+      display: none;
+    }
+
+    .cart-items {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+    }
+
+    .cart-popup p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-bottom: 12px;
+    }
+
+    .cart-icon-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    #cartPopup {
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 16px;
+      width: 320px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      display: none;
+      z-index: 999;
+      animation: slideDown 0.3s ease;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
       }
 
-      .logo img {
-        height: 75px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
 
-      .search-bar {
-        display: flex;
-        align-items: center;
-        width: 150px;
-        /* Đổi từ 30px sang 320px hoặc giá trị bạn muốn */
-        background: #f5f5f5;
-        border-radius: 6px;
-        padding: 6px 12px;
-      }
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      @media (max-width: 768px) {
-        .search-box {
-          max-width: 100%;
-        }
-      }
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
 
-      .notification-wrapper {
-        position: relative;
-      }
+    .cart-item-info {
+      flex: 1;
+    }
 
-      .notification-indicator {
-        width: 10px;
-        height: 10px;
-        background-color: red;
-        border-radius: 50%;
-        position: absolute;
-        top: -4px;
-        right: -4px;
-        z-index: 2;
-      }
+    .remove-btn {
+      color: #e60023;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      background: none;
+    }
 
-      .notification-popup {
-        position: absolute;
-        top: 36px;
-        right: 0;
-        width: 360px;
-        background: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 16px;
-        border-radius: 8px;
-        z-index: 1000;
-      }
+    .total-price {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 12px;
+    }
 
-      .notification-popup.hidden {
-        display: none;
-      }
+    #cartPopup {
+      position: absolute;
+      top: 36px;
+      /* hoặc 40px */
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 16px;
+      width: 320px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      display: none;
+      z-index: 999;
+      animation: slideDown 0.3s ease;
+      max-height: 400px;
+      overflow-y: auto;
+    }
 
-      .notification-popup p {
-        margin: 0 0 10px;
-        font-size: 14px;
-        color: #333;
-      }
+    .action-button {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-      .latest-products h2 {
-        font-size: 26px;
-        text-align: center;
-        color: #222;
-        margin-top: 40px;
-        margin-bottom: 20px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-      }
+    .action-button.add {
+      background: #f5f5f5;
+      color: #333;
+    }
 
-      .action-buttons {
-        display: flex;
-        gap: 8px;
-        /* Khoảng cách giữa các nút */
-        margin-top: 12px;
-        flex-wrap: nowrap;
-        /* Ngăn các nút xuống dòng */
-        align-items: center;
-      }
+    .action-button.add:hover {
+      background: #e2e2e2;
+    }
 
-      .action-buttons button {
-        background: #eee;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 14px;
-        white-space: nowrap;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: background-color 0.2s ease;
-      }
+    .action-button.discount {
+      background: #fff0f0;
+      color: #cc0033;
+    }
 
-      .action-buttons button:hover {
-        background-color: #ccc;
-      }
+    .action-button.discount:hover {
+      background: #ffe5e5;
+    }
 
-      .right-icons {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
+    .action-button.primary {
+      background: #e60023;
+      color: #fff;
+    }
 
-      .right-icons i,
-      .right-icons .username {
-        font-size: 16px;
-        color: #333;
-      }
+    .action-button.primary:hover {
+      background: #c4001c;
+    }
 
-      .post-button {
-        background-color: #ff3b30;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-weight: bold;
-        text-decoration: none;
-        white-space: nowrap;
-      }
+    .notification-item {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
 
-      .sub-menu {
-        display: flex;
-        justify-content: space-around;
-        padding: 10px 0;
-        background-color: #fff;
-        border-bottom: 1px solid #eee;
-      }
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
 
-      .menu-link {
-        text-decoration: none;
-        color: #333;
-        font-weight: 500;
-        padding: 6px 10px;
-        position: relative;
-      }
+    .notification-header strong {
+      color: #000;
+      font-weight: 600;
+    }
 
-      .menu-link.active {
-        color: #e60023;
-      }
+    .notification-content {
+      font-size: 13px;
+      color: #555;
+      margin: 0 0 8px;
+    }
 
-      .menu-link.active::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background-color: #e60023;
-        margin-top: 4px;
-      }
+    .remove-btn {
+      font-size: 16px;
+      color: crimson;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+  </style>
+</head>
 
-      .menu-link:hover {
-        color: #e60023;
-      }
-
-      .cart-wrapper {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .cart-popup {
-        display: block;
-        position: absolute;
-        top: 36px;
-        right: 0;
-        width: 340px;
-        background: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 16px;
-        border-radius: 8px;
-        z-index: 1000;
-      }
-
-      .cart-popup.hidden {
-        display: none;
-      }
-
-      .cart-items {
-        max-height: 200px;
-        overflow-y: auto;
-        margin-bottom: 12px;
-      }
-
-      .cart-popup p {
-        margin: 6px 0;
-        font-size: 14px;
-        color: #333;
-      }
-
-      .cart-total {
-        font-weight: bold;
-        text-align: right;
-        margin-bottom: 12px;
-      }
-
-      .cart-icon-container {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .cart-badge {
-        position: absolute;
-        top: -6px;
-        right: -10px;
-        background: red;
-        color: white;
-        font-size: 11px;
-        padding: 2px 6px;
-        border-radius: 50%;
-      }
-
-      #cartPopup {
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        background: white;
-        border: 1px solid #ddd;
-        padding: 16px;
-        width: 320px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        border-radius: 12px;
-        display: none;
-        z-index: 999;
-        animation: slideDown 0.3s ease;
-        max-height: 400px;
-        overflow-y: auto;
-      }
-
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .cart-item {
-        border-bottom: 1px solid #eee;
-        padding: 10px 0;
-        display: flex;
-        gap: 12px;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .cart-item img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 6px;
-      }
-
-      .cart-item-info {
-        flex: 1;
-      }
-
-      .remove-btn {
-        color: #e60023;
-        cursor: pointer;
-        font-size: 14px;
-        border: none;
-        background: none;
-      }
-
-      .total-price {
-        text-align: right;
-        font-weight: bold;
-        margin-top: 12px;
-      }
-
-      #cartPopup {
-        position: absolute;
-        top: 36px;
-        /* hoặc 40px */
-        right: 0;
-        background: white;
-        border: 1px solid #ddd;
-        padding: 16px;
-        width: 320px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        border-radius: 12px;
-        display: none;
-        z-index: 999;
-        animation: slideDown 0.3s ease;
-        max-height: 400px;
-        overflow-y: auto;
-      }
-
-      .action-button {
-        padding: 12px 20px;
-        border-radius: 10px;
-        border: none;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .action-button.add {
-        background: #f5f5f5;
-        color: #333;
-      }
-
-      .action-button.add:hover {
-        background: #e2e2e2;
-      }
-
-      .action-button.discount {
-        background: #fff0f0;
-        color: #cc0033;
-      }
-
-      .action-button.discount:hover {
-        background: #ffe5e5;
-      }
-
-      .action-button.primary {
-        background: #e60023;
-        color: #fff;
-      }
-
-      .action-button.primary:hover {
-        background: #c4001c;
-      }
-
-      .notification-item {
-        border-bottom: 1px solid #eee;
-        padding: 12px 0;
-      }
-
-      .notification-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 15px;
-        margin-bottom: 6px;
-      }
-
-      .notification-header strong {
-        color: #000;
-        font-weight: 600;
-      }
-
-      .notification-content {
-        font-size: 13px;
-        color: #555;
-        margin: 0 0 8px;
-      }
-
-      .remove-btn {
-        font-size: 16px;
-        color: crimson;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="navbar">
-      <div class="logo">
-        <img src="image/2hand.png" alt="logo" />
-      </div>
-      <div class="search-bar">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Tìm kiếm sản phẩm..."
-        />
-        <i class="fas fa-search"></i>
-      </div>
-      <div class="right-icons">
-        <div class="notification-wrapper">
-          <div class="notification-indicator" id="notifDot"></div>
-          <i class="fa fa-bell" id="notifIcon"></i>
-          <div class="notification-popup hidden" id="notificationBox">
-            <div id="notificationContent">
-              <p>Đang tải thông báo...</p>
-            </div>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="image/2hand.png" alt="logo" />
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." />
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="right-icons">
+      <div class="notification-wrapper">
+        <div class="notification-indicator" id="notifDot"></div>
+        <i class="fa fa-bell" id="notifIcon"></i>
+        <div class="notification-popup hidden" id="notificationBox">
+          <div id="notificationContent">
+            <p>Đang tải thông báo...</p>
           </div>
         </div>
-        <a
-          href="user.html"
-          class="username"
-          target="_blank"
-          id="username-link"
-        ></a>
+      </div>
+      <a href="user.html" class="username" target="_blank" id="username-link"></a>
 
-        <script>
-          function loadNotifications() {
-            const user = JSON.parse(localStorage.getItem("user"));
-            fetch(
-              `https://localhost:7238/api/Notification/get-all-notifications?currentId=${user.id}`
-            )
-              .then((res) => res.json())
-              .then((data) => {
-                const notificationContent = document.getElementById(
-                  "notificationContent"
-                );
-                if (!data || data.length === 0) {
-                  notificationContent.innerHTML =
-                    "<p>Không có thông báo nào.</p>";
-                  return;
-                }
+      <script>
+        function loadNotifications() {
+          const user = JSON.parse(localStorage.getItem("user"));
+          fetch(
+            `https://localhost:7238/api/Notification/get-all-notifications?currentId=${user.id}`
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              const notificationContent = document.getElementById(
+                "notificationContent"
+              );
+              if (!data || data.length === 0) {
+                notificationContent.innerHTML =
+                  "<p>Không có thông báo nào.</p>";
+                return;
+              }
 
-                if (!data || !data.data || data.data.length === 0) {
-                  notificationContent.innerHTML =
-                    "<p>Không có thông báo nào.</p>";
-                  return;
-                }
+              if (!data || !data.data || data.data.length === 0) {
+                notificationContent.innerHTML =
+                  "<p>Không có thông báo nào.</p>";
+                return;
+              }
 
-                let html = "<p><strong>📢 Thông báo</strong></p>";
-                data.data.forEach((notification, index) => {
-                  let actionButtons = "";
-                  if (notification.type === 1) {
-                    actionButtons = `
+              let html = "<p><strong>📢 Thông báo</strong></p>";
+              data.data.forEach((notification, index) => {
+                let actionButtons = "";
+                if (notification.type === 1) {
+                  actionButtons = `
           <button onclick="respond('accepted', ${JSON.stringify(
-            notification
-          ).replace(/"/g, "&quot;")})">✅ Đồng ý</button>
+                    notification
+                  ).replace(/"/g, "&quot;")})">✅ Đồng ý</button>
           <button onclick="respond('rejected', ${JSON.stringify(
-            notification
-          ).replace(/"/g, "&quot;")})">❌ Từ chối</button>
+                    notification
+                  ).replace(/"/g, "&quot;")})">❌ Từ chối</button>
           <button onclick="respond('chat', ${JSON.stringify(
-            notification
-          ).replace(/"/g, "&quot;")})">💬 Trả lời</button>
+                    notification
+                  ).replace(/"/g, "&quot;")})">💬 Trả lời</button>
           `;
-                  } else if (notification.type === 2) {
-                    actionButtons = `
+                } else if (notification.type === 2) {
+                  actionButtons = `
           <button onclick="respond('chat', ${JSON.stringify(
-            notification
-          ).replace(/"/g, "&quot;")})">💬 Trả lời</button>
+                    notification
+                  ).replace(/"/g, "&quot;")})">💬 Trả lời</button>
           `;
-                  } else if (notification.type === 3) {
-                    actionButtons = "";
-                  }
+                } else if (notification.type === 3) {
+                  actionButtons = "";
+                }
 
-                  html += `
+                html += `
   <div class="notification-item">
     <div class="notification-header">
       <strong>${notification.title || "Thông báo"}</strong>
-      <button class="remove-btn" onclick="event.stopPropagation(); removeNotification(${
-        notification.id
-      })">✕</button>
+      <button class="remove-btn" onclick="event.stopPropagation(); removeNotification(${notification.id
+                  })">✕</button>
     </div>
     <p class="notification-content">
       ${notification.content || notification.messeage || "Nội dung thông báo"}
@@ -481,476 +469,503 @@
     </div>
   </div>
 `;
-                });
-                notificationContent.innerHTML = html;
-              })
-              .catch((error) => {
-                console.error("Error loading notifications:", error);
-                document.getElementById("notificationContent").innerHTML =
-                  "<p>Lỗi khi tải thông báo.</p>";
               });
-          }
-
-          function removeNotification(notificationId) {
-            fetch(
-              `https://localhost:7238/api/Notification/remove-notification?notificationId=${notificationId}`,
-              {
-                method: "DELETE",
-              }
-            )
-              .then((res) => {
-                if (!res.ok) throw new Error("Xóa thất bại");
-                return res.json();
-              })
-              .then(() => {
-                loadNotifications(); // Làm mới danh sách thông báo
-              })
-              .catch((err) => {
-                console.error("Lỗi khi xóa thông báo:", err);
-              });
-          }
-
-          window.respond = async function (action, notification) {
-            switch (action) {
-              case "accepted":
-                let negotiatedPrice = null;
-                const productId = notification.productId;
-
-                if (notification.message || notification.messeage) {
-                  const message = notification.message || notification.messeage;
-                  const priceMatch = message.match(/₫([\d,.]+)/);
-                  if (priceMatch) {
-                    negotiatedPrice = parseInt(
-                      priceMatch[1].replace(/[,.]/g, "")
-                    );
-                  }
-                }
-
-                if (!negotiatedPrice || !productId) {
-                  alert(
-                    "❌ Không thể cập nhật giá - thiếu thông tin cần thiết."
-                  );
-                  return;
-                }
-
-                const payload = {
-                  id: productId,
-                  price: Number(negotiatedPrice),
-                  isDeleted: true,
-                };
-
-                try {
-                  const res = await fetch(
-                    "https://localhost:7238/api/Product/update-product",
-                    {
-                      method: "PUT",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(payload),
-                    }
-                  );
-
-                  const data = await res.json();
-
-                  if (data.success || data.status === 200) {
-                    alert(
-                      `✅ Bạn đã đồng ý thông báo #${
-                        notification.id
-                      }. Giá mới được cập nhật thành ${negotiatedPrice.toLocaleString()} đ.`
-                    );
-
-                    try {
-                      const removeRes = await fetch(
-                        `https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`,
-                        {
-                          method: "DELETE",
-                        }
-                      );
-                      if (removeRes.ok) {
-                        console.log("Notification removed successfully");
-
-                        loadNotifications();
-                      }
-                    } catch (removeErr) {
-                      console.error("Error removing notification:", removeErr);
-                    }
-                  } else {
-                    alert("❌ Cập nhật giá thất bại. Vui lòng thử lại.");
-                  }
-                } catch (err) {
-                  console.error("Error updating product price:", err);
-                  alert("❌ Có lỗi xảy ra khi cập nhật giá sản phẩm.");
-                }
-                break;
-              case "rejected":
-                alert(`❌ Bạn đã từ chối thông báo #${notification.id}.`);
-
-                try {
-                  const removeRes = await fetch(
-                    `https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
-                  if (removeRes.ok) {
-                    console.log("Notification removed successfully");
-
-                    loadNotifications();
-                  }
-                } catch (removeErr) {
-                  console.error("Error removing notification:", removeErr);
-                }
-                break;
-              case "chat":
-                const notificationIdToChat = {
-                  PriceNegotiationId: notification.relatedId || 1,
-                  SenderId: notification.senderId || 1,
-                  ReceiverId: notification.receiverId || 1,
-                };
-                localStorage.removeItem("notificationIdToChat");
-                localStorage.setItem(
-                  "notificationIdToChat",
-                  JSON.stringify(notificationIdToChat)
-                );
-                window.location.href = "chat.html";
-                break;
-              default:
-                alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
-            }
-            document.getElementById("notificationBox").classList.add("hidden");
-          };
-
-          document
-            .getElementById("notifIcon")
-            .addEventListener("click", function (e) {
-              e.stopPropagation();
-              const notificationBox =
-                document.getElementById("notificationBox");
-              if (notificationBox.classList.contains("hidden")) {
-                loadNotifications();
-              }
-              notificationBox.classList.toggle("hidden");
-              document.getElementById("notifDot").style.display = "none";
+              notificationContent.innerHTML = html;
+            })
+            .catch((error) => {
+              console.error("Error loading notifications:", error);
+              document.getElementById("notificationContent").innerHTML =
+                "<p>Lỗi khi tải thông báo.</p>";
             });
-        </script>
-        <script>
-          const user = JSON.parse(localStorage.getItem("user"));
-          const userId = user && user.id ? user.id : 1;
-          const username = user.fullName || "Mizu";
-          document.getElementById("username-link").textContent = username;
-        </script>
-        <div class="cart-icon-container">
-          <i class="fa fa-shopping-bag" id="cartIcon"></i>
-          <span class="cart-badge" id="cartCount">0</span>
+        }
 
-          <div id="cartPopup" class="cart-popup hidden"></div>
-        </div>
-        <a href="post.html" class="post-button">Đăng bán</a>
-      </div>
-    </div>
-
-    <div class="sub-menu">
-      <a href="#" class="menu-link active">GỢI Ý</a>
-      <a href="style.html" class="menu-link">THỜI TRANG</a>
-      <a href="book.html" class="menu-link">SÁCH</a>
-      <a href="hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
-      <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
-      <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
-    </div>
-
-    <section id="Slider">
-      <div class="slider-wrapper">
-        <img src="image/menu67.png" alt="" />
-        <img src="image/menu1.png" alt="" />
-        <img src="image/menu2.png" alt="" />
-        <img src="image/menu3.png" alt="" />
-      </div>
-    </section>
-    <section id="search-results" style="display: none; padding: 20px">
-      <h2>Kết quả tìm kiếm</h2>
-      <div id="searchList" class="suggest-grid"></div>
-    </section>
-    <section class="latest-products">
-      <h2>Gợi ý hôm nay dành cho bạn</h2>
-      <div id="productList1" class="suggest-grid"></div>
-    </section>
-
-    <section class="latest-products">
-      <h2>Khám phá danh mục</h2>
-      <div id="productList2" class="suggest-grid"></div>
-    </section>
-
-    <section class="latest-products">
-      <h2>Bài đăng mới</h2>
-      <div id="productList3" class="suggest-grid"></div>
-    </section>
-
-    <script>
-      fetch(
-        `https://localhost:7238/api/Product/get-suggested-products?PageNumber=1&PageSize=12&UserId=${userId}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const container = document.getElementById("productList1");
-          container.innerHTML = "";
-          data.data.forEach((product) => {
-            const card = document.createElement("div");
-            card.className = "product-card";
-
-            function formatPrice(price) {
-              if (typeof price === "number") price = price.toString();
-              price = price.replace(/\D/g, "");
-              return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+        function removeNotification(notificationId) {
+          fetch(
+            `https://localhost:7238/api/Notification/remove-notification?notificationId=${notificationId}`,
+            {
+              method: "DELETE",
             }
-            card.innerHTML = `
+          )
+            .then((res) => {
+              if (!res.ok) throw new Error("Xóa thất bại");
+              return res.json();
+            })
+            .then(() => {
+              loadNotifications(); // Làm mới danh sách thông báo
+            })
+            .catch((err) => {
+              console.error("Lỗi khi xóa thông báo:", err);
+            });
+        }
+
+        window.respond = async function (action, notification) {
+          switch (action) {
+            case "accepted":
+              let negotiatedPrice = null;
+              const productId = notification.productId;
+
+              if (notification.message || notification.messeage) {
+                const message = notification.message || notification.messeage;
+                const priceMatch = message.match(/(\d{1,3}(?:[.,]\d{3})*)\s*₫/);
+                if (priceMatch) {
+                  negotiatedPrice = parseInt(
+                    priceMatch[1].replace(/[,.]/g, "")
+                  );
+                }
+              }
+
+              if (!negotiatedPrice || !productId) {
+                alert(
+                  "❌ Không thể cập nhật giá - thiếu thông tin cần thiết."
+                );
+                return;
+              }
+
+              const payload = {
+                id: productId,
+                price: Number(negotiatedPrice),
+                isDeleted: true,
+              };
+
+              try {
+                await fetch("https://localhost:7238/api/PriceNegotiation/update-price-negotiation", {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    productId: notification.productId,
+                    offerPrice: negotiatedPrice,
+                    buyerId: notification.senderId,
+                    sellerResponse: "accepted",
+                    priceNegotiationId: notification.relatedId,
+                    status: 1,
+                  }),
+                });
+                const res = await fetch(
+                  "https://localhost:7238/api/Product/update-product",
+                  {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                  }
+                );
+
+                const data = await res.json();
+
+                if (data.success || data.status === 200) {
+                  alert(
+                    `✅ Bạn đã đồng ý thông báo #${notification.id
+                    }. Giá mới được cập nhật thành ${negotiatedPrice.toLocaleString()} đ.`
+                  );
+
+                  try {
+                    const removeRes = await fetch(
+                      `https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`,
+                      {
+                        method: "DELETE",
+                      }
+                    );
+                    if (removeRes.ok) {
+                      console.log("Notification removed successfully");
+
+                      loadNotifications();
+                    }
+                  } catch (removeErr) {
+                    console.error("Error removing notification:", removeErr);
+                  }
+                } else {
+                  alert("❌ Cập nhật giá thất bại. Vui lòng thử lại.");
+                }
+              } catch (err) {
+                console.error("Error updating product price:", err);
+                alert("❌ Có lỗi xảy ra khi cập nhật giá sản phẩm.");
+              }
+              break;
+            case "rejected":
+              alert(`❌ Bạn đã từ chối thông báo #${notification.id}.`);
+
+              try {
+                await fetch("https://localhost:7238/api/PriceNegotiation/update-price-negotiation", {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    productId: notification.productId,
+                    offerPrice: negotiatedPrice,
+                    buyerId: notification.senderId,
+                    sellerResponse: "accepted",
+                    priceNegotiationId: notification.relatedId,
+                    status: 2,
+                  }),
+                });
+                const removeRes = await fetch(
+                  `https://localhost:7238/api/Notification/remove-notification?notificationId=${notification.id}`,
+                  {
+                    method: "DELETE",
+                  }
+                );
+                if (removeRes.ok) {
+                  console.log("Notification removed successfully");
+
+                  loadNotifications();
+                }
+              } catch (removeErr) {
+                console.error("Error removing notification:", removeErr);
+              }
+              break;
+            case "chat":
+              const notificationIdToChat = {
+                PriceNegotiationId: notification.relatedId || 1,
+                SenderId: notification.senderId || 1,
+                ReceiverId: notification.receiverId || 1,
+              };
+              localStorage.removeItem("notificationIdToChat");
+              localStorage.setItem(
+                "notificationIdToChat",
+                JSON.stringify(notificationIdToChat)
+              );
+              window.location.href = "chat.html";
+              break;
+            default:
+              alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
+          }
+          document.getElementById("notificationBox").classList.add("hidden");
+        };
+
+        document
+          .getElementById("notifIcon")
+          .addEventListener("click", function (e) {
+            e.stopPropagation();
+            const notificationBox =
+              document.getElementById("notificationBox");
+            if (notificationBox.classList.contains("hidden")) {
+              loadNotifications();
+            }
+            notificationBox.classList.toggle("hidden");
+            document.getElementById("notifDot").style.display = "none";
+          });
+      </script>
+      <script>
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user && user.id ? user.id : 1;
+        const username = user.fullName || "Mizu";
+        document.getElementById("username-link").textContent = username;
+      </script>
+      <div class="cart-icon-container">
+        <i class="fa fa-shopping-bag" id="cartIcon"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+
+        <div id="cartPopup" class="cart-popup hidden"></div>
+      </div>
+      <a href="post.html" class="post-button">Đăng bán</a>
+    </div>
+  </div>
+
+  <div class="sub-menu">
+    <a href="#" class="menu-link active">GỢI Ý</a>
+    <a href="style.html" class="menu-link">THỜI TRANG</a>
+    <a href="book.html" class="menu-link">SÁCH</a>
+    <a href="hh.html" class="menu-link">ĐỒ GIA DỤNG</a>
+    <a href="elec.html" class="menu-link">ĐỒ ĐIỆN TỬ</a>
+    <a href="play.html" class="menu-link">ĐỒ GIẢI TRÍ</a>
+  </div>
+
+  <section id="Slider">
+    <div class="slider-wrapper">
+      <img src="image/menu67.png" alt="" />
+      <img src="image/menu1.png" alt="" />
+      <img src="image/menu2.png" alt="" />
+      <img src="image/menu3.png" alt="" />
+    </div>
+  </section>
+  <section id="search-results" style="display: none; padding: 20px">
+    <h2>Kết quả tìm kiếm</h2>
+    <div id="searchList" class="suggest-grid"></div>
+  </section>
+  <section class="latest-products">
+    <h2>Gợi ý hôm nay dành cho bạn</h2>
+    <div id="productList1" class="suggest-grid"></div>
+  </section>
+
+  <section class="latest-products">
+    <h2>Khám phá danh mục</h2>
+    <div id="productList2" class="suggest-grid"></div>
+  </section>
+
+  <section class="latest-products">
+    <h2>Bài đăng mới</h2>
+    <div id="productList3" class="suggest-grid"></div>
+  </section>
+
+  <script>
+    fetch(
+      `https://localhost:7238/api/Product/get-suggested-products?PageNumber=1&PageSize=12&UserId=${userId}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const container = document.getElementById("productList1");
+        container.innerHTML = "";
+        data.data.forEach((product) => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+
+          function formatPrice(price) {
+            if (typeof price === "number") price = price.toString();
+            price = price.replace(/\D/g, "");
+            return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+          }
+          card.innerHTML = `
         <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
-            card.style.cursor = "pointer";
-            card.onclick = function () {
-              localStorage.setItem("selectedProduct", JSON.stringify(product));
-              window.location.href = "sp.html";
-            };
-            container.appendChild(card);
-          });
-        })
-        .catch((error) => {
-          console.error("Lỗi khi tải bài đăng mới:", error);
+          card.style.cursor = "pointer";
+          card.onclick = function () {
+            localStorage.setItem("selectedProduct", JSON.stringify(product));
+            window.location.href = "sp.html";
+          };
+          container.appendChild(card);
         });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải bài đăng mới:", error);
+      });
 
-      fetch("MockData/kham_pha.json")
-        .then((res) => res.json())
-        .then((data) => {
-          const container = document.getElementById("productList2");
-          data.forEach((product, index) => {
-            const card = document.createElement("div");
-            card.className = "product-card";
-            card.innerHTML = `
+    fetch("MockData/kham_pha.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const container = document.getElementById("productList2");
+        data.forEach((product, index) => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${product.price}</p>
       `;
-            card.style.cursor = "pointer";
+          card.style.cursor = "pointer";
 
-            card.onclick = function () {
-              switch (index) {
-                case 0:
-                  window.location.href = "style.html";
-                  break;
-                case 1:
-                  window.location.href = "book.html";
-                  break;
-                case 2:
-                  window.location.href = "hh.html";
-                  break;
-                case 3:
-                  window.location.href = "play.html";
-                  break;
-                default:
-                  alert("Danh mục chưa được gán liên kết.");
-              }
-            };
-
-            container.appendChild(card);
-          });
-        });
-
-      fetch(
-        "https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageSize=20"
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          const container = document.getElementById("productList3");
-          container.innerHTML = ""; // Xóa nội dung cũ nếu có
-          data.data.forEach((product) => {
-            const card = document.createElement("div");
-            card.className = "product-card";
-            // Format price to "117.000 đ"
-            function formatPrice(price) {
-              if (typeof price === "number") price = price.toString();
-              price = price.replace(/\D/g, "");
-              return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+          card.onclick = function () {
+            switch (index) {
+              case 0:
+                window.location.href = "style.html";
+                break;
+              case 1:
+                window.location.href = "book.html";
+                break;
+              case 2:
+                window.location.href = "hh.html";
+                break;
+              case 3:
+                window.location.href = "play.html";
+                break;
+              default:
+                alert("Danh mục chưa được gán liên kết.");
             }
-            card.innerHTML = `
+          };
+
+          container.appendChild(card);
+        });
+      });
+
+    fetch(
+      "https://localhost:7238/api/Product/get-recent-products?PageNumber=1&PageSize=20"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const container = document.getElementById("productList3");
+        container.innerHTML = ""; // Xóa nội dung cũ nếu có
+        data.data.forEach((product) => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          // Format price to "117.000 đ"
+          function formatPrice(price) {
+            if (typeof price === "number") price = price.toString();
+            price = price.replace(/\D/g, "");
+            return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+          }
+          card.innerHTML = `
         <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>${formatPrice(product.price)}</p>
       `;
-            card.style.cursor = "pointer";
-            card.onclick = function () {
-              localStorage.setItem("selectedProduct", JSON.stringify(product));
-              window.location.href = "sp.html";
-            };
-            container.appendChild(card);
-          });
-        })
-        .catch((error) => {
-          console.error("Lỗi khi tải bài đăng mới:", error);
+          card.style.cursor = "pointer";
+          card.onclick = function () {
+            localStorage.setItem("selectedProduct", JSON.stringify(product));
+            window.location.href = "sp.html";
+          };
+          container.appendChild(card);
         });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải bài đăng mới:", error);
+      });
 
-      // ...existing code...
+    // ...existing code...
 
-      // window.onload = function () {
-      //   // === Notification icon ===
-      //   const bellIcon = document.getElementById('notifIcon');
-      //   const notificationBox = document.getElementById('notificationBox');
-      //   const notifDot = document.getElementById('notifDot');
+    // window.onload = function () {
+    //   // === Notification icon ===
+    //   const bellIcon = document.getElementById('notifIcon');
+    //   const notificationBox = document.getElementById('notificationBox');
+    //   const notifDot = document.getElementById('notifDot');
 
-      //   let bellClickCount = 0; //thong báo số lần click chuột vào biểu tượng chuông
-      // let bellClickTimer;
-      // bellIcon.addEventListener('click', (e) => {
-      //   e.stopPropagation();
-      //   bellClickCount++;
+    //   let bellClickCount = 0; //thong báo số lần click chuột vào biểu tượng chuông
+    // let bellClickTimer;
+    // bellIcon.addEventListener('click', (e) => {
+    //   e.stopPropagation();
+    //   bellClickCount++;
 
-      //   clearTimeout(bellClickTimer); // reset timer mỗi khi click
+    //   clearTimeout(bellClickTimer); // reset timer mỗi khi click
 
-      //   bellClickTimer = setTimeout(() => {
-      //     if (bellClickCount === 1) {
-      //       notificationBox.classList.toggle('hidden');
-      //       notifDot.style.display = 'none';
-      //     } else if (bellClickCount === 2) {
-      //       showAgreedPopup();
-      //     } else if (bellClickCount === 3) {
-      //       showRejectedPopup();
-      //     } else if (bellClickCount === 4) {
-      //       showChat();
-      //     }
-      //     bellClickCount = 0; // reset lại sau xử lý
-      //   }, 300); // 300ms để phát hiện chuỗi click
-      // });
+    //   bellClickTimer = setTimeout(() => {
+    //     if (bellClickCount === 1) {
+    //       notificationBox.classList.toggle('hidden');
+    //       notifDot.style.display = 'none';
+    //     } else if (bellClickCount === 2) {
+    //       showAgreedPopup();
+    //     } else if (bellClickCount === 3) {
+    //       showRejectedPopup();
+    //     } else if (bellClickCount === 4) {
+    //       showChat();
+    //     }
+    //     bellClickCount = 0; // reset lại sau xử lý
+    //   }, 300); // 300ms để phát hiện chuỗi click
+    // });
 
-      //   document.addEventListener('click', (e) => {
-      //     if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
-      //       notificationBox.classList.add('hidden');
-      //     }
-      //   });
+    //   document.addEventListener('click', (e) => {
+    //     if (!notificationBox.contains(e.target) && !bellIcon.contains(e.target)) {
+    //       notificationBox.classList.add('hidden');
+    //     }
+    //   });
 
-      //   window.respond = function (action) {
-      //     switch (action) {
-      //       case 'accepted':
-      //         alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
-      //         break;
-      //       case 'rejected':
-      //         alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
-      //         break;
-      //       case 'chat':
-      //         window.location.href = "chat.html";
-      //         break;
-      //       default:
-      //         alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
-      //     }
-      //     notificationBox.classList.add('hidden');
-      //   };
-      //   function showAgreedPopup() { //thong bao dong y thuong luong
-      //     notificationBox.innerHTML = `
-      //   <div style="
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: space-between;
-      //     gap: 16px;
-      //   ">
-      //     <div style="display: flex; align-items: center; gap: 10px;">
-      //       <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 20px;"></i>
-      //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-      //         Người bán đã đồng ý với yêu cầu thương lượng giá của bạn.
-      //       </p>
-      //     </div>
-      //     <button onclick="proceedToPayment()" style="
-      //       background-color: #e60023;
-      //       color: #fff;
-      //       border: none;
-      //       padding: 8px 14px;
-      //       border-radius: 6px;
-      //       font-size: 14px;
-      //       font-weight: bold;
-      //       cursor: pointer;
-      //       white-space: nowrap;
-      //       transition: background 0.2s ease;
-      //     ">Mua ngay</button>
-      //   </div>
-      // `;
-      //     notificationBox.classList.remove('hidden');
-      //   }
-      //   function showRejectedPopup() {
-      //     notificationBox.innerHTML = `
-      //   <div style="
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: space-between;
-      //     gap: 16px;
-      //   ">
-      //     <div style="display: flex; align-items: center; gap: 10px;">
-      //       <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 20px;"></i>
-      //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-      //         Người bán đã từ chối yêu cầu thương lượng của bạn.
-      //       </p>
-      //     </div>
-      //   </div>
-      // `;
-      //     notificationBox.classList.remove('hidden');
-      //   }
+    //   window.respond = function (action) {
+    //     switch (action) {
+    //       case 'accepted':
+    //         alert("✅ Bạn đã đồng ý giá thương lượng. Giá mới được cập nhật.");
+    //         break;
+    //       case 'rejected':
+    //         alert("❌ Bạn đã từ chối yêu cầu thương lượng.");
+    //         break;
+    //       case 'chat':
+    //         window.location.href = "chat.html";
+    //         break;
+    //       default:
+    //         alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại.");
+    //     }
+    //     notificationBox.classList.add('hidden');
+    //   };
+    //   function showAgreedPopup() { //thong bao dong y thuong luong
+    //     notificationBox.innerHTML = `
+    //   <div style="
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     gap: 16px;
+    //   ">
+    //     <div style="display: flex; align-items: center; gap: 10px;">
+    //       <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 20px;"></i>
+    //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+    //         Người bán đã đồng ý với yêu cầu thương lượng giá của bạn.
+    //       </p>
+    //     </div>
+    //     <button onclick="proceedToPayment()" style="
+    //       background-color: #e60023;
+    //       color: #fff;
+    //       border: none;
+    //       padding: 8px 14px;
+    //       border-radius: 6px;
+    //       font-size: 14px;
+    //       font-weight: bold;
+    //       cursor: pointer;
+    //       white-space: nowrap;
+    //       transition: background 0.2s ease;
+    //     ">Mua ngay</button>
+    //   </div>
+    // `;
+    //     notificationBox.classList.remove('hidden');
+    //   }
+    //   function showRejectedPopup() {
+    //     notificationBox.innerHTML = `
+    //   <div style="
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     gap: 16px;
+    //   ">
+    //     <div style="display: flex; align-items: center; gap: 10px;">
+    //       <i class="fas fa-times-circle" style="color: #e74c3c; font-size: 20px;"></i>
+    //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+    //         Người bán đã từ chối yêu cầu thương lượng của bạn.
+    //       </p>
+    //     </div>
+    //   </div>
+    // `;
+    //     notificationBox.classList.remove('hidden');
+    //   }
 
-      //   function showChat() {
-      //     notificationBox.innerHTML = `
-      //   <div style="
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: space-between;
-      //     gap: 16px;
-      //     cursor: pointer;
-      //   " id="chatPopupContent">
-      //     <div style="display: flex; align-items: center; gap: 10px;">
-      //       <i class="fas fa-comments" style="color: #3498db; font-size: 20px;"></i>
-      //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
-      //         Người bán đã gửi tin nhắn cho bạn !!!
-      //       </p>
-      //     </div>
-      //   </div>
-      // `;
-      //     notificationBox.classList.remove('hidden');
-      //     // Thêm sự kiện click để chuyển sang chat.html
-      //     document.getElementById('chatPopupContent').onclick = function () {
-      //       window.location.href = "chat.html";
-      //     };
-      //   }
+    //   function showChat() {
+    //     notificationBox.innerHTML = `
+    //   <div style="
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     gap: 16px;
+    //     cursor: pointer;
+    //   " id="chatPopupContent">
+    //     <div style="display: flex; align-items: center; gap: 10px;">
+    //       <i class="fas fa-comments" style="color: #3498db; font-size: 20px;"></i>
+    //       <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+    //         Người bán đã gửi tin nhắn cho bạn !!!
+    //       </p>
+    //     </div>
+    //   </div>
+    // `;
+    //     notificationBox.classList.remove('hidden');
+    //     // Thêm sự kiện click để chuyển sang chat.html
+    //     document.getElementById('chatPopupContent').onclick = function () {
+    //       window.location.href = "chat.html";
+    //     };
+    //   }
 
-      const cartCount = document.getElementById("cartCount");
-      const cartPopup = document.getElementById("cartPopup");
-      let cart = [];
+    const cartCount = document.getElementById("cartCount");
+    const cartPopup = document.getElementById("cartPopup");
+    let cart = [];
 
-      fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          cart = data.data || [];
-          updateCartUI();
-        })
-        .catch((error) => {
-          console.error("Error fetching cart items:", error);
-          // Fallback to localStorage if server request fails
-          cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-          updateCartUI();
-        });
+    fetch(`https://localhost:7238/api/Cart/get-items?userId=${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        cart = data.data || [];
+        updateCartUI();
+      })
+      .catch((error) => {
+        console.error("Error fetching cart items:", error);
+        // Fallback to localStorage if server request fails
+        cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        updateCartUI();
+      });
 
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+    }
+
+    function updateCartUI() {
+      cartCount.textContent = cart.length;
+      if (cart.length === 0) {
+        cartPopup.innerHTML = "<p>🛒 Giỏ hàng của bạn đang trống.</p>";
+        return;
       }
+      let html = '<h4 style="margin-top:0;">Sản phẩm trong giỏ:</h4>';
+      let total = 0;
 
-      function updateCartUI() {
-        cartCount.textContent = cart.length;
-        if (cart.length === 0) {
-          cartPopup.innerHTML = "<p>🛒 Giỏ hàng của bạn đang trống.</p>";
-          return;
-        }
-        let html = '<h4 style="margin-top:0;">Sản phẩm trong giỏ:</h4>';
-        let total = 0;
-
-        cart.forEach((item, index) => {
-          total += parseInt(item.price);
-          html += `
+      cart.forEach((item, index) => {
+        total += parseInt(item.price);
+        html += `
         <div class="cart-item">
           <img src="${item.productImage}" alt="${item.productName}" />
           <div class="cart-item-info" onclick="viewProduct(${index})" style="cursor:pointer;">
@@ -961,196 +976,197 @@
 
         </div>
       `;
-        });
+      });
 
-        html += `
+      html += `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; gap: 12px;">
         <div class="total-price" style="margin:0;">Tổng: ${formatPrice(
-          total.toString()
-        )}</div>
+        total.toString()
+      )}</div>
         <button class="action-button primary" onclick="proceedToPayment()" style="flex-shrink: 0;">Thanh toán</button>
       </div>
     `;
 
-        cartPopup.innerHTML = html;
-      }
+      cartPopup.innerHTML = html;
+    }
 
-      async function removeItem(index) {
-        const itemToRemove = cart[index];
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user && user.id ? user.id : 1;
+    async function removeItem(index) {
+      const itemToRemove = cart[index];
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user && user.id ? user.id : 1;
 
-        try {
-          const response = await fetch(
-            `https://localhost:7238/api/Cart/remove-item?userId=${userId}&productId=${itemToRemove.productId}`,
-            {
-              method: "DELETE",
-            }
-          );
-
-          cart.splice(index, 1);
-          localStorage.setItem("cartItems", JSON.stringify(cart));
-          updateCartUI();
-
-          if (!response.ok) {
-            console.error("Error removing item from server cart");
+      try {
+        const response = await fetch(
+          `https://localhost:7238/api/Cart/remove-item?userId=${userId}&productId=${itemToRemove.productId}`,
+          {
+            method: "DELETE",
           }
-        } catch (error) {
-          console.error("Error calling remove API:", error);
+        );
 
-          cart.splice(index, 1);
-          localStorage.setItem("cartItems", JSON.stringify(cart));
-          updateCartUI();
+        cart.splice(index, 1);
+        localStorage.setItem("cartItems", JSON.stringify(cart));
+        updateCartUI();
+
+        if (!response.ok) {
+          console.error("Error removing item from server cart");
         }
+      } catch (error) {
+        console.error("Error calling remove API:", error);
+
+        cart.splice(index, 1);
+        localStorage.setItem("cartItems", JSON.stringify(cart));
+        updateCartUI();
       }
+    }
 
-      updateCartUI();
+    updateCartUI();
 
-      window.viewProduct = function (index) {
-        const item = cart[index];
+    window.viewProduct = function (index) {
+      const item = cart[index];
 
-        const product = {
-          id: item.productId || item.id,
-          name: item.productName || item.name,
-          price: item.price,
-          imageUrl: item.productImage || item.image || item.imageUrl,
-          description: item.description || "",
-          categoryId: item.categoryId || 2,
-          sellerId: item.sellerId || 0,
-          status: item.status || 0,
-          isDeleted: item.isDeleted || false,
-          createdAt: item.createdAt || new Date().toISOString(),
-          condition: item.condition || "",
-        };
-        localStorage.setItem("selectedProduct", JSON.stringify(product));
-        window.location.href = "sp.html";
+      const product = {
+        id: item.productId || item.id,
+        name: item.productName || item.name,
+        price: item.price,
+        imageUrl: item.productImage || item.image || item.imageUrl,
+        description: item.description || "",
+        categoryId: item.categoryId || 2,
+        sellerId: item.sellerId || 0,
+        sellerAddress: item.sellerAddress || "",
+        status: item.status || 0,
+        isDeleted: item.isDeleted || false,
+        createdAt: item.createdAt || new Date().toISOString(),
+        condition: item.condition || "",
       };
+      localStorage.setItem("selectedProduct", JSON.stringify(product));
+      window.location.href = "sp.html";
+    };
 
-      window.proceedToPayment = function () {
-        if (cart.length === 0) {
-          alert("Giỏ hàng trống!");
-          return;
-        }
-        localStorage.setItem("cartToPay", JSON.stringify(cart));
-        window.location.href = "pay.html";
-      };
+    window.proceedToPayment = function () {
+      if (cart.length === 0) {
+        alert("Giỏ hàng trống!");
+        return;
+      }
+      localStorage.setItem("cartToPay", JSON.stringify(cart));
+      window.location.href = "pay.html";
+    };
 
-      document
-        .querySelector(".cart-icon-container")
-        .addEventListener("click", (e) => {
-          cartPopup.classList.toggle("hidden");
-          cartPopup.style.display =
-            cartPopup.style.display === "block" ? "none" : "block";
-          e.stopPropagation();
-        });
-
-      document.addEventListener("click", function (event) {
-        const isInside =
-          cartPopup.contains(event.target) ||
-          event.target.closest(".cart-icon-container");
-        if (!isInside) cartPopup.classList.add("hidden");
+    document
+      .querySelector(".cart-icon-container")
+      .addEventListener("click", (e) => {
+        cartPopup.classList.toggle("hidden");
+        cartPopup.style.display =
+          cartPopup.style.display === "block" ? "none" : "block";
+        e.stopPropagation();
       });
 
-      updateCartUI();
-    </script>
+    document.addEventListener("click", function (event) {
+      const isInside =
+        cartPopup.contains(event.target) ||
+        event.target.closest(".cart-icon-container");
+      if (!isInside) cartPopup.classList.add("hidden");
+    });
 
-    <footer>
-      <p>&copy; 2025 2HandHub.com - All rights reserved.</p>
-    </footer>
+    updateCartUI();
+  </script>
 
-    <script>
-      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-      document.getElementById("cartCount").textContent = cartItems.length;
-    </script>
+  <footer>
+    <p>&copy; 2025 2HandHub.com - All rights reserved.</p>
+  </footer>
 
-    <script>
-      const searchInput = document.getElementById("searchInput");
-      const searchSection = document.getElementById("search-results");
-      const searchList = document.getElementById("searchList");
+  <script>
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    document.getElementById("cartCount").textContent = cartItems.length;
+  </script>
 
-      function formatPrice(price) {
-        if (typeof price === "number") price = price.toString();
-        price = price.replace(/\D/g, "");
-        return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-      }
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const searchSection = document.getElementById("search-results");
+    const searchList = document.getElementById("searchList");
 
-      function renderProduct(container, product) {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
+    function formatPrice(price) {
+      if (typeof price === "number") price = price.toString();
+      price = price.replace(/\D/g, "");
+      return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+
+    function renderProduct(container, product) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
       <img src="${product.imageUrl}" alt="${product.name}">
       <h3>${product.name}</h3>
       <p>${formatPrice(product.price)}</p>
     `;
-        card.style.cursor = "pointer";
-        card.onclick = function () {
-          localStorage.setItem("selectedProduct", JSON.stringify(product));
-          window.location.href = "sp.html";
-        };
-        container.appendChild(card);
-      }
+      card.style.cursor = "pointer";
+      card.onclick = function () {
+        localStorage.setItem("selectedProduct", JSON.stringify(product));
+        window.location.href = "sp.html";
+      };
+      container.appendChild(card);
+    }
 
-      searchInput.addEventListener("input", () => {
-        clearTimeout(window.searchTimeout);
-        window.searchTimeout = setTimeout(() => {
-          const keyword = searchInput.value.trim();
-          if (!keyword) {
-            searchSection.style.display = "none";
+    searchInput.addEventListener("input", () => {
+      clearTimeout(window.searchTimeout);
+      window.searchTimeout = setTimeout(() => {
+        const keyword = searchInput.value.trim();
+        if (!keyword) {
+          searchSection.style.display = "none";
+          searchList.innerHTML = "";
+          return;
+        }
+
+        fetch(
+          `https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(
+            keyword
+          )}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
             searchList.innerHTML = "";
-            return;
-          }
-
-          fetch(
-            `https://localhost:7238/api/Product/search-by-name?PageNumber=1&PageSize=20&Name=${encodeURIComponent(
-              keyword
-            )}`
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              searchList.innerHTML = "";
-              const products = data.data || [];
-              searchSection.style.display = "block";
-              if (products.length === 0) {
-                searchList.innerHTML =
-                  "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
-                return;
-              }
-              products.forEach((product) => renderProduct(searchList, product));
-            })
-            .catch((err) => {
+            const products = data.data || [];
+            searchSection.style.display = "block";
+            if (products.length === 0) {
               searchList.innerHTML =
-                "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
-              searchSection.style.display = "block";
-              console.error("Lỗi tìm kiếm:", err);
-            });
-        }, 300);
+                "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+              return;
+            }
+            products.forEach((product) => renderProduct(searchList, product));
+          })
+          .catch((err) => {
+            searchList.innerHTML =
+              "<p>Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>";
+            searchSection.style.display = "block";
+            console.error("Lỗi tìm kiếm:", err);
+          });
+      }, 300);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const connection = new signalR.HubConnectionBuilder()
+        .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+      connection.on("UserConnected", function () {
+        console.log("Kết nối thành công đến NotificationHub");
       });
-    </script>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const connection = new signalR.HubConnectionBuilder()
-          .withUrl(`https://localhost:7238/notification?userId=${user.id}`) // hoặc "/hubs/notification" tuỳ cấu hình server
-          .withAutomaticReconnect()
-          .configureLogging(signalR.LogLevel.Information)
-          .build();
+      connection.on("ReceiveNotification", function (notification) {
+        console.log("Thông báo mới:", notification);
 
-        connection.on("UserConnected", function () {
-          console.log("Kết nối thành công đến NotificationHub");
-        });
+        const notifDot = document.getElementById("notifDot");
+        if (notifDot) {
+          notifDot.style.display = "block";
+        }
 
-        connection.on("ReceiveNotification", function (notification) {
-          console.log("Thông báo mới:", notification);
-
-          const notifDot = document.getElementById("notifDot");
-          if (notifDot) {
-            notifDot.style.display = "block";
-          }
-
-          if (notification.Title && notification.Message) {
-            const toast = document.createElement("div");
-            toast.style.cssText = `
+        if (notification.Title && notification.Message) {
+          const toast = document.createElement("div");
+          toast.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1163,27 +1179,28 @@
             max-width: 300px;
             animation: slideIn 0.3s ease;
           `;
-            toast.innerHTML = `
+          toast.innerHTML = `
             <div style="font-weight: bold; margin-bottom: 8px;">${notification.Title}</div>
             <div style="font-size: 14px; color: #666;">${notification.Message}</div>
           `;
-            document.body.appendChild(toast);
+          document.body.appendChild(toast);
 
-            setTimeout(() => {
-              toast.remove();
-            }, 5000);
-          }
-        });
-
-        connection
-          .start()
-          .then(function () {
-            console.log("Đã kết nối đến NotificationHub");
-          })
-          .catch(function (err) {
-            console.error("Lỗi khi kết nối SignalR:", err.toString());
-          });
+          setTimeout(() => {
+            toast.remove();
+          }, 5000);
+        }
       });
-    </script>
-  </body>
+
+      connection
+        .start()
+        .then(function () {
+          console.log("Đã kết nối đến NotificationHub");
+        })
+        .catch(function (err) {
+          console.error("Lỗi khi kết nối SignalR:", err.toString());
+        });
+    });
+  </script>
+</body>
+
 </html>

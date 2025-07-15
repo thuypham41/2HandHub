@@ -153,6 +153,9 @@
     <label for="productDesc">Mô tả sản phẩm:</label>
     <textarea id="productDesc" rows="4" required></textarea>
 
+    <label for="productCondition">Địa chỉ người bán:</label>
+    <textarea id="productCondition" rows="2" required></textarea>
+
     <label for="productPrice">Giá bán (VNĐ):</label>
     <input type="number" id="productPrice" min="1000" step="1000" required>
 
@@ -167,6 +170,7 @@
 <div id="popupSuccess" class="popup-overlay" style="display: none;">
   <div class="popup-content">
     <p>Bài đăng đã được gửi và đang chờ quản trị viên duyệt.</p>
+
     <div class="popup-buttons">
       <button onclick="window.location.href='home.html'">Về trang chủ</button>
       <button onclick="closePopup()">Ở lại trang</button>
@@ -233,6 +237,8 @@
 
     const name = document.getElementById("productName").value.trim();
     const desc = document.getElementById("productDesc").value.trim();
+    const condition = document.getElementById("productCondition").value.trim();
+
     const price = document.getElementById("productPrice").value;
     const image = document.getElementById("productImage").files[0];
     const mainCategory = document.getElementById("mainCategory").value;
@@ -271,17 +277,18 @@
         throw new Error('Failed to upload image to Cloudinary');
       }
 
-      const productData = {
-        categoryId: parseInt(mainCategory),
-        subCategoryId: parseInt(subCategory),
-        sellerId: 2, 
-        name: name,
-        condition: "Đã qua sử dụng", 
-        price: parseFloat(price),
-        description: desc,
-        imageUrl: imageUrl,
-        status: 0 
-      };
+     const productData = {
+  categoryId: parseInt(mainCategory),
+  subCategoryId: parseInt(subCategory),
+  sellerId: 2,
+  name: name,
+  price: parseFloat(price),
+  description: desc,
+  sellerAddress: condition,
+  imageUrl: imageUrl,
+  status: 0
+};
+
 
       const response = await fetch("https://localhost:7238/api/Product/create-product", {
         method: "POST",

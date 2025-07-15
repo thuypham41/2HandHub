@@ -405,10 +405,11 @@
 
               if (notification.message || notification.messeage) {
                 const message = notification.message || notification.messeage;
-                const priceMatch = message.match(/₫([\d,.]+)/);
+               const priceMatch = message.match(/(\d{1,3}(?:[.,]\d{3})*)\s*₫/);
                 if (priceMatch) {
-               
-                  negotiatedPrice = parseInt(priceMatch[1].replace(/[,.]/g, ''));
+                  negotiatedPrice = parseInt(
+                    priceMatch[1].replace(/[,.]/g, "")
+                  );
                 }
               }
 
@@ -425,17 +426,35 @@
               };
 
               try {
-                const res = await fetch("https://localhost:7238/api/Product/update-product", {
+                // const res = await fetch("https://localhost:7238/api/Product/update-product", {
+                //   method: "PUT",
+                //   headers: {
+                //     "Content-Type": "application/json"
+                //   },
+                //   body: JSON.stringify(payload)
+                // });
+
+                // const data = await res.json();
+
+                const negotiationPayload = {
+                  productId: productId,
+                  offerPrice: negotiatedPrice,
+                  buyerId: notification.senderId || 0,
+                  sellerResponse: "accepted",
+                  priceNegotiationId: notification.relatedId || 0,
+                  status: 1 // 1 = accepted
+                };
+
+                const negotiationRes = await fetch("https://localhost:7238/api/PriceNegotiation/update-price-negotiation", {
                   method: "PUT",
                   headers: {
                     "Content-Type": "application/json"
                   },
-                  body: JSON.stringify(payload)
+                  body: JSON.stringify(negotiationPayload)
                 });
 
-                const data = await res.json();
-
-                if (data.success || data.status === 200) {
+                const negotiationData = await negotiationRes.json();
+                if (1) {
                   alert(`✅ Bạn đã đồng ý thông báo #${notification.id}. Giá mới được cập nhật thành ${negotiatedPrice.toLocaleString()} đ.`);
 
                   try {
@@ -531,6 +550,7 @@
         <h1 class="product-title" id="productName"></h1>
         <p class="product-price" id="productPrice"></p>
         <p class="product-description" id="productDesc"></p>
+        <p class="product-description" id="productSellerAddress"></p>
         <div class="button-group">
           <button class="action-button add">🛒 Thêm vào giỏ</button>
           <button
@@ -563,12 +583,11 @@
     <script>
       const product = JSON.parse(localStorage.getItem("selectedProduct"));
       if (product) {
-        document.getElementById("productName").textContent = product.name;
-        document.getElementById("productPrice").textContent =
-          product.price + "đ";
+        document.getElementById("productName").textContent = "Tên sản phẩm: " + product.name;
+        document.getElementById("productPrice").textContent = "Giá: " + product.price + "đ";
         document.getElementById("productImage").src = product.imageUrl;
-        document.getElementById("productDesc").textContent =
-          product.description;
+        document.getElementById("productDesc").textContent = "Mô tả: " + product.description;
+        document.getElementById("productSellerAddress").textContent = "Địa chỉ người bán: " + product.sellerAddress;
       } else {
         alert("Không có dữ liệu sản phẩm.");
       }

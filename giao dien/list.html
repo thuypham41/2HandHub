@@ -158,7 +158,9 @@
 
           function loadRevenue() {
             const selectedFilter = timeFilter.value;
-            const toDate = new Date().toISOString().split('T')[0]; // Current date
+            const toDateObj = new Date();
+            toDateObj.setDate(toDateObj.getDate() + 1); // Plus one day
+            const toDate = toDateObj.toISOString().split('T')[0];
             let fromDate;
 
             // Calculate fromDate based on selected filter
@@ -253,7 +255,9 @@
 
             function loadUserOrders() {
             const selectedFilter = timeFilter.value;
-            const toDate = new Date().toISOString().split('T')[0]; // Current date
+            const toDateObj = new Date();
+            toDateObj.setDate(toDateObj.getDate() + 1); // Plus one day
+            const toDate = toDateObj.toISOString().split('T')[0]; // Current date
             let fromDate;
 
             // Calculate fromDate based on selected filter
@@ -443,7 +447,9 @@
 
           function loadPieChartData() {
             const selectedFilter = timeFilter.value;
-            const toDate = new Date().toISOString().split('T')[0];
+            const toDateObj = new Date();
+            toDateObj.setDate(toDateObj.getDate() + 1); // Plus one day
+            const toDate = toDateObj.toISOString().split('T')[0];
             let fromDate;
 
             const today = new Date();
